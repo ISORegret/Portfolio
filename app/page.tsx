@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Camera, Car, Building2, Mail, Instagram, Phone, MapPin, ExternalLink, Filter, CameraOff } from 'lucide-react'
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from '@/components/ui'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from '../components/ui'
 
 type Tag = 'All' | 'Automotive' | 'Real Estate' | 'Street'
 
