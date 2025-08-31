@@ -16,15 +16,11 @@ type GalleryItem = {
   tags: Array<'Automotive'|'Real Estate'|'Street'>
 }
 
-// Add at the top:
-// at the top
+// at the very top of the file (imports)
 import ProjectCard from '../components/ProjectCard';
 import { projects } from './data/projects';
 
-
-// Inside your <main> ... add these two sections where Gallery used to be:
-
-{/* Collections tiles */}
+// Collections tiles
 <section id="collections" className="scroll-mt-24">
   <div className="mb-6">
     <h2 className="text-2xl sm:text-3xl font-semibold">Collections</h2>
@@ -58,13 +54,19 @@ import { projects } from './data/projects';
     <h2 className="text-2xl sm:text-3xl font-semibold">Latest Projects</h2>
     <p className="text-neutral-400 mt-2">Recent shoots, listings, and sets.</p>
   </div>
-
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {[...projects]
       .sort((a, b) => b.date.localeCompare(a.date))
       .slice(0, 6)
       .map(p => (
-        <ProjectCard key={p.slug} title={p.title} category={p.category} cover={p.cover} album={p.album} blurb={p.blurb} />
+        <ProjectCard
+          key={p.slug}
+          title={p.title}
+          category={p.category}
+          cover={p.cover}
+          album={p.album}
+          blurb={p.blurb}
+        />
       ))}
   </div>
 </section>
@@ -79,7 +81,6 @@ export default function Page() {
       <Hero />
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16">
         <Services />
-        <Gallery />
         <About />
         <Contact />
       </main>
