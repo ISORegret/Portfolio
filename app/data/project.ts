@@ -15,7 +15,7 @@ export const projects: Project[] = [
     title: 'Cars & Coffee — Aug 2025',
     category: 'Automotive',
     date: '2025-08-23',
-    cover: 'https://i.imgur.com/your-automotive-cover.jpg',
+    cover: 'https://images.pixieset.com/32995689/d861118a57dc9048fc001b78e24f7b52-large.jpg',
     album: 'https://yourstudio.pixieset.com/cars-and-coffee-aug-2025/',
     blurb: 'Sunrise rollers and chrome for days.'
   },
