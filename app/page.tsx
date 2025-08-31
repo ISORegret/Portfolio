@@ -16,14 +16,57 @@ type GalleryItem = {
   tags: Array<'Automotive'|'Real Estate'|'Street'>
 }
 
-const gallery: GalleryItem[] = [
-  { id: 'auto-001', title: 'Night Drive — R32 Skyline', src: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop', tags: ['Automotive'] },
-  { id: 'auto-002', title: 'American Muscle at Dusk', src: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1600&auto=format&fit=crop', tags: ['Automotive'] },
-  { id: 're-001', title: 'Modern Kitchen Showcase', src: 'https://images.unsplash.com/photo-1505692794403-34d4982dffac?q=80&w=1600&auto=format&fit=crop', tags: ['Real Estate'] },
-  { id: 're-002', title: 'Golden Hour Exterior', src: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop', tags: ['Real Estate'] },
-  { id: 'street-001', title: 'Crosswalk Shadows', src: 'https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?q=80&w=1600&auto=format&fit=crop', tags: ['Street'] },
-  { id: 'street-002', title: 'Rainy Neon Alley', src: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop', tags: ['Street'] },
-]
+// Add at the top:
+import ProjectCard from '../components/ProjectCard';
+import { projects } from './data/projects';
+
+// Inside your <main> ... add these two sections where Gallery used to be:
+
+{/* Collections tiles */}
+<section id="collections" className="scroll-mt-24">
+  <div className="mb-6">
+    <h2 className="text-2xl sm:text-3xl font-semibold">Collections</h2>
+    <p className="text-neutral-400 mt-2">Explore by category.</p>
+  </div>
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <a href="/collections/automotive">
+      <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
+        <h3 className="text-lg font-semibold">Automotive</h3>
+        <p className="text-neutral-400 text-sm mt-1">Events, rollers, features.</p>
+      </div>
+    </a>
+    <a href="/collections/real-estate">
+      <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
+        <h3 className="text-lg font-semibold">Real Estate</h3>
+        <p className="text-neutral-400 text-sm mt-1">MLS-ready interiors & exteriors.</p>
+      </div>
+    </a>
+    <a href="/collections/street">
+      <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
+        <h3 className="text-lg font-semibold">Street</h3>
+        <p className="text-neutral-400 text-sm mt-1">Candid, cinematic city life.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+{/* Latest Projects */}
+<section id="latest" className="scroll-mt-24">
+  <div className="mb-6">
+    <h2 className="text-2xl sm:text-3xl font-semibold">Latest Projects</h2>
+    <p className="text-neutral-400 mt-2">Recent shoots, listings, and sets.</p>
+  </div>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {[...projects]
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 6)
+      .map(p => (
+        <ProjectCard key={p.slug} title={p.title} category={p.category} cover={p.cover} album={p.album} blurb={p.blurb} />
+      ))}
+  </div>
+</section>
+
 
 const tags: Tag[] = ['All','Automotive','Real Estate','Street']
 
