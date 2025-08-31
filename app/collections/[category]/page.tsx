@@ -3,6 +3,7 @@
 import ProjectCard from '../../../components/ProjectCard';
 import { projects } from '../../data/projects';
 
+
 const titleMap: Record<string, 'Automotive' | 'Real Estate' | 'Street'> = {
   'automotive': 'Automotive',
   'real-estate': 'Real Estate',
