@@ -17,8 +17,10 @@ type GalleryItem = {
 }
 
 // Add at the top:
+// at the top
 import ProjectCard from '../components/ProjectCard';
 import { projects } from './data/projects';
+
 
 // Inside your <main> ... add these two sections where Gallery used to be:
 
