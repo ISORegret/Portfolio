@@ -88,7 +88,7 @@ function Hero() {
           transition={{ duration: 0.6 }}
           className="text-4xl sm:text-6xl font-bold tracking-tight"
         >
-          Jacksonville Freelance Photographer
+          Jacksonville Photographer / Videographer 
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -97,7 +97,7 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mt-4 text-neutral-300 max-w-2xl"
         >
-          Automotive. Real Estate. Street stories. I make clean, cinematic images that feel like you were there.
+          Automotive. Real Estate. Street stories. I turn moments into moving pictures with cinematic frames, timeless stories where every shot tells a story. Photos that speak. Videos that move
         </motion.p>
         <div className="mt-8 flex gap-3">
           <a href="#gallery"><Button size="lg">View Albums</Button></a>
@@ -110,7 +110,7 @@ function Hero() {
 
 function Services() {
   const features = [
-    { icon: <Car className="w-6 h-6" />, title: 'Automotive', body: 'Show-ready rollers, rig shots, events, dealers. Night, neon, or natural light — your car, your vibe.' },
+    { icon: <Car className="w-6 h-6" />, title: 'Automotive', body: 'Show-ready rollers, rig shots, events, dealers. Night or natural light — your car, your vibe.' },
     { icon: <Building2 className="w-6 h-6" />, title: 'Real Estate', body: 'MLS-ready interiors/exteriors, blue-hour sets, detail vignettes, and optional vertical video add-ons.' },
     { icon: <Camera className="w-6 h-6" />, title: 'Street', body: 'Candid city moments with cinematic tones. Small-footprint, big storytelling.' },
   ]
@@ -237,7 +237,7 @@ function Contact() {
           <CardHeader><CardTitle>Contact Info</CardTitle></CardHeader>
           <CardContent className="space-y-3 text-neutral-300">
             <p className="flex items-center gap-2"><Mail className="w-4 h-4"/> ryan@isoregret.com</p>
-            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> (904) 555‑0124</p>
+            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> (904) 718-6429</p>
             <p className="flex items-center gap-2"><MapPin className="w-4 h-4"/> Jacksonville, Florida</p>
             <a className="inline-flex items-center gap-2 hover:underline" href="https://instagram.com/iso.regret" target="_blank" rel="noreferrer">
               <Instagram className="w-4 h-4"/> Instagram <ExternalLink className="w-4 h-4"/>
