@@ -14,7 +14,9 @@ export default function Page({ params }: { params: { category: string } }) {
   const category = titleMap[catKey];
 
   if (!category) {
-    return <div className="max-w-6xl mx-auto px-4 py-16"><h1 className="text-2xl font-semibold">Category not found.</h1></div>;
+    return <div className="max-w-6xl mx-auto px-4 py-16">
+      <h1 className="text-2xl font-semibold">Category not found.</h1>
+    </div>;
   }
 
   const list = projects
