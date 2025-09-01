@@ -214,36 +214,104 @@ function About() {
 function Contact() {
   return (
     <section id="contact" className="scroll-mt-24">
-      <div className="mb-8">
-        <h2 className="text-2xl sm:text-3xl font-semibold">Get in Touch</h2>
-        <p className="text-neutral-400 mt-2">Tell me about your project—date, location, vibe, and deliverables.</p>
+      <div className="text-center mb-16">
+        <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">Get in Touch</h2>
+        <p className="text-neutral-400 mt-4 text-lg">Tell me about your project—date, location, vibe, and deliverables</p>
+        <div className="w-24 h-1 bg-gradient-to-r from-neutral-600 to-neutral-400 mx-auto mt-6 rounded-full"></div>
       </div>
       <div className="grid lg:grid-cols-3 gap-8">
-        <Card className="lg:col-span-2">
-          <CardHeader><CardTitle>Start a booking</CardTitle></CardHeader>
+        <Card className="lg:col-span-2 border-neutral-700/50 bg-gradient-to-br from-neutral-900/80 to-neutral-800/60 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold">Start a booking</CardTitle>
+            <p className="text-neutral-400 text-sm">Fill out the form below and I'll get back to you within 24 hours</p>
+          </CardHeader>
           <CardContent>
-            {/* Replace action with your Formspree/Netlify endpoint */}
-            <form action="https://formspree.io/f/mldwlpkk" method="POST" className="space-y-4">
+            <form action="https://formspree.io/f/mldwlpkk" method="POST" className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-4">
-                <Input required name="name" placeholder="Your name" />
-                <Input required type="email" name="email" placeholder="Email" />
+                <div>
+                  <Input 
+                    required 
+                    name="name" 
+                    placeholder="Your name" 
+                    className="w-full"
+                  />
+                </div>
+                <div>
+                  <Input 
+                    required 
+                    type="email" 
+                    name="email" 
+                    placeholder="Email address" 
+                    className="w-full"
+                  />
+                </div>
               </div>
-              <Input name="phone" placeholder="Phone (optional)" />
-              <Input name="subject" placeholder="Shoot type / subject" />
-              <Textarea required name="message" placeholder="Tell me about your project…" />
-              <Button type="submit">Send</Button>
+              <div>
+                <Input 
+                  name="phone" 
+                  type="tel"
+                  placeholder="Phone number (optional)" 
+                  className="w-full"
+                />
+              </div>
+              <div>
+                <Input 
+                  name="subject" 
+                  placeholder="Shoot type / subject" 
+                  className="w-full"
+                />
+              </div>
+              <div>
+                <Textarea 
+                  required 
+                  name="message" 
+                  placeholder="Tell me about your project… date, location, vibe, and deliverables"
+                  className="w-full min-h-[120px]"
+                />
+              </div>
+              <Button 
+                type="submit" 
+                className="w-full sm:w-auto px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Send Message
+              </Button>
             </form>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader><CardTitle>Contact Info</CardTitle></CardHeader>
-          <CardContent className="space-y-3 text-neutral-300">
-            <p className="flex items-center gap-2"><Mail className="w-4 h-4"/> ryan@isoregret.com</p>
-            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> (904) 718-6429</p>
-            <p className="flex items-center gap-2"><MapPin className="w-4 h-4"/> Jacksonville, Florida</p>
-            <a className="inline-flex items-center gap-2 hover:underline" href="https://instagram.com/iso.regret" target="_blank" rel="noreferrer">
-              <Instagram className="w-4 h-4"/> Instagram <ExternalLink className="w-4 h-4"/>
-            </a>
+        <Card className="border-neutral-700/50 bg-gradient-to-br from-neutral-900/80 to-neutral-800/60 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold">Contact Info</CardTitle>
+            <p className="text-neutral-400 text-sm">Get in touch directly</p>
+          </CardHeader>
+          <CardContent className="space-y-4 text-neutral-300">
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-neutral-800/50 hover:bg-neutral-700/50 transition-colors duration-300">
+              <Mail className="w-5 h-5 text-neutral-400"/>
+              <a href="mailto:ryan@isoregret.com" className="hover:text-white transition-colors duration-300">
+                ryan@isoregret.com
+              </a>
+            </div>
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-neutral-800/50 hover:bg-neutral-700/50 transition-colors duration-300">
+              <Phone className="w-5 h-5 text-neutral-400"/>
+              <a href="tel:+19047186429" className="hover:text-white transition-colors duration-300">
+                (904) 718-6429
+              </a>
+            </div>
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-neutral-800/50 hover:bg-neutral-700/50 transition-colors duration-300">
+              <MapPin className="w-5 h-5 text-neutral-400"/>
+              <span>Jacksonville, Florida</span>
+            </div>
+            <div className="pt-4 border-t border-neutral-700/50">
+              <a 
+                className="inline-flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 hover:from-pink-500/30 hover:to-purple-500/30 transition-all duration-300 w-full" 
+                href="https://instagram.com/iso.regret" 
+                target="_blank" 
+                rel="noreferrer"
+              >
+                <Instagram className="w-5 h-5 text-pink-400"/>
+                <span className="font-medium">Follow on Instagram</span>
+                <ExternalLink className="w-4 h-4 text-neutral-400 ml-auto"/>
+              </a>
+            </div>
           </CardContent>
         </Card>
       </div>
