@@ -2,7 +2,6 @@
 
 import ProjectCard from '../../../components/ProjectCard';
 import { projects } from '../../data/projects';
-import SiteHeader from '../../../components/SiteHeader';
 import SiteFooter from '../../../components/SiteFooter';
 
 const titleMap: Record<string, 'Automotive' | 'Real Estate' | 'Street'> = {
@@ -23,19 +22,19 @@ export default function Page({ params }: { params: { category: string } }) {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      
+      {/* Inline header so collections pages always show navigation */}
       <header className="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur">
-  <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="/" className="font-semibold tracking-wide">ISO.Regret</a>
-    <nav className="flex items-center gap-6 text-sm">
-      <a href="/" className="hover:text-white/90">Home</a>
-      <a href="/#collections" className="hover:text-white/90">Collections</a>
-      <a href="/#latest" className="hover:text-white/90">Latest</a>
-      <a href="/#about" className="hover:text-white/90">About</a>
-      <a href="/#contact" className="hover:text-white/90">Contact</a>
-    </nav>
-  </div>
-</header>
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+          <a href="/" className="font-semibold tracking-wide">ISO.Regret</a>
+          <nav className="flex items-center gap-6 text-sm">
+            <a href="/" className="hover:text-white/90">Home</a>
+            <a href="/#collections" className="hover:text-white/90">Collections</a>
+            <a href="/#latest" className="hover:text-white/90">Latest</a>
+            <a href="/#about" className="hover:text-white/90">About</a>
+            <a href="/#contact" className="hover:text-white/90">Contact</a>
+          </nav>
+        </div>
+      </header>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-8">
         {!category ? (
@@ -72,12 +71,8 @@ export default function Page({ params }: { params: { category: string } }) {
           </>
         )}
       </main>
+
       <SiteFooter />
     </div>
-  );
-}
-
-
-    </main>
   );
 }
