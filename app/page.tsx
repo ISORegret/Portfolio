@@ -5,15 +5,11 @@ import { motion } from 'framer-motion';
 import { Car, Building2, Camera, Mail, Phone, MapPin, Instagram, ExternalLink } from 'lucide-react';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from './data/projects';
-import SiteHeader from '../components/SiteHeader';
-import SiteFooter from '../components/SiteFooter';
 import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from '../components/ui';
 
 export default function Page() {
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      <SiteHeader />
-      
       <Hero />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16">
@@ -79,8 +75,6 @@ export default function Page() {
         {/* Contact */}
         <Contact />
       </main>
-
-      <SiteFooter />
     </div>
   );
 }
