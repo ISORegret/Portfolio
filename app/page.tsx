@@ -134,6 +134,8 @@ export default function Page() {
         {/* Contact */}
         <Contact />
       </main>
+
+      <Footer />
     </div>
   );
 }
