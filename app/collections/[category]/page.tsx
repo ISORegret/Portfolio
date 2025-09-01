@@ -31,15 +31,27 @@ export default function Page({ params }: { params: { category: string } }) {
         <p className="text-neutral-400 mt-2">Curated shoots and albums in {category.toLowerCase()}.</p>
       </header>
 
-      {list.length === 0 ? (
-        <p className="text-neutral-400">No projects yet.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {list.map(p => (
-            <ProjectCard key={p.slug} title={p.title} category={p.category} cover={p.cover} album={p.album} blurb={p.blurb} />
-          ))}
-        </div>
-      )}
+{list.length === 0 ? (
+  category === 'Real Estate' ? (
+    <p className="text-neutral-400 italic">🏡 Real Estate projects — Coming Soon.</p>
+  ) : (
+    <p className="text-neutral-400">No projects yet.</p>
+  )
+) : (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {list.map(p => (
+      <ProjectCard
+        key={p.slug}
+        title={p.title}
+        category={p.category}
+        cover={p.cover}
+        album={p.album}
+        blurb={p.blurb}
+      />
+    ))}
+  </div>
+)}
+
     </main>
   );
 }
