@@ -27,7 +27,7 @@ export const projects: Project[] = [
   cover: 'https://images.pixieset.com/09906689/eb66a76e5bd0a204ea4f344b0b1cafbe-large.jpg',  // thumbnail image
   album: 'https://isoregret.pixieset.com/OpeningoftheBeaches/',  // link to full album
   blurb: 'Golden hour portraits and skyline views in downtown Jacksonville.',
-}
+  },
   {
     slug: '123-oak-lane-listing',
     title: '123 Oak Lane Listing',
