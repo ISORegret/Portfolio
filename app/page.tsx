@@ -77,9 +77,6 @@ export default function Page() {
 }
 
 
-import SiteHeader from '../components/SiteHeader';
-import SiteFooter from '../components/SiteFooter';
-
 export default function Page() {
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
