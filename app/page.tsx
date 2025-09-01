@@ -9,48 +9,62 @@ import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } fro
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
       <Hero />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32 py-20">
         {/* Services */}
         <Services />
 
-        {/* Collections - with background separator */}
-        <div className="bg-neutral-900/50 rounded-3xl p-8 -mx-4 sm:-mx-6 lg:-mx-8">
-          <section id="collections" className="scroll-mt-24">
-            <div className="mb-6">
-              <h2 className="text-2xl sm:text-3xl font-semibold">Collections</h2>
-              <p className="text-neutral-400 mt-2">Explore by category.</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <a href="/collections/automotive">
-                <div className="rounded-2xl border border-neutral-800 bg-neutral-800 p-6 hover:border-neutral-700 transition">
-                  <h3 className="text-lg font-semibold">Automotive</h3>
-                  <p className="text-neutral-400 text-sm mt-1">Events, rollers, features.</p>
-                </div>
-              </a>
-              <a href="/collections/real-estate">
-                <div className="rounded-2xl border border-neutral-800 bg-neutral-800 p-6 hover:border-neutral-700 transition">
-                  <h3 className="text-lg font-semibold">Real Estate</h3>
-                  <p className="text-neutral-400 text-sm mt-1">MLS-ready interiors & exteriors.</p>
-                </div>
-              </a>
-              <a href="/collections/street">
-                <div className="rounded-2xl border border-neutral-800 bg-neutral-800 p-6 hover:border-neutral-700 transition">
-                  <h3 className="text-lg font-semibold">Street</h3>
-                  <p className="text-neutral-400 text-sm mt-1">Candid, cinematic city life.</p>
-                </div>
-              </a>
-            </div>
-          </section>
+        {/* Collections - with enhanced background separator */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-neutral-800/20 via-neutral-700/30 to-neutral-800/20 rounded-3xl blur-xl"></div>
+          <div className="relative bg-gradient-to-br from-neutral-900/80 to-neutral-800/60 backdrop-blur-sm border border-neutral-700/50 rounded-3xl p-12 -mx-4 sm:-mx-6 lg:-mx-8 shadow-2xl">
+            <section id="collections" className="scroll-mt-24">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">Collections</h2>
+                <p className="text-neutral-400 mt-4 text-lg">Explore by category</p>
+                <div className="w-24 h-1 bg-gradient-to-r from-neutral-600 to-neutral-400 mx-auto mt-6 rounded-full"></div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <a href="/collections/automotive" className="group">
+                  <div className="relative rounded-3xl border border-neutral-700/50 bg-gradient-to-br from-neutral-800/80 to-neutral-900/80 p-8 hover:border-neutral-500/70 hover:shadow-2xl hover:shadow-neutral-900/50 transition-all duration-500 transform hover:-translate-y-2 backdrop-blur-sm">
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative">
+                      <h3 className="text-xl font-bold text-white group-hover:text-red-400 transition-colors duration-300">Automotive</h3>
+                      <p className="text-neutral-400 mt-3 leading-relaxed">Events, rollers, features.</p>
+                    </div>
+                  </div>
+                </a>
+                <a href="/collections/real-estate" className="group">
+                  <div className="relative rounded-3xl border border-neutral-700/50 bg-gradient-to-br from-neutral-800/80 to-neutral-900/80 p-8 hover:border-neutral-500/70 hover:shadow-2xl hover:shadow-neutral-900/50 transition-all duration-500 transform hover:-translate-y-2 backdrop-blur-sm">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative">
+                      <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">Real Estate</h3>
+                      <p className="text-neutral-400 mt-3 leading-relaxed">MLS-ready interiors & exteriors.</p>
+                    </div>
+                  </div>
+                </a>
+                <a href="/collections/street" className="group">
+                  <div className="relative rounded-3xl border border-neutral-700/50 bg-gradient-to-br from-neutral-800/80 to-neutral-900/80 p-8 hover:border-neutral-500/70 hover:shadow-2xl hover:shadow-neutral-900/50 transition-all duration-500 transform hover:-translate-y-2 backdrop-blur-sm">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative">
+                      <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">Street</h3>
+                      <p className="text-neutral-400 mt-3 leading-relaxed">Candid, cinematic city life.</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </section>
+          </div>
         </div>
 
         {/* Latest Projects */}
         <section id="latest" className="scroll-mt-24">
-          <div className="mb-6">
-            <h2 className="text-2xl sm:text-3xl font-semibold">Latest Projects</h2>
-            <p className="text-neutral-400 mt-2">Recent shoots, listings, and sets.</p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">Latest Projects</h2>
+            <p className="text-neutral-400 mt-4 text-lg">Recent shoots, listings, and sets</p>
+            <div className="w-24 h-1 bg-gradient-to-r from-neutral-600 to-neutral-400 mx-auto mt-6 rounded-full"></div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...projects]
@@ -82,12 +96,12 @@ export default function Page() {
 
 function Hero() {
   return (
-    <section className="relative isolate overflow-hidden">
+    <section className="relative isolate overflow-hidden min-h-[80vh] flex items-center">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/40 to-neutral-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/60 via-neutral-900/40 to-neutral-950/80" />
         <Image
           alt="Hero background"
-          className="w-full h-[50vh] object-cover opacity-60"
+          className="w-full h-full object-cover opacity-50"
           src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2000&auto=format&fit=crop"
           fill
           priority
@@ -95,30 +109,44 @@ function Hero() {
           style={{ objectFit: 'cover' }}
         />
       </div>
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
         <motion.h1
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-6xl font-bold tracking-tight"
+          transition={{ duration: 0.8 }}
+          className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent leading-tight"
         >
           Cinematic Photography & Videography
         </motion.h1>
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-4 text-neutral-300 max-w-2xl"
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-8 text-neutral-300 max-w-3xl mx-auto text-lg sm:text-xl leading-relaxed"
         >
           Automotive. Real Estate. Candid shots. I turn moments into moving pictures with cinematic frames and
           timeless storytelling. Photos that speak. Videos that move.
         </motion.p>
-        <div className="mt-8 flex gap-3">
-          <a href="#collections"><Button size="lg">View Collections</Button></a>
-          <a href="#contact"><Button variant="secondary" size="lg">Book a Shoot</Button></a>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center"
+        >
+          <a href="#collections">
+            <Button size="lg" className="px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-neutral-900/50 transition-all duration-300">
+              View Collections
+            </Button>
+          </a>
+          <a href="#contact">
+            <Button variant="secondary" size="lg" className="px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-neutral-900/50 transition-all duration-300">
+              Book a Shoot
+            </Button>
+          </a>
+        </motion.div>
       </div>
     </section>
   )
