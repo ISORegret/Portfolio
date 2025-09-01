@@ -31,22 +31,12 @@ export const projects: Project[] = [
   },
   
   {
-    slug: '123-oak-lane-listing',
-    title: '123 Oak Lane Listing',
-    category: 'Real Estate',
-    date: '2025-08-18',
-    cover: 'https://i.imgur.com/your-realestate-cover.jpg',
-    album: 'https://yourstudio.pixieset.com/123-oak-lane/',
-    blurb: 'Blue-hour exteriors and bright kitchen vignettes.'
-  },
-  
-  {
-    slug: 'riverside-night-walk',
-    title: 'Riverside Night Walk',
+    slug: 'Candid Randoms',
+    title: 'Candid Moments',
     category: 'Street',
     date: '2025-08-10',
-    cover: 'https://i.imgur.com/your-street-cover.jpg',
-    album: 'https://yourstudio.pixieset.com/riverside-night-walk/',
+    cover: 'https://images.pixieset.com/78529689/df0fea87d96794c5ea15cb958efff59a-large.jpg',
+    album: 'https://isoregret.pixieset.com/candidrandoms/',
     blurb: 'Neon reflections and candid moments.'
   },
 ];
