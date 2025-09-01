@@ -96,7 +96,7 @@ export default function Page() {
 
 function Hero() {
   return (
-    <section className="relative isolate overflow-hidden min-h-[80vh] flex items-center">
+    <section className="relative isolate overflow-hidden h-screen flex items-center">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/60 via-neutral-900/40 to-neutral-950/80" />
         <Image
@@ -136,9 +136,9 @@ function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center"
         >
-          <a href="#collections">
+          <a href="#services">
             <Button size="lg" className="px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-neutral-900/50 transition-all duration-300">
-              View Collections
+              View Services
             </Button>
           </a>
           <a href="#contact">
@@ -159,21 +159,79 @@ function Services() {
     { icon: <Camera className="w-6 h-6" />, title: 'Street', body: 'Candid city moments with cinematic tones. Small-footprint, big storytelling.' },
   ]
   return (
-    <section id="services" className="scroll-mt-24">
-      <div className="mb-8">
-        <h2 className="text-2xl sm:text-3xl font-semibold">Services</h2>
-        <p className="text-neutral-400 mt-2">Clean deliverables, quick turnarounds, and transparent pricing.</p>
+    <section id="services" className="scroll-mt-24 relative">
+      {/* Scroll indicator */}
+      <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center gap-2 text-neutral-400"
+        >
+          <span className="text-sm font-medium">Scroll to explore</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-6 h-10 border-2 border-neutral-400 rounded-full flex justify-center"
+          >
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-1 h-3 bg-neutral-400 rounded-full mt-2"
+            />
+          </motion.div>
+        </motion.div>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div className="text-center mb-16">
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent"
+        >
+          Services
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-neutral-400 mt-4 text-lg"
+        >
+          Clean deliverables, quick turnarounds, and transparent pricing
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="w-24 h-1 bg-gradient-to-r from-neutral-600 to-neutral-400 mx-auto mt-6 rounded-full origin-center"
+        />
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map((f, i) => (
-          <Card key={i}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">{f.icon}<span>{f.title}</span></CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-neutral-300 leading-relaxed">{f.body}</p>
-            </CardContent>
-          </Card>
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: i * 0.2 }}
+          >
+            <Card className="h-full border-neutral-700/50 bg-gradient-to-br from-neutral-900/80 to-neutral-800/60 backdrop-blur-sm hover:border-neutral-500/70 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-900/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <span className="text-neutral-400">{f.icon}</span>
+                  <span>{f.title}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-neutral-300 leading-relaxed">{f.body}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
       </div>
     </section>
