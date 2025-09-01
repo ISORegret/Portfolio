@@ -122,7 +122,7 @@ function Hero() {
           transition={{ duration: 0.6 }}
           className="text-4xl sm:text-6xl font-bold tracking-tight"
         >
-          Jacksonville Photographer / Videographer
+          Cinematic Photography & Videography
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -131,7 +131,7 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mt-4 text-neutral-300 max-w-2xl"
         >
-          Automotive. Real Estate. Street stories. I turn moments into moving pictures with cinematic frames and
+          Automotive. Real Estate. Candid shots. I turn moments into moving pictures with cinematic frames and
           timeless storytelling. Photos that speak. Videos that move.
         </motion.p>
         <div className="mt-8 flex gap-3">
