@@ -203,7 +203,7 @@ function Contact() {
           <CardHeader><CardTitle>Start a booking</CardTitle></CardHeader>
           <CardContent>
             {/* Replace action with your Formspree/Netlify endpoint */}
-            <form action="https://formspree.io/f/your-form-id" method="POST" className="space-y-4">
+            <form action="https://formspree.io/f/mldwlpkk" method="POST" className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <Input required name="name" placeholder="Your name" />
                 <Input required type="email" name="email" placeholder="Email" />
