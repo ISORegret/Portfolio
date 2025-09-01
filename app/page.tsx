@@ -1,10 +1,13 @@
 'use client';
 
+'use client';
+
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from './data/projects';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
-import Image from 'next/image';
 
 export default function Page() {
   return (
