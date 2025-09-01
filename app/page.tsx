@@ -13,6 +13,8 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
       <SiteHeader />
+      
+      <Hero />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16">
         {/* Collections */}
@@ -43,6 +45,9 @@ export default function Page() {
           </div>
         </section>
 
+        {/* Services */}
+        <Services />
+
         {/* Latest Projects */}
         <section id="latest" className="scroll-mt-24">
           <div className="mb-6">
@@ -65,6 +70,12 @@ export default function Page() {
               ))}
           </div>
         </section>
+
+        {/* About */}
+        <About />
+
+        {/* Contact */}
+        <Contact />
       </main>
 
       <SiteFooter />
