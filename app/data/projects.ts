@@ -19,6 +19,7 @@ export const projects: Project[] = [
     album: 'https://isoregret.pixieset.com/morningmotorevent/',
     blurb: 'Sunrise rollers and chrome for days.'
   },
+  
   {
   slug: 'Opening of the Beaches',
   title: 'Ooening of the Beaches',
@@ -28,6 +29,7 @@ export const projects: Project[] = [
   album: 'https://isoregret.pixieset.com/OpeningoftheBeaches/',  // link to full album
   blurb: 'Golden hour portraits and skyline views in downtown Jacksonville.',
   },
+  
   {
     slug: '123-oak-lane-listing',
     title: '123 Oak Lane Listing',
@@ -37,6 +39,7 @@ export const projects: Project[] = [
     album: 'https://yourstudio.pixieset.com/123-oak-lane/',
     blurb: 'Blue-hour exteriors and bright kitchen vignettes.'
   },
+  
   {
     slug: 'riverside-night-walk',
     title: 'Riverside Night Walk',
@@ -45,5 +48,5 @@ export const projects: Project[] = [
     cover: 'https://i.imgur.com/your-street-cover.jpg',
     album: 'https://yourstudio.pixieset.com/riverside-night-walk/',
     blurb: 'Neon reflections and candid moments.'
-  }
+  },
 ];
