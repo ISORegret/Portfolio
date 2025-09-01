@@ -69,17 +69,6 @@ export default function Page() {
 }
 
 
-export default function Page() {
-  return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      <SiteHeader />
-      {/* ...rest stays the same... */}
-      <SiteFooter />
-    </div>
-  );
-}
-
-
 function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
