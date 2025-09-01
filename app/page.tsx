@@ -1,21 +1,19 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { Camera, Car, Building2, Mail, Instagram, Phone, MapPin, ExternalLink } from 'lucide-react'
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from '../components/ui'
-
-// Hybrid data/components
-import ProjectCard from '../components/ProjectCard'
-import { projects } from './data/projects'
+import ProjectCard from '../components/ProjectCard';
+import { projects } from './data/projects';
+import SiteHeader from '../components/SiteHeader';
+import SiteFooter from '../components/SiteFooter';
 
 export default function Page() {
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      <Header />
-      <Hero />
+      <SiteHeader />
+
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16">
-        <Services />
+        {/* Services */}
+        {/* If you have a Services component, import & render it here */}
+        {/* <Services /> */}
 
         {/* Collections tiles */}
         <section id="collections" className="scroll-mt-24">
@@ -55,7 +53,7 @@ export default function Page() {
             {[...projects]
               .sort((a, b) => b.date.localeCompare(a.date))
               .slice(0, 6)
-              .map(p => (
+              .map((p) => (
                 <ProjectCard
                   key={p.slug}
                   title={p.title}
@@ -68,13 +66,16 @@ export default function Page() {
           </div>
         </section>
 
-        <About />
-        <Contact />
+        {/* About / Contact sections if you have them */}
+        {/* <About /> */}
+        {/* <Contact /> */}
       </main>
-      <Footer />
+
+      <SiteFooter />
     </div>
-  )
+  );
 }
+
 
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
