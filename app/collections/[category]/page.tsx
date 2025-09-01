@@ -2,6 +2,24 @@
 
 import ProjectCard from '../../../components/ProjectCard';
 import { projects } from '../../data/projects';
+import SiteHeader from '../../../components/SiteHeader';
+import SiteFooter from '../../../components/SiteFooter';
+
+// ...your titleMap and component...
+
+export default function Page({ params }: { params: { category: string } }) {
+  // ...existing logic...
+  return (
+    <div className="min-h-screen bg-neutral-950 text-neutral-100">
+      <SiteHeader />
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-8">
+        {/* your existing header + grid */}
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
 
 
 const titleMap: Record<string, 'Automotive' | 'Real Estate' | 'Street'> = {
