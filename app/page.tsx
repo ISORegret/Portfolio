@@ -17,36 +17,38 @@ export default function Page() {
       <Hero />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16">
-        {/* Collections */}
-        <section id="collections" className="scroll-mt-24">
-          <div className="mb-6">
-            <h2 className="text-2xl sm:text-3xl font-semibold">Collections</h2>
-            <p className="text-neutral-400 mt-2">Explore by category.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <a href="/collections/automotive">
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
-                <h3 className="text-lg font-semibold">Automotive</h3>
-                <p className="text-neutral-400 text-sm mt-1">Events, rollers, features.</p>
-              </div>
-            </a>
-            <a href="/collections/real-estate">
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
-                <h3 className="text-lg font-semibold">Real Estate</h3>
-                <p className="text-neutral-400 text-sm mt-1">MLS-ready interiors & exteriors.</p>
-              </div>
-            </a>
-            <a href="/collections/street">
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
-                <h3 className="text-lg font-semibold">Street</h3>
-                <p className="text-neutral-400 text-sm mt-1">Candid, cinematic city life.</p>
-              </div>
-            </a>
-          </div>
-        </section>
-
         {/* Services */}
         <Services />
+
+        {/* Collections - with background separator */}
+        <div className="bg-neutral-900/50 rounded-3xl p-8 -mx-4 sm:-mx-6 lg:-mx-8">
+          <section id="collections" className="scroll-mt-24">
+            <div className="mb-6">
+              <h2 className="text-2xl sm:text-3xl font-semibold">Collections</h2>
+              <p className="text-neutral-400 mt-2">Explore by category.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <a href="/collections/automotive">
+                <div className="rounded-2xl border border-neutral-800 bg-neutral-800 p-6 hover:border-neutral-700 transition">
+                  <h3 className="text-lg font-semibold">Automotive</h3>
+                  <p className="text-neutral-400 text-sm mt-1">Events, rollers, features.</p>
+                </div>
+              </a>
+              <a href="/collections/real-estate">
+                <div className="rounded-2xl border border-neutral-800 bg-neutral-800 p-6 hover:border-neutral-700 transition">
+                  <h3 className="text-lg font-semibold">Real Estate</h3>
+                  <p className="text-neutral-400 text-sm mt-1">MLS-ready interiors & exteriors.</p>
+                </div>
+              </a>
+              <a href="/collections/street">
+                <div className="rounded-2xl border border-neutral-800 bg-neutral-800 p-6 hover:border-neutral-700 transition">
+                  <h3 className="text-lg font-semibold">Street</h3>
+                  <p className="text-neutral-400 text-sm mt-1">Candid, cinematic city life.</p>
+                </div>
+              </a>
+            </div>
+          </section>
+        </div>
 
         {/* Latest Projects */}
         <section id="latest" className="scroll-mt-24">
