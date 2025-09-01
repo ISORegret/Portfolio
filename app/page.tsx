@@ -1,13 +1,13 @@
 'use client';
 
-'use client';
-
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Car, Building2, Camera, Mail, Phone, MapPin, Instagram, ExternalLink } from 'lucide-react';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from './data/projects';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from '../components/ui';
 
 export default function Page() {
   return (
