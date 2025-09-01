@@ -1,16 +1,20 @@
+// app/layout.tsx
 import './globals.css'
-import type { Metadata } from 'next'
+import SiteHeader from '../components/SiteHeader'
+import SiteFooter from '../components/SiteFooter'
 
-export const metadata: Metadata = {
-  title: 'ISO.Regret — Photography Portfolio',
-  description: 'Automotive, Real Estate, and Street photography by Ryan. Jacksonville, FL.',
-  metadataBase: new URL('https://example.com')
-}
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-neutral-950 text-neutral-100">
+        <SiteHeader />
+        {children}
+        <SiteFooter />
+      </body>
     </html>
-  )
+  );
 }
