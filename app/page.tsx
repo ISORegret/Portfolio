@@ -27,33 +27,78 @@ export default function Page() {
                 <div className="w-24 h-1 bg-gradient-to-r from-neutral-600 to-neutral-400 mx-auto mt-6 rounded-full"></div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                <a href="/collections/automotive" className="group">
-                  <div className="relative rounded-3xl border border-neutral-700/50 bg-gradient-to-br from-neutral-800/80 to-neutral-900/80 p-8 hover:border-neutral-500/70 hover:shadow-2xl hover:shadow-neutral-900/50 transition-all duration-500 transform hover:-translate-y-2 backdrop-blur-sm">
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="relative">
-                      <h3 className="text-xl font-bold text-white group-hover:text-red-400 transition-colors duration-300">Automotive</h3>
-                      <p className="text-neutral-400 mt-3 leading-relaxed">Events, rollers, features.</p>
+                {[
+                  { 
+                    href: "/collections/automotive", 
+                    title: "Automotive", 
+                    description: "Events, rollers, features.",
+                    gradient: "from-red-500/10 to-orange-500/10",
+                    hoverColor: "group-hover:text-red-400"
+                  },
+                  { 
+                    href: "/collections/real-estate", 
+                    title: "Real Estate", 
+                    description: "MLS-ready interiors & exteriors.",
+                    gradient: "from-blue-500/10 to-cyan-500/10",
+                    hoverColor: "group-hover:text-blue-400"
+                  },
+                  { 
+                    href: "/collections/street", 
+                    title: "Street", 
+                    description: "Candid, cinematic city life.",
+                    gradient: "from-purple-500/10 to-pink-500/10",
+                    hoverColor: "group-hover:text-purple-400"
+                  }
+                ].map((collection, i) => (
+                  <motion.a
+                    key={i}
+                    href={collection.href}
+                    className="group block"
+                    initial={{ opacity: 0, y: 60, scale: 0.8 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ 
+                      duration: 0.8, 
+                      delay: i * 0.2,
+                      type: "spring",
+                      stiffness: 80,
+                      damping: 20
+                    }}
+                    whileHover={{ 
+                      y: -12,
+                      scale: 1.02,
+                      transition: { duration: 0.4, ease: "easeOut" }
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="relative rounded-3xl border border-neutral-700/50 bg-gradient-to-br from-neutral-800/80 to-neutral-900/80 p-8 hover:border-neutral-500/70 hover:shadow-2xl hover:shadow-neutral-900/50 transition-all duration-500 backdrop-blur-sm overflow-hidden">
+                      <motion.div
+                        className={`absolute inset-0 bg-gradient-to-br ${collection.gradient} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                        initial={false}
+                      />
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        initial={false}
+                      />
+                      <div className="relative">
+                        <motion.h3 
+                          className={`text-xl font-bold text-white ${collection.hoverColor} transition-colors duration-300`}
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {collection.title}
+                        </motion.h3>
+                        <motion.p 
+                          className="text-neutral-400 mt-3 leading-relaxed group-hover:text-neutral-300 transition-colors duration-300"
+                          initial={{ opacity: 0.8 }}
+                          whileHover={{ opacity: 1 }}
+                        >
+                          {collection.description}
+                        </motion.p>
+                      </div>
                     </div>
-                  </div>
-                </a>
-                <a href="/collections/real-estate" className="group">
-                  <div className="relative rounded-3xl border border-neutral-700/50 bg-gradient-to-br from-neutral-800/80 to-neutral-900/80 p-8 hover:border-neutral-500/70 hover:shadow-2xl hover:shadow-neutral-900/50 transition-all duration-500 transform hover:-translate-y-2 backdrop-blur-sm">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="relative">
-                      <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">Real Estate</h3>
-                      <p className="text-neutral-400 mt-3 leading-relaxed">MLS-ready interiors & exteriors.</p>
-                    </div>
-                  </div>
-                </a>
-                <a href="/collections/street" className="group">
-                  <div className="relative rounded-3xl border border-neutral-700/50 bg-gradient-to-br from-neutral-800/80 to-neutral-900/80 p-8 hover:border-neutral-500/70 hover:shadow-2xl hover:shadow-neutral-900/50 transition-all duration-500 transform hover:-translate-y-2 backdrop-blur-sm">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="relative">
-                      <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">Street</h3>
-                      <p className="text-neutral-400 mt-3 leading-relaxed">Candid, cinematic city life.</p>
-                    </div>
-                  </div>
-                </a>
+                  </motion.a>
+                ))}
               </div>
             </section>
           </div>
@@ -99,15 +144,22 @@ function Hero() {
     <section className="relative isolate overflow-hidden h-screen flex items-center">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/60 via-neutral-900/40 to-neutral-950/80" />
-        <Image
-          alt="Hero background"
-          className="w-full h-full object-cover opacity-50"
-          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2000&auto=format&fit=crop"
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover' }}
-        />
+        <motion.div
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="w-full h-full"
+        >
+          <Image
+            alt="Hero background"
+            className="w-full h-full object-cover opacity-50"
+            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2000&auto=format&fit=crop"
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+          />
+        </motion.div>
       </div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
         <motion.h1
@@ -243,20 +295,47 @@ function Services() {
         {features.map((f, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.2 }}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ 
+              duration: 0.8, 
+              delay: i * 0.15,
+              type: "spring",
+              stiffness: 100,
+              damping: 15
+            }}
+            whileHover={{ 
+              y: -8,
+              transition: { duration: 0.3, ease: "easeOut" }
+            }}
+            className="group"
           >
-            <Card className="h-full border-neutral-700/50 bg-gradient-to-br from-neutral-900/80 to-neutral-800/60 backdrop-blur-sm hover:border-neutral-500/70 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-900/50">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl">
-                  <span className="text-neutral-400">{f.icon}</span>
-                  <span>{f.title}</span>
-                </CardTitle>
+            <Card className="h-full border-neutral-700/50 bg-gradient-to-br from-neutral-900/80 to-neutral-800/60 backdrop-blur-sm hover:border-neutral-500/70 transition-all duration-500 hover:shadow-2xl hover:shadow-neutral-900/50 overflow-hidden">
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                initial={false}
+              />
+              <CardHeader className="relative">
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                  className="inline-block"
+                >
+                  <CardTitle className="flex items-center gap-3 text-xl">
+                    <span className="text-neutral-400 group-hover:text-white transition-colors duration-300">{f.icon}</span>
+                    <span className="group-hover:text-white transition-colors duration-300">{f.title}</span>
+                  </CardTitle>
+                </motion.div>
               </CardHeader>
-              <CardContent>
-                <p className="text-neutral-300 leading-relaxed">{f.body}</p>
+              <CardContent className="relative">
+                <motion.p 
+                  className="text-neutral-300 leading-relaxed group-hover:text-neutral-200 transition-colors duration-300"
+                  initial={{ opacity: 0.8 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  {f.body}
+                </motion.p>
               </CardContent>
             </Card>
           </motion.div>
