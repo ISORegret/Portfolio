@@ -2,77 +2,61 @@
 
 import ProjectCard from '../components/ProjectCard';
 import { projects } from './data/projects';
-import SiteHeader from '../components/SiteHeader';
-import SiteFooter from '../components/SiteFooter';
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      <SiteHeader />
+    <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16">
+      {/* Collections */}
+      <section id="collections" className="scroll-mt-24">
+        <div className="mb-6">
+          <h2 className="text-2xl sm:text-3xl font-semibold">Collections</h2>
+          <p className="text-neutral-400 mt-2">Explore by category.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <a href="/collections/automotive">
+            <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
+              <h3 className="text-lg font-semibold">Automotive</h3>
+              <p className="text-neutral-400 text-sm mt-1">Events, rollers, features.</p>
+            </div>
+          </a>
+          <a href="/collections/real-estate">
+            <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
+              <h3 className="text-lg font-semibold">Real Estate</h3>
+              <p className="text-neutral-400 text-sm mt-1">MLS-ready interiors & exteriors.</p>
+            </div>
+          </a>
+          <a href="/collections/street">
+            <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
+              <h3 className="text-lg font-semibold">Street</h3>
+              <p className="text-neutral-400 text-sm mt-1">Candid, cinematic city life.</p>
+            </div>
+          </a>
+        </div>
+      </section>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16">
-        {/* Services */}
-        {/* If you have a Services component, import & render it here */}
-        {/* <Services /> */}
-
-        {/* Collections tiles */}
-        <section id="collections" className="scroll-mt-24">
-          <div className="mb-6">
-            <h2 className="text-2xl sm:text-3xl font-semibold">Collections</h2>
-            <p className="text-neutral-400 mt-2">Explore by category.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <a href="/collections/automotive">
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
-                <h3 className="text-lg font-semibold">Automotive</h3>
-                <p className="text-neutral-400 text-sm mt-1">Events, rollers, features.</p>
-              </div>
-            </a>
-            <a href="/collections/real-estate">
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
-                <h3 className="text-lg font-semibold">Real Estate</h3>
-                <p className="text-neutral-400 text-sm mt-1">MLS-ready interiors & exteriors.</p>
-              </div>
-            </a>
-            <a href="/collections/street">
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 hover:border-neutral-700 transition">
-                <h3 className="text-lg font-semibold">Street</h3>
-                <p className="text-neutral-400 text-sm mt-1">Candid, cinematic city life.</p>
-              </div>
-            </a>
-          </div>
-        </section>
-
-        {/* Latest Projects */}
-        <section id="latest" className="scroll-mt-24">
-          <div className="mb-6">
-            <h2 className="text-2xl sm:text-3xl font-semibold">Latest Projects</h2>
-            <p className="text-neutral-400 mt-2">Recent shoots, listings, and sets.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...projects]
-              .sort((a, b) => b.date.localeCompare(a.date))
-              .slice(0, 6)
-              .map((p) => (
-                <ProjectCard
-                  key={p.slug}
-                  title={p.title}
-                  category={p.category}
-                  cover={p.cover}
-                  album={p.album}
-                  blurb={p.blurb}
-                />
-              ))}
-          </div>
-        </section>
-
-        {/* About / Contact sections if you have them */}
-        {/* <About /> */}
-        {/* <Contact /> */}
-      </main>
-
-      <SiteFooter />
-    </div>
+      {/* Latest Projects */}
+      <section id="latest" className="scroll-mt-24">
+        <div className="mb-6">
+          <h2 className="text-2xl sm:text-3xl font-semibold">Latest Projects</h2>
+          <p className="text-neutral-400 mt-2">Recent shoots, listings, and sets.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...projects]
+            .sort((a, b) => b.date.localeCompare(a.date))
+            .slice(0, 6)
+            .map((p) => (
+              <ProjectCard
+                key={p.slug}
+                title={p.title}
+                category={p.category}
+                cover={p.cover}
+                album={p.album}
+                blurb={p.blurb}
+              />
+            ))}
+        </div>
+      </section>
+    </main>
   );
 }
 
