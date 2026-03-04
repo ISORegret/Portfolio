@@ -39,4 +39,23 @@ export const projects: Project[] = [
     album: 'https://isoregret.pixieset.com/candidrandoms/',
     blurb: 'Neon reflections and candid moments.'
   },
+
+  {
+    slug: 'damespoint',
+    title: 'Dames Point',
+    category: 'Automotive',
+    date: '2025-10-01',
+    cover: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=800&auto=format&fit=crop',
+    album: 'https://isoregret.pixieset.com/damespoint/',
+    blurb: 'Dames Point shoot.',
+  },
+  {
+    slug: 'wingsanwheels',
+    title: 'Wings and Wheels',
+    category: 'Automotive',
+    date: '2025-09-15',
+    cover: 'https://images.unsplash.com/photo-1492144654662-5c0c14b4b8b9?q=80&w=800&auto=format&fit=crop',
+    album: 'https://isoregret.pixieset.com/wingsanwheels/',
+    blurb: 'Wings and Wheels event.',
+  },
 ];
