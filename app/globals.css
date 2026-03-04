@@ -4,6 +4,22 @@
 
 :root {
   color-scheme: dark;
+  /* Design tokens – cinematic dark with warm accent */
+  --bg: 10 10 12;
+  --bg-elevated: 24 24 28;
+  --bg-card: 18 18 22;
+  --border: 38 38 45;
+  --border-muted: 30 30 36;
+  --text: 250 250 252;
+  --text-muted: 161 161 170;
+  --text-subtle: 113 113 122;
+  --accent: 251 191 36;
+  --accent-muted: 245 158 11;
+  --radius: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --shadow: 0 4px 24px -4px rgb(0 0 0 / 0.4);
+  --shadow-glow: 0 0 40px -8px rgb(251 191 36 / 0.15);
 }
 
 html {
@@ -12,11 +28,15 @@ html {
 }
 
 body {
-  @apply bg-neutral-950 text-neutral-100 antialiased;
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-feature-settings: "rlig" 1, "calt" 1;
   overflow-x: hidden;
 }
 
-a { @apply cursor-pointer; }
+a {
+  @apply cursor-pointer;
+}
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -24,53 +44,39 @@ a { @apply cursor-pointer; }
 }
 
 ::-webkit-scrollbar-track {
-  background: #171717;
+  background: rgb(var(--bg-elevated));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #404040;
+  background: rgb(var(--border));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #525252;
+  background: rgb(var(--text-subtle));
 }
 
-/* Smooth transitions for all elements */
-* {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-/* Enhanced focus states */
+/* Focus states */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid rgb(var(--accent));
   outline-offset: 2px;
 }
 
-/* Parallax container */
-.parallax-container {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-
-/* Glass morphism effect */
+/* Utility classes */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Enhanced hover effects */
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
 }
