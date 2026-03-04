@@ -133,9 +133,9 @@ function Hero() {
           className="w-full h-full"
         >
           <Image
-            alt="Hero background"
+            alt="Hero background — automotive and candid photography"
             className="w-full h-full object-cover opacity-50"
-            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2000&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop"
             fill
             priority
             sizes="100vw"
@@ -158,7 +158,7 @@ function Hero() {
           transition={{ duration: 1, delay: 0.8 }}
           className="mt-8 text-[rgb(var(--text-muted))] max-w-3xl mx-auto text-lg sm:text-xl leading-relaxed"
         >
-          Automotive. Real Estate. Candid shots. I turn moments into moving pictures with cinematic frames and
+          Candid & automotive. I turn moments into moving pictures with cinematic frames and
           timeless storytelling. Photos that speak. Videos that move.
         </motion.p>
         <motion.div
