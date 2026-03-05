@@ -46,7 +46,7 @@ export const projects: Project[] = [
     category: 'Automotive',
     date: '2025-10-01',
     cover: 'https://images.pixieset.com/929953011/9976c46a33e5f7611dc4ea5823c55046-cover-large.jpg',
-    album: 'https://pixies.et/JZ2bfCy8',
+    album: 'https://isoregret.pixieset.com/damespoint/',
     blurb: 'Dames Point shoot.',
   },
   {
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     category: 'Automotive',
     date: '2025-09-15',
     cover: 'https://images.pixieset.com/343953011/a8ba15af67e8933e6a9c6d3d22421632-cover-large.jpg',
-    album: 'https://pixies.et/TynVnrYG',
+    album: 'https://isoregret.pixieset.com/wingsanwheels/',
     blurb: 'Wings and Wheels event.',
   },
 ];
