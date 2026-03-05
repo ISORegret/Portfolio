@@ -1,7 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import { ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, Button } from './ui';
+
+// Minimal blur placeholder for image loading (tiny gray gradient)
+const BLUR_DATA =
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQAD8QDu/9k=';
 
 type Props = {
   title: string;
@@ -16,7 +21,22 @@ export default function ProjectCard({ title, category, cover, album, blurb }: Pr
     <a href={album} target="_blank" rel="noreferrer" className="block group">
       <Card className="overflow-hidden border-border/60 bg-bg-card hover:border-accent/30 hover:shadow-glow transition-all duration-300 h-full flex flex-col">
         <div className="relative h-56 overflow-hidden">
-          <Image src={cover} alt={title} fill sizes="(min-width: 1024px) 33vw, 100vw" style={{ objectFit: 'cover' }} className="group-hover:scale-105 transition-transform duration-500" />
+          <Image
+            src={cover}
+            alt={title}
+            fill
+            sizes="(min-width: 1024px) 33vw, 100vw"
+            style={{ objectFit: 'cover' }}
+            className="group-hover:scale-105 transition-transform duration-500 ease-out"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA}
+          />
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-accent/90 text-neutral-900 px-4 py-2 text-sm font-semibold shadow-lg">
+              View album
+              <ExternalLink className="w-4 h-4" />
+            </span>
+          </div>
         </div>
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center justify-between text-[rgb(var(--text))]">

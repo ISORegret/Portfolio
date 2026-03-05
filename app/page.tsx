@@ -2,10 +2,15 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Car, Building2, Camera, Mail, Phone, MapPin, Instagram, ExternalLink } from 'lucide-react';
+import { Car, Building2, Camera, Mail, Phone, MapPin, Instagram, ExternalLink, Quote } from 'lucide-react';
 import ProjectCard from '../components/ProjectCard';
+import ContactForm from '../components/ContactForm';
 import { projects } from './data/projects';
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from '../components/ui';
+import { testimonials } from './data/testimonials';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '../components/ui';
+
+const BLUR_DATA =
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQAD8QDu/9k=';
 
 export default function Page() {
   return (
@@ -15,30 +20,71 @@ export default function Page() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28 py-20">
         {/* Latest Projects — show work first */}
         <section id="latest" className="scroll-mt-24">
-          <div className="text-center mb-16">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Latest Projects</h2>
             <p className="text-[rgb(var(--text-muted))] mt-4 text-lg">Recent shoots and sets</p>
             <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full" aria-hidden />
-          </div>
+          </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...projects]
               .sort((a, b) => b.date.localeCompare(a.date))
               .slice(0, 6)
-              .map((p) => (
-                <ProjectCard
+              .map((p, i) => (
+                <motion.div
                   key={p.slug}
-                  title={p.title}
-                  category={p.category}
-                  cover={p.cover}
-                  album={p.album}
-                  blurb={p.blurb}
-                />
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, delay: i * 0.08, type: 'spring', stiffness: 100, damping: 18 }}
+                >
+                  <ProjectCard
+                    title={p.title}
+                    category={p.category}
+                    cover={p.cover}
+                    album={p.album}
+                    blurb={p.blurb}
+                  />
+                </motion.div>
               ))}
           </div>
+          <motion.div
+            className="text-center mt-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <div className="flex flex-wrap items-center justify-center gap-6">
+            <a
+              href="/#collections"
+              className="inline-flex items-center gap-2 text-accent hover:text-accent-muted font-medium transition-colors"
+            >
+              View all collections
+              <ExternalLink className="w-4 h-4" />
+            </a>
+            <span className="text-[rgb(var(--text-subtle))]">·</span>
+            <a href="/gallery" className="text-accent hover:text-accent-muted font-medium transition-colors">
+              Full gallery
+            </a>
+            <span className="text-[rgb(var(--text-subtle))]">·</span>
+            <a href="/blog" className="text-accent hover:text-accent-muted font-medium transition-colors">
+              Behind the shot (blog)
+            </a>
+          </div>
+          </motion.div>
         </section>
 
         {/* Services */}
         <Services />
+
+        {/* Testimonials & Featured */}
+        <Testimonials />
 
         {/* Collections */}
         <div className="relative">
@@ -140,6 +186,8 @@ function Hero() {
             priority
             sizes="100vw"
             style={{ objectFit: 'cover' }}
+            placeholder="blur"
+            blurDataURL={BLUR_DATA}
           />
         </motion.div>
       </div>
@@ -213,36 +261,12 @@ function Hero() {
 
 function Services() {
   const features = [
-    { icon: <Car className="w-6 h-6" />, title: 'Automotive', body: 'Show-ready rollers, rig shots, events, dealers. Night or natural light — your car, your vibe.' },
-    { icon: <Building2 className="w-6 h-6" />, title: 'Real Estate', body: 'MLS-ready interiors/exteriors, blue-hour sets, detail vignettes, and optional vertical video add-ons.' },
-    { icon: <Camera className="w-6 h-6" />, title: 'Street', body: 'Candid city moments with cinematic tones. Small-footprint, big storytelling.' },
+    { icon: <Car className="w-6 h-6" />, title: 'Automotive', body: 'Show-ready rollers, rig shots, events, dealers. Night or natural light — your car, your vibe.', hint: 'Events & shoots' },
+    { icon: <Building2 className="w-6 h-6" />, title: 'Real Estate', body: 'MLS-ready interiors/exteriors, blue-hour sets, detail vignettes, and optional vertical video add-ons.', hint: 'Per listing & packages' },
+    { icon: <Camera className="w-6 h-6" />, title: 'Street', body: 'Candid city moments with cinematic tones. Small-footprint, big storytelling.', hint: 'Sessions & day rates' },
   ]
   return (
-    <section id="services" className="scroll-mt-24 relative">
-      {/* Scroll indicator */}
-      <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center gap-2 text-[rgb(var(--text-muted))]"
-        >
-          <span className="text-sm font-medium">Scroll to explore</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-6 h-10 border-2 border-[rgb(var(--text-muted))] rounded-full flex justify-center"
-          >
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1 h-3 bg-accent rounded-full mt-2"
-            />
-          </motion.div>
-        </motion.div>
-      </div>
-
+    <section id="services" className="scroll-mt-24">
       <div className="text-center mb-16">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -260,7 +284,7 @@ function Services() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-[rgb(var(--text-muted))] mt-4 text-lg"
         >
-          Clean deliverables, quick turnarounds, and transparent pricing
+          Clean deliverables, quick turnarounds. Packages & custom quotes — tell me your vision.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
@@ -294,6 +318,11 @@ function Services() {
                 <p className="text-[rgb(var(--text-muted))] leading-relaxed group-hover:text-[rgb(var(--text))]/90 transition-colors">
                   {f.body}
                 </p>
+                {f.hint && (
+                  <p className="mt-3 text-xs text-[rgb(var(--text-subtle))] font-medium uppercase tracking-wider">
+                    {f.hint}
+                  </p>
+                )}
               </CardContent>
             </Card>
           </motion.div>
@@ -303,10 +332,68 @@ function Services() {
   )
 }
 
+function Testimonials() {
+  return (
+    <section id="testimonials" className="scroll-mt-24">
+      <motion.div
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <p className="text-sm font-medium uppercase tracking-wider text-accent mb-4">Featured in & kind words</p>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">What people say</h2>
+        <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full" aria-hidden />
+      </motion.div>
+      <div className="grid md:grid-cols-3 gap-8">
+        {testimonials.map((t, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+          >
+            <Card className="h-full border-border/60 bg-bg-card flex flex-col">
+              <CardContent className="pt-6 pb-6 flex flex-col flex-1">
+                <Quote className="w-8 h-8 text-accent/60 mb-3" aria-hidden />
+                <p className="text-[rgb(var(--text-muted))] leading-relaxed flex-1">&ldquo;{t.quote}&rdquo;</p>
+                <div className="mt-4 pt-4 border-t border-border/60">
+                  <p className="font-semibold text-[rgb(var(--text))]">{t.name}</p>
+                  {t.role && <p className="text-sm text-[rgb(var(--text-subtle))]">{t.role}</p>}
+                  {t.project && <p className="text-xs text-accent/80 mt-1">{t.project}</p>}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+      <motion.div
+        className="mt-12 text-center"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <p className="text-sm text-[rgb(var(--text-subtle))]">
+          Events · Realtors · Enthusiasts · Brands
+        </p>
+      </motion.div>
+    </section>
+  )
+}
+
 function About() {
   return (
     <section id="about" className="scroll-mt-24">
-      <div className="grid lg:grid-cols-3 gap-10 items-start">
+      <motion.div
+        className="grid lg:grid-cols-3 gap-10 items-start"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="lg:col-span-2">
           <h2 className="font-display text-2xl sm:text-3xl font-semibold text-[rgb(var(--text))]">About</h2>
           <p className="mt-4 text-[rgb(var(--text-muted))] leading-relaxed">
@@ -329,7 +416,7 @@ function About() {
             <p>• Add-ons: short-form reels, vertical video, reels cover frames</p>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     </section>
   )
 }
@@ -337,65 +424,31 @@ function About() {
 function Contact() {
   return (
     <section id="contact" className="scroll-mt-24">
-      <div className="text-center mb-16">
+      <motion.div
+        className="text-center mb-16"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Get in Touch</h2>
         <p className="text-[rgb(var(--text-muted))] mt-4 text-lg">Tell me about your project—date, location, vibe, and deliverables</p>
         <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full" aria-hidden />
-      </div>
-      <div className="grid lg:grid-cols-3 gap-8">
+      </motion.div>
+      <motion.div
+        className="grid lg:grid-cols-3 gap-8"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
         <Card className="lg:col-span-2 border-border/60 bg-bg-card">
           <CardHeader>
             <CardTitle className="text-xl font-bold">Start a booking</CardTitle>
             <p className="text-[rgb(var(--text-muted))] text-sm">Fill out the form below and I'll get back to you within 24 hours</p>
           </CardHeader>
           <CardContent>
-            <form action="https://formspree.io/f/mldwlpkk" method="POST" className="space-y-6">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <Input 
-                    required 
-                    name="name" 
-                    placeholder="Your name" 
-                    className="w-full"
-                  />
-                </div>
-                <div>
-                  <Input 
-                    required 
-                    type="email" 
-                    name="email" 
-                    placeholder="Email address" 
-                    className="w-full"
-                  />
-                </div>
-              </div>
-              <div>
-                <Input 
-                  name="phone" 
-                  type="tel"
-                  placeholder="Phone number (optional)" 
-                  className="w-full"
-                />
-              </div>
-              <div>
-                <Input 
-                  name="subject" 
-                  placeholder="Shoot type / subject" 
-                  className="w-full"
-                />
-              </div>
-              <div>
-                <Textarea 
-                  required 
-                  name="message" 
-                  placeholder="Tell me about your project… date, location, vibe, and deliverables"
-                  className="w-full min-h-[120px]"
-                />
-              </div>
-              <Button type="submit" className="w-full sm:w-auto px-8 py-3 text-lg font-semibold">
-                Send Message
-              </Button>
-            </form>
+            <ContactForm />
           </CardContent>
         </Card>
         <Card className="border-border/60 bg-bg-card">
@@ -434,7 +487,7 @@ function Contact() {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     </section>
   )
 }
