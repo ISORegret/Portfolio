@@ -53,6 +53,7 @@ export default function AlbumGallery({ title, images }: Props) {
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               className="object-cover hover:scale-105 transition-transform duration-300"
               placeholder="blur"
+              unoptimized={src.includes('pixieset.com')}
               blurDataURL={BLUR_DATA}
             />
           </button>
@@ -105,6 +106,7 @@ export default function AlbumGallery({ title, images }: Props) {
                 sizes="90vw"
                 placeholder="blur"
                 blurDataURL={BLUR_DATA}
+                unoptimized={images[lightboxIndex]?.includes('pixieset.com')}
               />
             </div>
           </div>
