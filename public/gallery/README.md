@@ -15,7 +15,7 @@ Each album has a folder under `public/gallery/`. Put images in that folder with 
 | `wingsanwheels` | `cover.jpg` | `1.jpg` … `12.jpg` |
 | `turkeyrodrun` | `cover.jpg` | `1.jpg` … `28.jpg` |
 | `car-show` | `cover.jpg` | `1.jpg` … `12.jpg` |
-| `st-johns-county-permit-center` | `cover.jpg` | `1.jpg` … `14.jpg` |
+| `architecture` | `cover.jpg` | `1.jpg` … `14.jpg` |
 | `justin-blennis` | `cover.jpg` | `1.jpg` … `23.jpg` |
 
 ## How to add photos

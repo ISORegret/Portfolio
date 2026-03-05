@@ -96,13 +96,13 @@ const projects: Project[] = [
     blurb: 'Car show event.',
   },
   {
-    slug: 'st-johns-county-permit-center',
-    title: 'St Johns County Permit Center',
+    slug: 'architecture',
+    title: 'Architecture',
     category: 'Real Estate',
     date: '2025-12-20',
-    ...albumPaths('st-johns-county-permit-center', 14),
+    ...albumPaths('architecture', 14),
     album: 'https://isoregret.pixieset.com/stjohnscountypermitcenter/',
-    blurb: 'St Johns County Permit Center.',
+    blurb: 'Architecture.',
   },
   {
     slug: 'justin-blennis',
