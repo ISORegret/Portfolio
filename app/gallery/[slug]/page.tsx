@@ -1,11 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { getProjectBySlug } from '../../data/projects';
-
-const BLUR_DATA =
-  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQAD8QDu/9k=';
+import AlbumGallery from '../../../components/AlbumGallery';
 
 type Props = { params: { slug: string } };
 
@@ -38,27 +35,13 @@ export default function AlbumPage({ params }: Props) {
               {project.blurb}
             </p>
           )}
+          <p className="text-[rgb(var(--text-subtle))] mt-2 text-sm">
+            Click any photo to view larger · Use arrow keys to move between photos
+          </p>
           <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-4 rounded-full" aria-hidden />
         </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {allImages.map((src, i) => (
-            <div
-              key={`${src}-${i}`}
-              className="aspect-[4/3] relative overflow-hidden rounded-token-lg bg-bg-elevated"
-            >
-              <Image
-                src={src}
-                alt={`${project.title} — photo ${i + 1}`}
-                fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-                placeholder="blur"
-                blurDataURL={BLUR_DATA}
-              />
-            </div>
-          ))}
-        </div>
+        <AlbumGallery title={project.title} images={allImages} />
 
         <div className="mt-12 text-center">
           <a
