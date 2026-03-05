@@ -45,8 +45,8 @@ export const projects: Project[] = [
     title: 'Dames Point',
     category: 'Automotive',
     date: '2025-10-01',
-    cover: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=800&auto=format&fit=crop',
-    album: 'https://isoregret.pixieset.com/damespoint/',
+    cover: 'https://images.pixieset.com/32995689/d861118a57dc9048fc001b78e24f7b52-large.jpg',
+    album: 'https://isoregret.pixieset.com/damespoint',
     blurb: 'Dames Point shoot.',
   },
   {
@@ -54,8 +54,8 @@ export const projects: Project[] = [
     title: 'Wings and Wheels',
     category: 'Automotive',
     date: '2025-09-15',
-    cover: 'https://images.unsplash.com/photo-1492144654662-5c0c14b4b8b9?q=80&w=800&auto=format&fit=crop',
-    album: 'https://isoregret.pixieset.com/wingsanwheels/',
+    cover: 'https://images.pixieset.com/32995689/d861118a57dc9048fc001b78e24f7b52-large.jpg',
+    album: 'https://isoregret.pixieset.com/wingsanwheels',
     blurb: 'Wings and Wheels event.',
   },
 ];

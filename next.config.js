@@ -5,7 +5,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'i.imgur.com' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
-      // Pixieset cover images (if you hotlink one)
+      { protocol: 'https', hostname: 'images.pixieset.com' },
       { protocol: 'https', hostname: '*.pixieset.com' }
     ]
   }

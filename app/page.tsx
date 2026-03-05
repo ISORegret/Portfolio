@@ -13,6 +13,30 @@ export default function Page() {
       <Hero />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28 py-20">
+        {/* Latest Projects — show work first */}
+        <section id="latest" className="scroll-mt-24">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Latest Projects</h2>
+            <p className="text-[rgb(var(--text-muted))] mt-4 text-lg">Recent shoots and sets</p>
+            <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full" aria-hidden />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...projects]
+              .sort((a, b) => b.date.localeCompare(a.date))
+              .slice(0, 6)
+              .map((p) => (
+                <ProjectCard
+                  key={p.slug}
+                  title={p.title}
+                  category={p.category}
+                  cover={p.cover}
+                  album={p.album}
+                  blurb={p.blurb}
+                />
+              ))}
+          </div>
+        </section>
+
         {/* Services */}
         <Services />
 
@@ -85,30 +109,6 @@ export default function Page() {
             </section>
           </div>
         </div>
-
-        {/* Latest Projects */}
-        <section id="latest" className="scroll-mt-24">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Latest Projects</h2>
-            <p className="text-[rgb(var(--text-muted))] mt-4 text-lg">Recent shoots, listings, and sets</p>
-            <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full" aria-hidden />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...projects]
-              .sort((a, b) => b.date.localeCompare(a.date))
-              .slice(0, 6)
-              .map((p) => (
-                <ProjectCard
-                  key={p.slug}
-                  title={p.title}
-                  category={p.category}
-                  cover={p.cover}
-                  album={p.album}
-                  blurb={p.blurb}
-                />
-              ))}
-          </div>
-        </section>
 
         {/* About */}
         <About />
