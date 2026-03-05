@@ -44,6 +44,7 @@ export default function Page() {
                   transition={{ duration: 0.5, delay: i * 0.08, type: 'spring', stiffness: 100, damping: 18 }}
                 >
                   <ProjectCard
+                    slug={p.slug}
                     title={p.title}
                     category={p.category}
                     cover={p.cover}

@@ -7,7 +7,14 @@ export type Project = {
   cover: string           // image URL (Imgur/Cloudinary) or /public path
   album: string           // Pixieset (or other) album URL
   blurb?: string
+  /** Optional extra image URLs — all show in Gallery grid and on album page (cover + these) */
+  images?: string[]
 };
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  const decoded = decodeURIComponent(slug);
+  return projects.find((p) => p.slug === decoded);
+}
 
 export const projects: Project[] = [
   {
@@ -57,5 +64,14 @@ export const projects: Project[] = [
     cover: 'https://images.pixieset.com/343953011/a8ba15af67e8933e6a9c6d3d22421632-cover-large.jpg',
     album: 'https://isoregret.pixieset.com/wingsanwheels/',
     blurb: 'Wings and Wheels event.',
+  },
+  {
+    slug: 'turkeyrodrun',
+    title: 'Turkey Rod Run',
+    category: 'Automotive',
+    date: '2025-11-28',
+    cover: 'https://images.pixieset.com/905463011/8c03ce04216aa4d8da0541a648430f73-xlarge.jpg',
+    album: 'https://isoregret.pixieset.com/turkeyrodrun/',
+    blurb: 'Turkey Rod Run automotive event.',
   },
 ];

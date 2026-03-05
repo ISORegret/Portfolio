@@ -40,6 +40,7 @@ export default function Page({ params }: { params: { category: string } }) {
               {list.map((p) => (
                 <ProjectCard
                   key={p.slug}
+                  slug={p.slug}
                   title={p.title}
                   category={p.category}
                   cover={p.cover}
