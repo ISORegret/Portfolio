@@ -191,7 +191,7 @@ export const projects: Project[] = [
     title: 'Turkey Rod Run',
     category: 'Automotive',
     date: '2025-11-28',
-    cover: 'https://images.pixieset.com/905463011/8c03ce04216aa4d8da0541a648430f73-cover-large.jpg',
+    cover: 'https://images.pixieset.com/905463011/0bae805c0b0daedf43ebdf54d99552d-large.jpg',
     album: 'https://isoregret.pixieset.com/turkeyrodrun/',
     blurb: 'Turkey Rod Run automotive event.',
     images: [
@@ -234,7 +234,7 @@ export const projects: Project[] = [
     title: 'Car Show',
     category: 'Automotive',
     date: '2025-12-15',
-    cover: 'https://images.pixieset.com/600663011/751d891cb2888505cdb0096f93d9bc7f-cover-large.jpg',
+    cover: 'https://images.pixieset.com/600663011/35da663e816d82cbc8209eea5e6a4e6-large.jpg',
     album: 'https://pixies.et/QTnOVcfQ',
     blurb: 'Car show event.',
     images: [
@@ -257,7 +257,7 @@ export const projects: Project[] = [
     title: 'St Johns County Permit Center',
     category: 'Real Estate',
     date: '2025-12-20',
-    cover: 'https://images.pixieset.com/591284501/c33bc9ac8866be3c24fbfc4e747e7946-cover-large.jpg',
+    cover: 'https://images.pixieset.com/591284501/1ab6986df50221a1e59b3f4164801d4-large.jpg',
     album: 'https://isoregret.pixieset.com/stjohnscountypermitcenter/',
     blurb: 'St Johns County Permit Center.',
     images: [

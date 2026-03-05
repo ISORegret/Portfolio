@@ -33,6 +33,7 @@ export default function ProjectCard({ slug, title, category, cover, blurb }: Pro
             placeholder="blur"
             blurDataURL={BLUR_DATA}
             unoptimized={cover.includes('pixieset.com')}
+            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-accent/90 text-neutral-900 px-4 py-2 text-sm font-semibold shadow-lg">

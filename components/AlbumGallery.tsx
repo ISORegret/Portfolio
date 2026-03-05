@@ -54,6 +54,7 @@ export default function AlbumGallery({ title, images }: Props) {
               className="object-cover hover:scale-105 transition-transform duration-300"
               placeholder="blur"
               unoptimized={src.includes('pixieset.com')}
+              referrerPolicy="no-referrer"
               blurDataURL={BLUR_DATA}
             />
           </button>
@@ -107,6 +108,7 @@ export default function AlbumGallery({ title, images }: Props) {
                 placeholder="blur"
                 blurDataURL={BLUR_DATA}
                 unoptimized={images[lightboxIndex]?.includes('pixieset.com')}
+                referrerPolicy="no-referrer"
               />
             </div>
           </div>
