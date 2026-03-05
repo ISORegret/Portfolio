@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle } from './ui';
 
 // Minimal blur placeholder for image loading (tiny gray gradient)
 const BLUR_DATA =
@@ -48,7 +48,9 @@ export default function ProjectCard({ slug, title, category, cover, blurb }: Pro
         {blurb && (
           <CardContent className="pt-0 mt-auto">
             <p className="text-sm text-[rgb(var(--text-muted))] line-clamp-2">{blurb}</p>
-            <Button className="mt-3" variant="secondary">View Album</Button>
+            <span className="mt-3 inline-flex items-center justify-center rounded-token bg-bg-card border border-border text-[rgb(var(--text))] hover:border-border-muted hover:bg-bg-elevated text-sm font-medium px-4 py-2 transition-colors">
+              View album
+            </span>
           </CardContent>
         )}
       </Card>
