@@ -1,1 +1,5 @@
 node_modules
+
+# Next.js build output (delete this folder if CSS stops loading in dev)
+.next
+out

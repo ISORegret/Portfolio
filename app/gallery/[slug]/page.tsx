@@ -6,13 +6,15 @@ import AlbumGallery from '../../../components/AlbumGallery';
 
 type Props = { params: { slug: string } };
 
+const PIXIESET_CODE_MAILTO =
+  'mailto:ryan@isoregret.com?subject=Pixieset%20guest%20code%20%2F%20high-res%20access';
+
 export default function AlbumPage({ params }: Props) {
   const project = getProjectBySlug(params.slug);
   if (!project) notFound();
 
   const allImages = [project.cover, ...(project.images ?? [])];
-  const downloadAccess =
-    project.downloadAccess ?? (project.album ? 'none' : 'open');
+  const downloadAccess = project.downloadAccess ?? 'open';
 
   const downloadHint =
     downloadAccess === 'code'
@@ -21,7 +23,9 @@ export default function AlbumPage({ params }: Props) {
         ? project.album
           ? 'Click any photo for a larger preview · Full set and downloads use your Pixieset guest code'
           : 'Click any photo to view larger · Downloads are disabled for this album'
-        : 'Click any photo to view larger · Arrow keys to move · Download in the viewer';
+        : project.album
+          ? 'Click any photo to view larger · Arrow keys to move · Download previews here · High-res full gallery on Pixieset (guest code, link below)'
+          : 'Click any photo to view larger · Arrow keys to move · Download in the viewer';
 
   const pixiesetPrimary = Boolean(project.album && downloadAccess === 'none');
 
@@ -53,15 +57,23 @@ export default function AlbumPage({ params }: Props) {
         {pixiesetPrimary ? (
           <div className="max-w-3xl mx-auto mb-6 rounded-token border border-border/70 bg-bg-card/90 px-3 py-2.5 sm:px-4 sm:py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 text-center sm:text-left">
             <div className="min-w-0">
-              <p className="text-sm font-medium text-[rgb(var(--text))]">Pixieset — full gallery & downloads</p>
+              <p className="text-sm font-medium text-[rgb(var(--text))]">Pixieset — full gallery and downloads</p>
               <p className="text-xs text-[rgb(var(--text-muted))] mt-0.5 leading-snug">
-                Guest access and print orders happen there; this page is a preview.
+                Guest access and print orders happen there; this page is a preview. Need the guest code or high-res
+                downloads?{' '}
+                <a
+                  href={PIXIESET_CODE_MAILTO}
+                  className="text-accent hover:underline underline-offset-2 whitespace-nowrap"
+                >
+                  Contact me
+                </a>
+                .
               </p>
             </div>
             <a
               href={project.album}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener"
               className="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-token bg-accent/12 text-[rgb(var(--text))] hover:bg-accent/20 border border-border/60 px-3 py-1.5 text-xs font-medium transition-colors mx-auto sm:mx-0"
             >
               Open on Pixieset
@@ -70,7 +82,21 @@ export default function AlbumPage({ params }: Props) {
           </div>
         ) : null}
 
-        <p className="text-[rgb(var(--text-subtle))] text-sm text-center mb-8 max-w-2xl mx-auto">{downloadHint}</p>
+        <div className="text-[rgb(var(--text-subtle))] text-sm text-center mb-8 max-w-2xl mx-auto space-y-2">
+          <p>{downloadHint}</p>
+          {project.album ? (
+            <p>
+              Don&apos;t have a Pixieset guest code for the full high-res gallery?{' '}
+              <a
+                href={PIXIESET_CODE_MAILTO}
+                className="text-[rgb(var(--text))] underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
+              >
+                Email me
+              </a>{' '}
+              and I&apos;ll get you set up.
+            </p>
+          ) : null}
+        </div>
         <div className="w-16 h-0.5 bg-accent/60 mx-auto -mt-4 mb-10 rounded-full" aria-hidden />
 
         <AlbumGallery
@@ -86,7 +112,7 @@ export default function AlbumPage({ params }: Props) {
             <a
               href={project.album}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener"
               className="inline-flex items-center gap-2 rounded-token bg-accent/10 text-[rgb(var(--text))] hover:bg-accent/20 border border-border/60 px-5 py-2.5 text-sm font-medium transition-colors"
             >
               View full album on Pixieset

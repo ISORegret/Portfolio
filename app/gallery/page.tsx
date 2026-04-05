@@ -43,6 +43,16 @@ export default function GalleryPage() {
           <p className="text-[rgb(var(--text-muted))] mt-3 text-lg">
             All photos — tap any image to view the album on this site.
           </p>
+          <p className="text-[rgb(var(--text-subtle))] mt-2 text-sm max-w-xl mx-auto">
+            Full high-res files and guest access are on Pixieset.{' '}
+            <a
+              href="mailto:ryan@isoregret.com?subject=Pixieset%20guest%20code%20%2F%20high-res%20access"
+              className="text-accent hover:underline underline-offset-2"
+            >
+              Email me
+            </a>{' '}
+            if you need a code.
+          </p>
           <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-4 rounded-full" aria-hidden />
         </motion.div>
 
