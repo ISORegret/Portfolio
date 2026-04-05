@@ -13,7 +13,7 @@ type Props = {
   title: string;
   category: 'Automotive' | 'Real Estate' | 'Street';
   cover: string;
-  album: string;
+  album?: string;
   blurb?: string;
 };
 
