@@ -97,3 +97,20 @@ textarea:focus-visible {
   transform: translateY(-4px);
   box-shadow: var(--shadow);
 }
+
+/* Decorative hero video: WebKit draws a play overlay that can show through a translucent image on top. */
+video.hero-bg-video::-webkit-media-controls {
+  display: none !important;
+}
+
+video.hero-bg-video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+video.hero-bg-video::-webkit-media-controls-overlay-enclosure {
+  display: none !important;
+}
+
+video.hero-bg-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}

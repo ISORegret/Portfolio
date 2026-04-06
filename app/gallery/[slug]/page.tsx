@@ -1,17 +1,61 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { getProjectBySlug } from '../../data/projects';
 import AlbumGallery from '../../../components/AlbumGallery';
+import { resolveAlbumBack } from '../../../lib/albumBackNavigation';
+import { SITE_URL } from '../../data/site';
 
-type Props = { params: { slug: string } };
+type Props = {
+  params: { slug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const project = getProjectBySlug(params.slug);
+  if (!project) return { title: 'Album | ISO.Regret' };
+
+  const title = project.seoTitle ?? project.title;
+  const description =
+    project.seoDescription ??
+    project.blurb ??
+    `${project.category} photography by ISO.Regret — Jacksonville, FL`;
+
+  const url = `${SITE_URL}/gallery/${encodeURIComponent(project.slug)}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'ISO.Regret',
+      locale: 'en_US',
+      type: 'website',
+      images: project.cover
+        ? [{ url: project.cover, alt: project.title }]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: project.cover ? [project.cover] : undefined,
+    },
+    alternates: { canonical: url },
+  };
+}
 
 const PIXIESET_CODE_MAILTO =
   'mailto:ryan@isoregret.com?subject=Pixieset%20guest%20code%20%2F%20high-res%20access';
 
-export default function AlbumPage({ params }: Props) {
+export default function AlbumPage({ params, searchParams }: Props) {
   const project = getProjectBySlug(params.slug);
   if (!project) notFound();
+
+  const back = resolveAlbumBack(searchParams?.from);
 
   const allImages = [project.cover, ...(project.images ?? [])];
   const downloadAccess = project.downloadAccess ?? 'open';
@@ -33,11 +77,11 @@ export default function AlbumPage({ params }: Props) {
     <div className="min-h-screen bg-bg">
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <Link
-          href="/gallery"
+          href={back.href}
           className="inline-flex items-center gap-2 text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))] transition-colors mb-8"
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to gallery
+          <ArrowLeft className="w-4 h-4" aria-hidden />
+          Back to {back.label}
         </Link>
 
         <header className="text-center mb-12">
@@ -52,6 +96,11 @@ export default function AlbumPage({ params }: Props) {
               {project.blurb}
             </p>
           )}
+          {project.story ? (
+            <p className="text-[rgb(var(--text-subtle))] mt-5 text-base max-w-2xl mx-auto leading-relaxed border-t border-border/50 pt-5">
+              {project.story}
+            </p>
+          ) : null}
         </header>
 
         {pixiesetPrimary ? (

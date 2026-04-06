@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { albumHrefWithFrom } from '../lib/albumBackNavigation';
 import { Card, CardContent, CardHeader, CardTitle } from './ui';
 
 // Minimal blur placeholder for image loading (tiny gray gradient)
@@ -15,10 +16,12 @@ type Props = {
   cover: string;
   album?: string;
   blurb?: string;
+  /** Where the user came from — album page back link matches this */
+  fromPath?: string;
 };
 
-export default function ProjectCard({ slug, title, category, cover, blurb }: Props) {
-  const albumPath = `/gallery/${encodeURIComponent(slug)}`;
+export default function ProjectCard({ slug, title, category, cover, blurb, fromPath }: Props) {
+  const albumPath = fromPath ? albumHrefWithFrom(slug, fromPath) : `/gallery/${encodeURIComponent(slug)}`;
   return (
     <Link href={albumPath} className="block group">
       <Card className="overflow-hidden border-border/60 bg-bg-card hover:border-accent/30 hover:shadow-glow transition-all duration-300 h-full flex flex-col">

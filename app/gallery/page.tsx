@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { projects } from '../data/projects';
+import { albumHrefWithFrom } from '../../lib/albumBackNavigation';
 
 const BLUR_DATA =
   'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQAD8QDu/9k=';
@@ -38,10 +39,14 @@ export default function GalleryPage() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">
-            Gallery
+            All photos
           </h1>
-          <p className="text-[rgb(var(--text-muted))] mt-3 text-lg">
-            All photos — tap any image to view the album on this site.
+          <p className="text-[rgb(var(--text-muted))] mt-3 text-lg max-w-2xl mx-auto">
+            A flat grid of every image from every shoot. Tap any photo to jump to that album — or use{' '}
+            <a href="/#latest" className="text-accent hover:underline underline-offset-2">
+              Recent albums
+            </a>{' '}
+            on the home page for a cleaner list.
           </p>
           <p className="text-[rgb(var(--text-subtle))] mt-2 text-sm max-w-xl mx-auto">
             Full high-res files and guest access are on Pixieset.{' '}
@@ -65,7 +70,10 @@ export default function GalleryPage() {
               transition={{ duration: 0.4, delay: Math.min(i * 0.03, 0.6) }}
               className="aspect-square relative overflow-hidden rounded-token group"
             >
-              <Link href={`/gallery/${encodeURIComponent(photo.slug)}`} className="block w-full h-full">
+              <Link
+                href={albumHrefWithFrom(photo.slug, '/gallery')}
+                className="block w-full h-full"
+              >
                 <Image
                   src={photo.src}
                   alt={photo.title}

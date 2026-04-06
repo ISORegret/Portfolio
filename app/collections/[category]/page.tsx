@@ -26,8 +26,8 @@ export default function Page({ params }: { params: { category: string } }) {
       ) : (
         <>
           <header>
-            <h1 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">{category} Collection</h1>
-            <p className="text-[rgb(var(--text-muted))] mt-2 text-lg">Curated shoots and albums in {category.toLowerCase()}.</p>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">{category}</h1>
+            <p className="text-[rgb(var(--text-muted))] mt-2 text-lg">Albums in this category — open a card for the full set.</p>
             <div className="w-16 h-0.5 bg-accent/60 rounded-full mt-4" aria-hidden />
           </header>
 
@@ -46,6 +46,7 @@ export default function Page({ params }: { params: { category: string } }) {
                   cover={p.cover}
                   album={p.album}
                   blurb={p.blurb}
+                  fromPath={`/collections/${catKey}`}
                 />
               ))}
             </div>

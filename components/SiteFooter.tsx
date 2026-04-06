@@ -13,12 +13,12 @@ export default function SiteFooter() {
               <Camera className="w-5 h-5 text-accent" aria-hidden />
               <span>ISO.Regret</span>
             </div>
-            <nav className="flex items-center gap-6 text-sm text-[rgb(var(--text-muted))]">
+            <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[rgb(var(--text-muted))]">
               <a href="/#services" className="hover:text-[rgb(var(--text))] transition-colors">Services</a>
-              <a href="/#collections" className="hover:text-[rgb(var(--text))] transition-colors">Collections</a>
-              <a href="/#latest" className="hover:text-[rgb(var(--text))] transition-colors">Latest</a>
+              <a href="/#packages" className="hover:text-[rgb(var(--text))] transition-colors">Packages</a>
+              <a href="/#latest" className="hover:text-[rgb(var(--text))] transition-colors">Recent albums</a>
+              <a href="/gallery" className="hover:text-[rgb(var(--text))] transition-colors">All photos</a>
               <a href="/blog" className="hover:text-[rgb(var(--text))] transition-colors">Blog</a>
-              <a href="/gallery" className="hover:text-[rgb(var(--text))] transition-colors">Gallery</a>
               <a href="/#about" className="hover:text-[rgb(var(--text))] transition-colors">About</a>
               <a href="/#contact" className="hover:text-[rgb(var(--text))] transition-colors">Contact</a>
             </nav>

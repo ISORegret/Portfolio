@@ -1,24 +1,26 @@
 'use client';
 
-import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Car, Building2, Camera, Mail, Phone, MapPin, Instagram, ExternalLink, Quote } from 'lucide-react';
+import { Car, Building2, Camera, Mail, Phone, MapPin, Instagram, ExternalLink, Quote, ChevronRight } from 'lucide-react';
 import ProjectCard from '../components/ProjectCard';
 import ContactForm from '../components/ContactForm';
+import HeroSection from '../components/HeroSection';
+import FeaturedStrip from '../components/FeaturedStrip';
+import PricingPackages from '../components/PricingPackages';
 import { projects } from './data/projects';
+import { siteConfig } from './data/site';
 import { testimonials } from './data/testimonials';
 import { Button, Card, CardContent, CardHeader, CardTitle } from '../components/ui';
-
-const BLUR_DATA =
-  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQAD8QDu/9k=';
 
 export default function Page() {
   return (
     <div className="bg-bg">
-      <Hero />
+      <HeroSection />
+      <FeaturedStrip />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28 py-20">
-        {/* Latest Projects — show work first */}
+        {/* Recent albums — entry point to full shoots */}
         <section id="latest" className="scroll-mt-24">
           <motion.div
             className="text-center mb-16"
@@ -27,8 +29,10 @@ export default function Page() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Latest Projects</h2>
-            <p className="text-[rgb(var(--text-muted))] mt-4 text-lg">Recent shoots and sets</p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Recent albums</h2>
+            <p className="text-[rgb(var(--text-muted))] mt-4 text-lg max-w-2xl mx-auto">
+              Full shoots, one card each — open an album to browse and download previews.
+            </p>
             <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full" aria-hidden />
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -50,6 +54,7 @@ export default function Page() {
                     cover={p.cover}
                     album={p.album}
                     blurb={p.blurb}
+                    fromPath="/#latest"
                   />
                 </motion.div>
               ))}
@@ -63,15 +68,14 @@ export default function Page() {
           >
             <div className="flex flex-wrap items-center justify-center gap-6">
             <a
-              href="/#collections"
+              href="/#services"
               className="inline-flex items-center gap-2 text-accent hover:text-accent-muted font-medium transition-colors"
             >
-              View all collections
-              <ExternalLink className="w-4 h-4" />
+              Albums by service
             </a>
             <span className="text-[rgb(var(--text-subtle))]">·</span>
             <a href="/gallery" className="text-accent hover:text-accent-muted font-medium transition-colors">
-              Full gallery
+              All photos grid
             </a>
             <span className="text-[rgb(var(--text-subtle))]">·</span>
             <a href="/blog" className="text-accent hover:text-accent-muted font-medium transition-colors">
@@ -81,81 +85,13 @@ export default function Page() {
           </motion.div>
         </section>
 
-        {/* Services */}
+        {/* Services — each card links to albums in that style */}
         <Services />
+
+        <PricingPackages />
 
         {/* Testimonials & Featured */}
         <Testimonials />
-
-        {/* Collections */}
-        <div className="relative">
-          <div className="absolute inset-0 bg-bg-elevated/50 rounded-token-xl blur-2xl" aria-hidden />
-          <div className="relative bg-bg-card/90 backdrop-blur-sm border border-border/60 rounded-token-xl p-12 -mx-4 sm:-mx-6 lg:-mx-8 shadow-soft">
-            <section id="collections" className="scroll-mt-24">
-              <div className="text-center mb-12">
-                <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Collections</h2>
-                <p className="text-[rgb(var(--text-muted))] mt-4 text-lg">Explore by category</p>
-                <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full" aria-hidden />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                {[
-                  { href: "/collections/automotive", title: "Automotive", description: "Events, rollers, features.", gradient: "from-red-500/10 to-orange-500/10", hoverColor: "group-hover:text-red-400" },
-                  { href: "/collections/real-estate", title: "Real Estate", description: "MLS-ready interiors & exteriors.", gradient: "from-blue-500/10 to-cyan-500/10", hoverColor: "group-hover:text-blue-400" },
-                  { href: "/collections/street", title: "Street", description: "Candid, cinematic city life.", gradient: "from-purple-500/10 to-pink-500/10", hoverColor: "group-hover:text-purple-400" }
-                ].map((collection, i) => (
-                  <motion.a
-                    key={i}
-                    href={collection.href}
-                    className="group block"
-                    initial={{ opacity: 0, y: 60, scale: 0.8 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ 
-                      duration: 0.8, 
-                      delay: i * 0.2,
-                      type: "spring",
-                      stiffness: 80,
-                      damping: 20
-                    }}
-                    whileHover={{ 
-                      y: -12,
-                      scale: 1.02,
-                      transition: { duration: 0.4, ease: "easeOut" }
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="relative rounded-token-xl border border-border/60 bg-bg-card p-8 hover:border-accent/30 hover:shadow-glow transition-all duration-300 overflow-hidden">
-                      <motion.div
-                        className={`absolute inset-0 bg-gradient-to-br ${collection.gradient} rounded-token-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                        initial={false}
-                      />
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        initial={false}
-                      />
-                      <div className="relative">
-                        <motion.h3
-                          className={`font-display text-xl font-bold text-[rgb(var(--text))] ${collection.hoverColor} transition-colors duration-300`}
-                          whileHover={{ scale: 1.05 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          {collection.title}
-                        </motion.h3>
-                        <motion.p
-                          className="text-[rgb(var(--text-muted))] mt-3 leading-relaxed group-hover:text-[rgb(var(--text))] transition-colors duration-300"
-                          initial={{ opacity: 0.8 }}
-                          whileHover={{ opacity: 1 }}
-                        >
-                          {collection.description}
-                        </motion.p>
-                      </div>
-                    </div>
-                  </motion.a>
-                ))}
-              </div>
-            </section>
-          </div>
-        </div>
 
         {/* About */}
         <About />
@@ -168,103 +104,29 @@ export default function Page() {
 }
 
 
-function Hero() {
-  return (
-    <section className="relative isolate overflow-hidden h-screen flex items-center">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgb(var(--bg))]/80 via-[rgb(var(--bg))]/60 to-[rgb(var(--bg))]" />
-        <motion.div
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 2, ease: "easeOut" }}
-          className="w-full h-full"
-        >
-          <Image
-            alt="Hero background — automotive and candid photography"
-            className="w-full h-full object-cover opacity-50"
-            src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop"
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover' }}
-            placeholder="blur"
-            blurDataURL={BLUR_DATA}
-          />
-        </motion.div>
-      </div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[rgb(var(--text))] leading-tight"
-        >
-          Cinematic Photography & Videography
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-8 text-[rgb(var(--text-muted))] max-w-3xl mx-auto text-lg sm:text-xl leading-relaxed"
-        >
-          Candid & automotive. I turn moments into moving pictures with cinematic frames and
-          timeless storytelling. Photos that speak. Videos that move.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.1 }}
-          className="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center"
-        >
-          <a href="#services">
-            <Button size="lg" className="px-8 py-4 text-lg font-semibold">
-              View Services
-            </Button>
-          </a>
-          <a href="#contact">
-            <Button variant="secondary" size="lg" className="px-8 py-4 text-lg font-semibold">
-              Book a Shoot
-            </Button>
-          </a>
-        </motion.div>
-      </div>
-      
-      {/* Scroll indicator at bottom of hero */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2 text-[rgb(var(--text-muted))] cursor-pointer"
-          onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          <span className="text-sm font-medium">Scroll to explore</span>
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-6 h-10 border-2 border-neutral-400 rounded-full flex justify-center"
-          >
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1 h-3 bg-neutral-400 rounded-full mt-2"
-            />
-          </motion.div>
-        </motion.div>
-      </motion.div>
-    </section>
-  )
-}
-
 function Services() {
   const features = [
-    { icon: <Car className="w-6 h-6" />, title: 'Automotive', body: 'Show-ready rollers, rig shots, events, dealers. Night or natural light — your car, your vibe.', hint: 'Events & shoots' },
-    { icon: <Building2 className="w-6 h-6" />, title: 'Real Estate', body: 'MLS-ready interiors/exteriors, blue-hour sets, detail vignettes, and optional vertical video add-ons.', hint: 'Per listing & packages' },
-    { icon: <Camera className="w-6 h-6" />, title: 'Street', body: 'Candid city moments with cinematic tones. Small-footprint, big storytelling.', hint: 'Sessions & day rates' },
+    {
+      href: '/collections/automotive',
+      icon: <Car className="w-6 h-6" />,
+      title: 'Automotive',
+      body: 'Show-ready rollers, rig shots, events, dealers. Night or natural light — your car, your vibe.',
+      hint: 'Events & shoots',
+    },
+    {
+      href: '/collections/real-estate',
+      icon: <Building2 className="w-6 h-6" />,
+      title: 'Real Estate',
+      body: 'MLS-ready interiors/exteriors, blue-hour sets, detail vignettes, and optional vertical video add-ons.',
+      hint: 'Per listing & packages',
+    },
+    {
+      href: '/collections/street',
+      icon: <Camera className="w-6 h-6" />,
+      title: 'Street',
+      body: 'Candid city moments with cinematic tones. Small-footprint, big storytelling.',
+      hint: 'Sessions & day rates',
+    },
   ]
   return (
     <section id="services" className="scroll-mt-24">
@@ -283,9 +145,9 @@ function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-[rgb(var(--text-muted))] mt-4 text-lg"
+          className="text-[rgb(var(--text-muted))] mt-4 text-lg max-w-2xl mx-auto"
         >
-          Clean deliverables, quick turnarounds. Packages & custom quotes — tell me your vision.
+          Packages & custom quotes — tap a service to see albums in that style, or tell me your vision for a new shoot.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
@@ -298,7 +160,7 @@ function Services() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map((f, i) => (
           <motion.div
-            key={i}
+            key={f.href}
             initial={{ opacity: 0, y: 50, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -306,26 +168,36 @@ function Services() {
             whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
             className="group"
           >
-            <Card className="h-full border-border/60 bg-bg-card hover:border-accent/20 hover:shadow-glow transition-all duration-300 overflow-hidden relative">
-              <CardHeader className="relative">
-                <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }} className="inline-block">
-                  <CardTitle className="flex items-center gap-3 text-xl">
-                    <span className="text-accent group-hover:text-accent-muted transition-colors">{f.icon}</span>
-                    <span className="text-[rgb(var(--text))] group-hover:text-[rgb(var(--text))]">{f.title}</span>
-                  </CardTitle>
-                </motion.div>
-              </CardHeader>
-              <CardContent className="relative">
-                <p className="text-[rgb(var(--text-muted))] leading-relaxed group-hover:text-[rgb(var(--text))]/90 transition-colors">
-                  {f.body}
-                </p>
-                {f.hint && (
-                  <p className="mt-3 text-xs text-[rgb(var(--text-subtle))] font-medium uppercase tracking-wider">
-                    {f.hint}
+            <Link
+              href={f.href}
+              className="block h-full rounded-token focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+              aria-label={`${f.title}: view albums and service details`}
+            >
+              <Card className="h-full border-border/60 bg-bg-card hover:border-accent/20 hover:shadow-glow transition-all duration-300 overflow-hidden relative cursor-pointer">
+                <CardHeader className="relative">
+                  <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }} className="inline-block">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <span className="text-accent group-hover:text-accent-muted transition-colors">{f.icon}</span>
+                      <span className="text-[rgb(var(--text))] group-hover:text-[rgb(var(--text))]">{f.title}</span>
+                    </CardTitle>
+                  </motion.div>
+                </CardHeader>
+                <CardContent className="relative">
+                  <p className="text-[rgb(var(--text-muted))] leading-relaxed group-hover:text-[rgb(var(--text))]/90 transition-colors">
+                    {f.body}
                   </p>
-                )}
-              </CardContent>
-            </Card>
+                  {f.hint && (
+                    <p className="mt-3 text-xs text-[rgb(var(--text-subtle))] font-medium uppercase tracking-wider">
+                      {f.hint}
+                    </p>
+                  )}
+                  <p className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent group-hover:gap-2 transition-all">
+                    View albums
+                    <ChevronRight className="w-4 h-4" aria-hidden />
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           </motion.div>
         ))}
       </div>
@@ -371,7 +243,7 @@ function Testimonials() {
         ))}
       </div>
       <motion.div
-        className="mt-12 text-center"
+        className="mt-12 text-center space-y-3"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -380,6 +252,19 @@ function Testimonials() {
         <p className="text-sm text-[rgb(var(--text-subtle))]">
           Events · Realtors · Enthusiasts · Brands
         </p>
+        {siteConfig.press.length > 0 ? (
+          <p className="text-xs text-[rgb(var(--text-muted))]">
+            As seen in:{' '}
+            {siteConfig.press.map((p, i) => (
+              <span key={p.href}>
+                {i > 0 ? ' · ' : null}
+                <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                  {p.name}
+                </a>
+              </span>
+            ))}
+          </p>
+        ) : null}
       </motion.div>
     </section>
   )

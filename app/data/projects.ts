@@ -18,6 +18,12 @@ export type Project = {
   /** Required when `downloadAccess` is `'code'` (share with client like Pixieset). */
   downloadCode?: string
   blurb?: string
+  /** Longer context for the album page (how/why you shot it) */
+  story?: string
+  /** Optional SEO title; defaults to `title` */
+  seoTitle?: string
+  /** Optional meta description; defaults to `blurb` */
+  seoDescription?: string
   images?: string[]
 };
 
@@ -42,6 +48,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/waterfrontautoshow2026stmaryga/',
     blurb: 'Waterfront show in St. Marys, Georgia.',
+    seoTitle: 'Waterfront Auto Show 2026 — automotive event photos | ISO.Regret',
+    seoDescription:
+      'Event coverage from the St. Marys waterfront auto show — detail, color, and atmosphere for enthusiasts and owners.',
+    story:
+      'Shot as the sun dropped behind the water: chrome, crowd energy, and wide establishing frames so the set works for social crops and full-width web.',
     images: [
       '/gallery/waterfront-auto-show-2026/_DSC2253.jpg',
       '/gallery/waterfront-auto-show-2026/_DSC2254.jpg',
@@ -153,6 +164,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/caffeineandoctanejacksonville/',
     blurb: 'Cars and coffee energy at the Jacksonville meet.',
+    seoTitle: 'Caffeine and Octane Jacksonville — cars & coffee photography | ISO.Regret',
+    seoDescription:
+      'Automotive meet coverage in Jacksonville, FL: detail shots, atmosphere, and owner-ready files for web and social.',
+    story:
+      'Early light and packed rows—shot to feel like the meet: chrome, coffee steam, and the crowd without losing individual cars as heroes.',
     images: [
       '/gallery/caffeine-octane-jacksonville/_DSC1670.jpg',
       '/gallery/caffeine-octane-jacksonville/_DSC1672.jpg',
@@ -189,6 +205,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/boatrampjacksonville/',
     blurb: 'Jacksonville boat ramp meet.',
+    seoTitle: 'Boat ramp car meet — Jacksonville automotive photography | ISO.Regret',
+    seoDescription:
+      'Casual automotive gathering at a Jacksonville boat ramp—environment, cars, and coastal Florida light.',
+    story:
+      'Water in the background and rigs up front—balanced exposure for harsh midday and softer edges toward sunset.',
     images: [
       '/gallery/boat-ramp-jacksonville/_DSC1799.jpg',
       '/gallery/boat-ramp-jacksonville/_DSC1802.jpg',
@@ -237,6 +258,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/morningmotorevent/',
     blurb: 'Sunrise shots and chrome for days.',
+    seoTitle: 'Morning Motor Events — sunrise automotive photography Jacksonville | ISO.Regret',
+    seoDescription:
+      'Early-morning automotive event photography in Northeast Florida—warm light, long shadows, and show-ready detail.',
+    story:
+      'Chased the short sunrise window so paint and polish read clean without blowing highlights—editorial feel, event pace.',
     images: [
       '/gallery/morning-motor-events/DSC00258.jpg',
       '/gallery/morning-motor-events/DSC00261.jpg',
@@ -253,6 +279,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/OpeningoftheBeaches/',
     blurb: 'Golden hour portraits and skyline views in downtown Jacksonville Beach.',
+    seoTitle: 'Opening of the Beaches — Jacksonville Beach event & car photography | ISO.Regret',
+    seoDescription:
+      'Golden hour automotive and portrait-style work at Jacksonville Beach—skyline, crowd energy, and coastal light.',
+    story:
+      'Mixed wide establishing shots with tight character on cars and people so the set works for recap posts and print.',
     images: [
       '/gallery/opening-of-the-beaches/DSC01704.jpg',
       '/gallery/opening-of-the-beaches/DSC01705.jpg',
@@ -307,6 +338,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/candidrandoms/',
     blurb: 'Neon reflections and candid moments.',
+    seoTitle: 'Candid street photography — neon & night Jacksonville | ISO.Regret',
+    seoDescription:
+      'Street and candid photography: neon, reflections, and everyday scenes—ISO.Regret, Jacksonville area.',
+    story:
+      'Night color and available light only—chasing reflections and gesture so frames feel candid, not staged.',
     images: [
       '/gallery/candid-randoms/_DSC1343.jpg',
       '/gallery/candid-randoms/_DSC1346.jpg',
@@ -355,6 +391,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/damespoint/',
     blurb: 'Dames Point shoot.',
+    seoTitle: 'Dames Point automotive shoot — Jacksonville bridge & cars | ISO.Regret',
+    seoDescription:
+      'Automotive photography with Jacksonville’s Dames Point bridge in play—location portrait and detail work.',
+    story:
+      'Used the bridge and sky as a graphic backdrop—compositions built for hero crops and wide banners alike.',
     images: [
       '/gallery/damespoint/_DSC1142.jpg',
       '/gallery/damespoint/_DSC1144.jpg',
@@ -406,6 +447,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/wingsanwheels/',
     blurb: 'Wings and Wheels event.',
+    seoTitle: 'Wings and Wheels — aviation & car event photography | ISO.Regret',
+    seoDescription:
+      'Wings and Wheels event coverage: aircraft and automotive subjects in one day—ISO.Regret, Northeast Florida.',
+    story:
+      'Two worlds in one venue—alternating between static aircraft frames and ground-level car detail without a split tone of voice.',
     images: [
       '/gallery/wingsanwheels/_DSC1564.jpg',
       '/gallery/wingsanwheels/_DSC1577.jpg',
@@ -445,6 +491,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/turkeyrodrun/',
     blurb: 'Turkey Rod Run automotive event.',
+    seoTitle: 'Turkey Rod Run — classic car event photography Florida | ISO.Regret',
+    seoDescription:
+      'Classic and hot-rod event coverage from Turkey Rod Run—dense crowds, high polish, and show-field storytelling.',
+    story:
+      'High-volume show workflow: walk the field for standouts, then double back for detail when the light softened.',
     images: [
       '/gallery/turkeyrodrun/DSC00056.jpg',
       '/gallery/turkeyrodrun/DSC00060.jpg',
@@ -523,6 +574,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/carshow/',
     blurb: 'Car show event.',
+    seoTitle: 'Car show photography — automotive event gallery | ISO.Regret Jacksonville',
+    seoDescription:
+      'Full car show set: rows, trophies, and detail—event photography for owners and organizers in Northeast Florida.',
+    story:
+      'Shot for variety—establishing crowd and venue, then tight paint and wheels so every car type gets a fair look.',
     images: [
       '/gallery/car-show/DSC00654.jpg',
       '/gallery/car-show/DSC00665.jpg',
@@ -569,6 +625,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/stjohnscountypermitcenter/',
     blurb: 'Architecture.',
+    seoTitle: 'Architecture & civic spaces — real estate photography Jacksonville | ISO.Regret',
+    seoDescription:
+      'Interiors, exteriors, and civic architecture — MLS-ready files and editorial-style frames for marketing and portfolios.',
+    story:
+      'Mixed natural and controlled light to keep glass and structure honest while staying inviting — ideal for listings and long-form case studies.',
     images: [
       '/gallery/Architecture/_DSC1481.jpg',
       '/gallery/Architecture/_DSC1486.jpg',
@@ -598,6 +659,11 @@ const projects: Project[] = [
     downloadAccess: 'open',
     album: 'https://isoregret.pixieset.com/blenniscaddy/',
     blurb: 'Justin Blennis shoot.',
+    seoTitle: 'Portrait & street session — Justin Blennis | ISO.Regret Jacksonville',
+    seoDescription:
+      'On-location portrait and street-style photography session—directional light, character, and editorial framing.',
+    story:
+      'Session pace built around comfort and movement—quick environmental frames, then tighter portraits when the light landed.',
     images: [
       '/gallery/justin-blennis/DSC00562-2.jpg',
       '/gallery/justin-blennis/DSC00580.jpg',

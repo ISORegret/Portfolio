@@ -7,10 +7,10 @@ import { useTheme } from './ThemeProvider';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/#services', label: 'Services' },
-  { href: '/#collections', label: 'Collections' },
-  { href: '/#latest', label: 'Latest' },
+  { href: '/#packages', label: 'Packages' },
+  { href: '/#latest', label: 'Recent albums' },
+  { href: '/gallery', label: 'All photos' },
   { href: '/blog', label: 'Blog' },
-  { href: '/gallery', label: 'Gallery' },
   { href: '/#about', label: 'About' },
   { href: '/#contact', label: 'Contact' },
 ];
@@ -30,12 +30,18 @@ export default function SiteHeader() {
           <span>ISO.Regret</span>
         </a>
 
-        <nav className="hidden sm:flex items-center gap-8 text-sm text-[rgb(var(--text-muted))]">
+        <nav className="hidden sm:flex items-center gap-6 lg:gap-8 text-sm text-[rgb(var(--text-muted))]">
           {navLinks.map((link) => (
             <a key={link.href} href={link.href} className="hover:text-[rgb(var(--text))] transition-colors">
               {link.label}
             </a>
           ))}
+          <a
+            href="/#contact"
+            className="rounded-token bg-accent text-neutral-900 hover:bg-accent-muted px-4 py-2 text-sm font-semibold transition-colors shadow-soft"
+          >
+            Book
+          </a>
           <button
             type="button"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -79,6 +85,13 @@ export default function SiteHeader() {
                 {link.label}
               </a>
             ))}
+            <a
+              href="/#contact"
+              onClick={() => setMobileOpen(false)}
+              className="py-3 px-3 rounded-token bg-accent text-neutral-900 font-semibold text-center hover:bg-accent-muted transition-colors"
+            >
+              Book a shoot
+            </a>
             <button
               type="button"
               onClick={() => { setTheme(theme === 'dark' ? 'light' : 'dark'); setMobileOpen(false); }}

@@ -1,18 +1,25 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import { getPostBySlug } from '../../data/posts';
+import { SITE_URL } from '../../data/site';
 import { ArrowLeft } from 'lucide-react';
 
 type Props = { params: Promise<{ slug: string }> };
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return { title: 'Post not found | ISO.Regret' };
+  const title = `${post.title} | ISO.Regret Blog`;
+  const url = `${SITE_URL}/blog/${encodeURIComponent(slug)}`;
   return {
-    title: `${post.title} | ISO.Regret Blog`,
+    title,
     description: post.excerpt,
+    openGraph: { title, description: post.excerpt, url, type: 'article' },
+    twitter: { card: 'summary_large_image', title, description: post.excerpt },
+    alternates: { canonical: url },
   };
 }
 

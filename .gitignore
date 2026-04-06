@@ -3,3 +3,9 @@ node_modules
 # Next.js build output (delete this folder if CSS stops loading in dev)
 .next
 out
+
+# Local env — never commit (copy from .env.example)
+.env*.local
+
+# TypeScript incremental build cache
+*.tsbuildinfo
