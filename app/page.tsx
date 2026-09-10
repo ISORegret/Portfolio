@@ -6,7 +6,6 @@ import { Car, Building2, Camera, Mail, Phone, MapPin, Instagram, ExternalLink, Q
 import ProjectCard from '../components/ProjectCard';
 import ContactForm from '../components/ContactForm';
 import HeroSection from '../components/HeroSection';
-import FeaturedStrip from '../components/FeaturedStrip';
 import PricingPackages from '../components/PricingPackages';
 import { projects } from './data/projects';
 import { siteConfig } from './data/site';
@@ -17,23 +16,27 @@ export default function Page() {
   return (
     <div className="bg-bg">
       <HeroSection />
-      <FeaturedStrip />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28 py-20">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16 sm:py-20">
         {/* Recent albums — entry point to full shoots */}
         <section id="latest" className="scroll-mt-24">
           <motion.div
-            className="text-center mb-16"
+            className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Recent albums</h2>
-            <p className="text-[rgb(var(--text-muted))] mt-4 text-lg max-w-2xl mx-auto">
-              Full shoots, one card each — open an album to browse and download previews.
-            </p>
-            <div className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full" aria-hidden />
+            <div>
+              <p className="text-sm font-medium uppercase tracking-[0.18em] text-accent mb-3">Latest work</p>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Recent albums</h2>
+              <p className="text-[rgb(var(--text-muted))] mt-3 text-base sm:text-lg max-w-2xl">
+                Curated stories from recent shoots. Open any album and start looking.
+              </p>
+            </div>
+            <Link href="/work" className="inline-flex items-center gap-2 text-accent hover:text-accent-muted font-semibold whitespace-nowrap">
+              View all work <ChevronRight className="w-4 h-4" aria-hidden />
+            </Link>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...projects]
@@ -66,22 +69,12 @@ export default function Page() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <div className="flex flex-wrap items-center justify-center gap-6">
-            <a
-              href="/#services"
-              className="inline-flex items-center gap-2 text-accent hover:text-accent-muted font-medium transition-colors"
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-2 rounded-token border border-border/70 bg-bg-card px-5 py-3 text-[rgb(var(--text))] hover:border-accent/40 hover:bg-bg-elevated font-semibold transition-colors"
             >
-              Albums by service
-            </a>
-            <span className="text-[rgb(var(--text-subtle))]">·</span>
-            <a href="/gallery" className="text-accent hover:text-accent-muted font-medium transition-colors">
-              All photos grid
-            </a>
-            <span className="text-[rgb(var(--text-subtle))]">·</span>
-            <a href="/blog" className="text-accent hover:text-accent-muted font-medium transition-colors">
-              Behind the shot (blog)
-            </a>
-          </div>
+              Explore every album <ChevronRight className="w-4 h-4" aria-hidden />
+            </Link>
           </motion.div>
         </section>
 
@@ -377,4 +370,3 @@ function Contact() {
     </section>
   )
 }
-

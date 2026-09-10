@@ -14,13 +14,10 @@ export default function SiteFooter() {
               <span>ISO.Regret</span>
             </div>
             <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[rgb(var(--text-muted))]">
+              <a href="/work" className="hover:text-[rgb(var(--text))] transition-colors">Work</a>
               <a href="/#services" className="hover:text-[rgb(var(--text))] transition-colors">Services</a>
-              <a href="/#packages" className="hover:text-[rgb(var(--text))] transition-colors">Packages</a>
-              <a href="/#latest" className="hover:text-[rgb(var(--text))] transition-colors">Recent albums</a>
-              <a href="/gallery" className="hover:text-[rgb(var(--text))] transition-colors">All photos</a>
-              <a href="/blog" className="hover:text-[rgb(var(--text))] transition-colors">Blog</a>
               <a href="/#about" className="hover:text-[rgb(var(--text))] transition-colors">About</a>
-              <a href="/#contact" className="hover:text-[rgb(var(--text))] transition-colors">Contact</a>
+              <a href="/#contact" className="hover:text-[rgb(var(--text))] transition-colors">Book</a>
             </nav>
           </div>
           <div className="mt-8 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[rgb(var(--text-muted))]">

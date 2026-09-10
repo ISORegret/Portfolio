@@ -3,15 +3,14 @@ import type { ReactNode } from 'react';
 import { SITE_URL } from '../data/site';
 
 export const metadata: Metadata = {
-  title: 'All photos',
-  description:
-    'Full image grid of every shoot — ISO.Regret. Jacksonville automotive, real estate, and street photography.',
+  title: 'Photography albums',
+  description: 'Curated photography albums by ISO.Regret.',
   openGraph: {
-    title: 'All photos | ISO.Regret',
-    description: 'Browse every image from every album on one page.',
-    url: `${SITE_URL}/gallery`,
+    title: 'Photography albums | ISO.Regret',
+    description: 'Curated photography albums by ISO.Regret.',
+    url: `${SITE_URL}/work`,
   },
-  alternates: { canonical: `${SITE_URL}/gallery` },
+  alternates: { canonical: `${SITE_URL}/work` },
 };
 
 export default function GalleryLayout({ children }: { children: ReactNode }) {

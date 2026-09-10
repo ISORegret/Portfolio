@@ -20,6 +20,8 @@ export type Project = {
   blurb?: string
   /** Longer context for the album page (how/why you shot it) */
   story?: string
+  /** Hand-picked web portfolio sequence. Falls back to the first 23 album images plus the cover. */
+  curatedImages?: string[]
   /** Optional SEO title; defaults to `title` */
   seoTitle?: string
   /** Optional meta description; defaults to `blurb` */
@@ -37,7 +39,7 @@ export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === decoded);
 }
 
-// Each album: optional `album` = Pixieset URL for full high-res set (guest code there). `downloadAccess: 'open'` = allow downloading preview files from this site; use `none` or `code` if you want to restrict on-site downloads.
+// Each album: optional `album` = Pixieset URL for the full high-res set. The website is a curated, view-only preview.
 const projects: Project[] = [
   {
     slug: 'waterfront-auto-show-2026',
@@ -45,7 +47,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2026-04-15',
     cover: '/gallery/waterfront-auto-show-2026/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/waterfrontautoshow2026stmaryga/',
     blurb: 'Waterfront show in St. Marys, Georgia.',
     seoTitle: 'Waterfront Auto Show 2026 — automotive event photos | ISO.Regret',
@@ -161,7 +163,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2026-03-09',
     cover: '/gallery/caffeine-octane-jacksonville/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/caffeineandoctanejacksonville/',
     blurb: 'Cars and coffee energy at the Jacksonville meet.',
     seoTitle: 'Caffeine and Octane Jacksonville — cars & coffee photography | ISO.Regret',
@@ -202,7 +204,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2026-02-10',
     cover: '/gallery/boat-ramp-jacksonville/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/boatrampjacksonville/',
     blurb: 'Jacksonville boat ramp meet.',
     seoTitle: 'Boat ramp car meet — Jacksonville automotive photography | ISO.Regret',
@@ -255,7 +257,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2025-08-23',
     cover: '/gallery/morning-motor-events/Cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/morningmotorevent/',
     blurb: 'Sunrise shots and chrome for days.',
     seoTitle: 'Morning Motor Events — sunrise automotive photography Jacksonville | ISO.Regret',
@@ -276,7 +278,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2025-09-01',
     cover: '/gallery/opening-of-the-beaches/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/OpeningoftheBeaches/',
     blurb: 'Golden hour portraits and skyline views in downtown Jacksonville Beach.',
     seoTitle: 'Opening of the Beaches — Jacksonville Beach event & car photography | ISO.Regret',
@@ -335,7 +337,7 @@ const projects: Project[] = [
     category: 'Street',
     date: '2025-08-10',
     cover: '/gallery/candid-randoms/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/candidrandoms/',
     blurb: 'Neon reflections and candid moments.',
     seoTitle: 'Candid street photography — neon & night Jacksonville | ISO.Regret',
@@ -388,7 +390,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2025-10-01',
     cover: '/gallery/damespoint/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/damespoint/',
     blurb: 'Dames Point shoot.',
     seoTitle: 'Dames Point automotive shoot — Jacksonville bridge & cars | ISO.Regret',
@@ -444,7 +446,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2025-09-15',
     cover: '/gallery/wingsanwheels/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/wingsanwheels/',
     blurb: 'Wings and Wheels event.',
     seoTitle: 'Wings and Wheels — aviation & car event photography | ISO.Regret',
@@ -488,7 +490,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2025-11-28',
     cover: '/gallery/turkeyrodrun/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/turkeyrodrun/',
     blurb: 'Turkey Rod Run automotive event.',
     seoTitle: 'Turkey Rod Run — classic car event photography Florida | ISO.Regret',
@@ -571,7 +573,7 @@ const projects: Project[] = [
     category: 'Automotive',
     date: '2025-12-15',
     cover: '/gallery/car-show/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/carshow/',
     blurb: 'Car show event.',
     seoTitle: 'Car show photography — automotive event gallery | ISO.Regret Jacksonville',
@@ -622,7 +624,7 @@ const projects: Project[] = [
     category: 'Real Estate',
     date: '2025-12-20',
     cover: '/gallery/Architecture/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/stjohnscountypermitcenter/',
     blurb: 'Architecture.',
     seoTitle: 'Architecture & civic spaces — real estate photography Jacksonville | ISO.Regret',
@@ -656,7 +658,7 @@ const projects: Project[] = [
     category: 'Street',
     date: '2025-12-01',
     cover: '/gallery/justin-blennis/cover.jpg',
-    downloadAccess: 'open',
+    downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/blenniscaddy/',
     blurb: 'Justin Blennis shoot.',
     seoTitle: 'Portrait & street session — Justin Blennis | ISO.Regret Jacksonville',

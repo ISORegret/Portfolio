@@ -5,14 +5,9 @@ import { Camera, Instagram, Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
+  { href: '/work', label: 'Work' },
   { href: '/#services', label: 'Services' },
-  { href: '/#packages', label: 'Packages' },
-  { href: '/#latest', label: 'Recent albums' },
-  { href: '/gallery', label: 'All photos' },
-  { href: '/blog', label: 'Blog' },
   { href: '/#about', label: 'About' },
-  { href: '/#contact', label: 'Contact' },
 ];
 
 export default function SiteHeader() {

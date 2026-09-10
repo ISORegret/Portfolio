@@ -3,7 +3,7 @@
  * Edit here — no code changes needed for most updates.
  */
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.isoregret.com';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://isoregretmedia.com';
 
 /** Used in <meta name="keywords"> and for internal consistency — search engines weigh content & titles more, but this helps focus. */
 export const seoKeywords = [

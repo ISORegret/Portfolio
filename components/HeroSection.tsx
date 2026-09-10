@@ -10,7 +10,7 @@ const BLUR_DATA =
   'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQAD8QDu/9k=';
 
 export default function HeroSection() {
-  const { hero, colorStory } = siteConfig;
+  const { hero } = siteConfig;
   const wantsVideo = Boolean(hero.videoSrc && hero.videoSrc.length > 0);
   const [videoFailed, setVideoFailed] = useState(false);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
@@ -35,7 +35,7 @@ export default function HeroSection() {
   }, [showVideo, hero.videoSrc]);
 
   return (
-    <section className="relative isolate overflow-hidden min-h-[100dvh] flex flex-col justify-center">
+    <section className="relative isolate overflow-hidden min-h-[88dvh] flex flex-col justify-center">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-[rgb(var(--bg))]/85 via-[rgb(var(--bg))]/50 to-[rgb(var(--bg))]/92 z-20 pointer-events-none" />
         <motion.div
@@ -106,19 +106,11 @@ export default function HeroSection() {
         >
           {hero.subline}
         </motion.p>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.85 }}
-          className="mt-5 text-sm sm:text-base text-[rgb(var(--text-subtle))] max-w-2xl mx-auto leading-relaxed border-l-2 border-accent/40 pl-4 text-left sm:text-center sm:border-l-0 sm:pl-0 sm:border-0"
-        >
-          {colorStory}
-        </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.05 }}
-          className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center"
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <a href="#contact">
             <Button size="lg" className="px-8 py-4 text-lg font-semibold w-full sm:w-auto min-w-[200px]">
@@ -144,9 +136,9 @@ export default function HeroSection() {
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           className="flex flex-col items-center gap-2 text-[rgb(var(--text-muted))] cursor-pointer bg-transparent border-0 p-0 font-inherit"
-          onClick={() => document.getElementById('featured-strip')?.scrollIntoView({ behavior: 'smooth' })}
+          onClick={() => document.getElementById('latest')?.scrollIntoView({ behavior: 'smooth' })}
         >
-          <span className="text-sm font-medium">Selected work</span>
+          <span className="text-sm font-medium">Recent albums</span>
           <span className="w-6 h-10 border-2 border-neutral-400/80 rounded-full flex justify-center">
             <span className="w-1 h-3 bg-neutral-400 rounded-full mt-2 block" />
           </span>
