@@ -43,13 +43,13 @@ export function getProjectBySlug(slug: string): Project | undefined {
 const projects: Project[] = [
   {
     slug: 'blue-mustang',
-    title: 'Blue Mustang',
+    title: 'S550 Mustang GT',
     category: 'Automotive',
     date: '2026-09-23',
     cover: '/gallery/blue-mustang/blue-mustang-crosswalk.jpg',
     downloadAccess: 'none',
     blurb: 'Motion, street light, and a Mustang that owns the frame.',
-    seoDescription: 'Blue Mustang automotive photography by ISO.Regret in Jacksonville, Florida.',
+    seoDescription: 'S550 Ford Mustang GT automotive photography by ISO.Regret in Jacksonville, Florida.',
     images: [
       '/gallery/blue-mustang/blue-mustang-crosswalk.jpg',
       '/gallery/blue-mustang/blue-mustang-roller.jpg',
@@ -59,13 +59,13 @@ const projects: Project[] = [
   },
   {
     slug: 'green-macan',
-    title: 'Green Macan',
+    title: '2018 Porsche Macan GTS',
     category: 'Automotive',
     date: '2026-09-22',
     cover: '/gallery/green-macan/green-macan.jpg',
     downloadAccess: 'none',
     blurb: 'A Porsche Macan in the last light of the day.',
-    seoDescription: 'Green Porsche Macan automotive portrait by ISO.Regret in Jacksonville, Florida.',
+    seoDescription: '2018 Porsche Macan GTS automotive photography by ISO.Regret in Jacksonville, Florida.'
     images: ['/gallery/green-macan/green-macan.jpg'],
   },
   {
