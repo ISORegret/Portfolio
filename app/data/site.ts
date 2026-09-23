@@ -33,7 +33,7 @@ export const siteConfig = {
     'True-to-life color for listings, punch and atmosphere for cars and events, and mood when the story calls for it—graded for wherever your images live.',
   hero: {
     /** Your image in /public — swap anytime */
-    imageSrc: '/gallery/waterfront-auto-show-2026/cover.jpg',
+    imageSrc: '/gallery/green-macan/green-macan.jpg',
     imageAlt:
       'Automotive and car show photography at a waterfront event in Jacksonville, Florida — ISO.Regret photographer',
     /**
@@ -50,6 +50,9 @@ export const siteConfig = {
   },
   /** Slugs of projects to show in the horizontal “selected work” strip (order preserved) */
   featuredStripSlugs: [
+    'blue-mustang',
+    'green-macan',
+    'blue-porsche',
     'waterfront-auto-show-2026',
     'caffeine-octane-jacksonville',
     'opening-of-the-beaches',
