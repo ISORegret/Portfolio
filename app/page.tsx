@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Car, Building2, Camera, Mail, Phone, MapPin, Instagram, ExternalLink, Quote, ChevronRight } from 'lucide-react';
 import ProjectCard from '../components/ProjectCard';
@@ -18,49 +17,65 @@ export default function Page() {
     <div className="bg-bg">
       <HeroSection />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16 sm:py-24">
-        {/* An image-first portfolio preview, followed by recent album entry points. */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-16 sm:py-20">
+        {/* Recent albums — entry point to full shoots */}
         <section id="latest" className="scroll-mt-24">
-          <div className="mb-8 flex flex-col justify-between gap-5 border-b border-border/70 pb-7 sm:flex-row sm:items-end">
+          <motion.div
+            className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent">Selected work / 2026</p>
-              <h2 className="font-display text-4xl font-bold tracking-tight text-[rgb(var(--text))] sm:text-6xl">The work speaks.</h2>
+              <p className="text-sm font-medium uppercase tracking-[0.18em] text-accent mb-3">Latest work</p>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">Recent albums</h2>
+              <p className="text-[rgb(var(--text-muted))] mt-3 text-base sm:text-lg max-w-2xl">
+                Curated stories from recent shoots. Open any album and start looking.
+              </p>
             </div>
-            <Link href="/work" className="inline-flex items-center gap-2 text-sm font-semibold text-[rgb(var(--text))] transition-colors hover:text-accent">
-              View all albums <ChevronRight className="h-5 w-5" aria-hidden />
+            <Link href="/work" className="inline-flex items-center gap-2 text-accent hover:text-accent-muted font-semibold whitespace-nowrap">
+              View all work <ChevronRight className="w-4 h-4" aria-hidden />
             </Link>
+          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...projects]
+              .sort((a, b) => b.date.localeCompare(a.date))
+              .slice(0, 6)
+              .map((p, i) => (
+                <motion.div
+                  key={p.slug}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, delay: i * 0.08, type: 'spring', stiffness: 100, damping: 18 }}
+                >
+                  <ProjectCard
+                    slug={p.slug}
+                    title={p.title}
+                    category={p.category}
+                    cover={p.cover}
+                    album={p.album}
+                    blurb={p.blurb}
+                    fromPath="/#latest"
+                  />
+                </motion.div>
+              ))}
           </div>
-          <div className="grid gap-3 md:grid-cols-[1.3fr_0.7fr]">
-            <Link href="/gallery/blue-porsche" className="group relative block min-h-[320px] overflow-hidden bg-bg-elevated md:min-h-[580px]">
-              <Image src="/gallery/blue-porsche/blue-porsche-front.jpg" alt="Blue Porsche photographed in Jacksonville" fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
-              <span className="absolute bottom-5 left-5 bg-black/70 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">01 / Porsche</span>
+          <motion.div
+            className="text-center mt-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-2 rounded-token border border-border/70 bg-bg-card px-5 py-3 text-[rgb(var(--text))] hover:border-accent/40 hover:bg-bg-elevated font-semibold transition-colors"
+            >
+              Explore every album <ChevronRight className="w-4 h-4" aria-hidden />
             </Link>
-            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-1">
-              <Link href="/gallery/blue-mustang" className="group relative block min-h-[260px] overflow-hidden bg-bg-elevated md:min-h-0">
-                <Image src="/gallery/blue-mustang/blue-mustang-crosswalk.jpg" alt="Blue Mustang photographed in motion" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
-                <span className="absolute bottom-5 left-5 bg-black/70 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">02 / Motion</span>
-              </Link>
-              <Link href="/gallery/blue-porsche" className="group relative block min-h-[260px] overflow-hidden bg-bg-elevated md:min-h-0">
-                <Image src="/gallery/blue-porsche/blue-porsche-detail.jpg" alt="Close-up of a blue Porsche wheel" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
-                <span className="absolute bottom-5 left-5 bg-black/70 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">03 / Details</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section aria-labelledby="recent-heading" className="scroll-mt-24">
-          <div className="mb-8 flex items-end justify-between gap-4 border-b border-border/70 pb-6">
-            <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent">Out in the field</p>
-              <h2 id="recent-heading" className="font-display text-3xl font-bold tracking-tight text-[rgb(var(--text))] sm:text-4xl">Recent albums</h2>
-            </div>
-            <Link href="/work" className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-accent hover:text-accent-muted">All albums <ChevronRight className="h-4 w-4" aria-hidden /></Link>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {['blue-mustang', 'green-macan', 'blue-porsche', 'caffeine-octane-jacksonville'].map((slug) => projects.find((project) => project.slug === slug)!).map((p) => (
-              <ProjectCard key={p.slug} slug={p.slug} title={p.title} category={p.category} cover={p.cover} album={p.album} blurb={p.blurb} fromPath="/#latest" />
-            ))}
-          </div>
+          </motion.div>
         </section>
 
         {/* Services — each card links to albums in that style */}
@@ -323,8 +338,8 @@ function Contact() {
           <CardContent className="space-y-3 text-[rgb(var(--text-muted))]">
             <div className="flex items-center gap-3 p-3 rounded-token bg-bg-elevated hover:bg-border/20 transition-colors">
               <Mail className="w-5 h-5 text-accent shrink-0" />
-              <a href="mailto:ryan@isoregret.com" className="hover:text-[rgb(var(--text))] transition-colors truncate">
-                ryan@isoregret.com
+              <a href="mailto:Brickel.Ryan@icloud.com" className="hover:text-[rgb(var(--text))] transition-colors truncate">
+                Brickel.Ryan@icloud.com
               </a>
             </div>
             <div className="flex items-center gap-3 p-3 rounded-token bg-bg-elevated hover:bg-border/20 transition-colors">

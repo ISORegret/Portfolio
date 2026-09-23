@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Instagram, Menu, X, Sun, Moon } from 'lucide-react';
+import { Camera, Instagram, Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const navLinks = [
@@ -16,12 +16,13 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-bg/80 backdrop-blur-xl supports-[backdrop-filter]:bg-bg/70">
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-16 h-[72px] flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a
           href="/"
           className="flex items-center gap-2.5 font-display font-semibold tracking-tight text-[rgb(var(--text))] hover:text-accent transition-colors"
         >
-          <span className="text-xl font-black uppercase tracking-[-0.06em]">ISO<span className="text-accent">.</span>Regret</span>
+          <Camera className="w-5 h-5 text-accent" aria-hidden />
+          <span>ISO.Regret</span>
         </a>
 
         <nav className="hidden sm:flex items-center gap-6 lg:gap-8 text-sm text-[rgb(var(--text-muted))]">
@@ -32,7 +33,7 @@ export default function SiteHeader() {
           ))}
           <a
             href="/#contact"
-            className="bg-accent text-neutral-900 hover:bg-accent-muted px-5 py-2.5 text-xs uppercase tracking-wider font-bold transition-colors shadow-soft"
+            className="rounded-token bg-accent text-neutral-900 hover:bg-accent-muted px-4 py-2 text-sm font-semibold transition-colors shadow-soft"
           >
             Book
           </a>
