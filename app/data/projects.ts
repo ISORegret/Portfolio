@@ -59,13 +59,13 @@ const projects: Project[] = [
   },
   {
     slug: 'green-macan',
-    title: '2018 Porsche Macan GTS',
+    title: '2018 Macan GTS',
     category: 'Automotive',
     date: '2026-09-22',
     cover: '/gallery/green-macan/green-macan.jpg',
     downloadAccess: 'none',
     blurb: 'A Porsche Macan in the last light of the day.',
-    seoDescription: '2018 Porsche Macan GTS automotive photography by ISO.Regret in Jacksonville, Florida.'
+    seoDescription: '2018 Porsche Macan GTS automotive photography by ISO.Regret in Jacksonville, Florida.',
     images: ['/gallery/green-macan/green-macan.jpg'],
   },
   {
