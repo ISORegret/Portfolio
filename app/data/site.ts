@@ -44,9 +44,9 @@ export const siteConfig = {
      * To disable video entirely, set to ''.
      */
     videoSrc: '',
-    headline: 'Cinematic photography & videography in Jacksonville',
+    headline: 'Cars. Motion. Atmosphere.',
     subline:
-      'Automotive events, MLS-ready real estate, and street work—with the same eye for light, color, and story. On-site shoots, polished galleries, files ready for web, print, or social.',
+      'Automotive photography and short-form video for owners, events, and brands across Jacksonville and Northeast Florida.',
   },
   /** Slugs of projects to show in the horizontal “selected work” strip (order preserved) */
   featuredStripSlugs: [
