@@ -33,9 +33,9 @@ export const siteConfig = {
     'True-to-life color for listings, punch and atmosphere for cars and events, and mood when the story calls for it—graded for wherever your images live.',
   hero: {
     /** Your image in /public — swap anytime */
-    imageSrc: '/gallery/waterfront-auto-show-2026/cover.jpg',
+    imageSrc: '/gallery/blue-mustang/s550-roller-front.webp',
     imageAlt:
-      'Automotive and car show photography at a waterfront event in Jacksonville, Florida — ISO.Regret photographer',
+      'S550 Mustang GT rolling automotive photography in Jacksonville, Florida — ISO.Regret',
     /**
      * Step 5 — Optional hero loop (plays under the still image).
      * 1) Export: H.264 .mp4, muted, ~1080p, short loop (e.g. 10–30s), keep file size reasonable for web.
