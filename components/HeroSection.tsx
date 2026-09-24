@@ -37,7 +37,7 @@ export default function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden min-h-[88dvh] flex flex-col justify-center">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgb(var(--bg))]/85 via-[rgb(var(--bg))]/50 to-[rgb(var(--bg))]/92 z-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-black/15 z-20 pointer-events-none" />
         <motion.div
           initial={{ scale: 1.06 }}
           animate={{ scale: 1 }}
@@ -66,7 +66,7 @@ export default function HeroSection() {
               <div className="relative h-full w-full">
                 <Image
                   alt={hero.imageAlt}
-                  className="object-cover opacity-[0.5]"
+                  className="object-cover opacity-[0.78]"
                   src={hero.imageSrc}
                   fill
                   priority
@@ -81,20 +81,20 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 sm:py-36 text-center">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-28 sm:pt-44 sm:pb-36 text-left">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-sm sm:text-base text-accent font-medium tracking-wide uppercase mb-4 max-w-2xl mx-auto"
+          className="text-xs sm:text-sm text-accent font-semibold tracking-[0.22em] uppercase mb-5 max-w-2xl"
         >
-          Jacksonville, FL · Automotive · Real Estate · Street
+          Jacksonville, FL · Automotive Photography + Film
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.35 }}
-          className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[rgb(var(--text))] leading-tight"
+          className="font-display text-5xl sm:text-7xl lg:text-8xl font-bold tracking-[-0.035em] text-white leading-[0.95] max-w-5xl"
         >
           {hero.headline}
         </motion.h1>
@@ -102,7 +102,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, delay: 0.55 }}
-          className="mt-6 text-[rgb(var(--text-muted))] max-w-3xl mx-auto text-lg sm:text-xl leading-relaxed"
+          className="mt-7 text-white/75 max-w-2xl text-base sm:text-xl leading-relaxed"
         >
           {hero.subline}
         </motion.p>
@@ -110,16 +110,16 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="mt-10 flex flex-col sm:flex-row gap-3 items-start sm:items-center"
         >
           <a href="#contact">
             <Button size="lg" className="px-8 py-4 text-lg font-semibold w-full sm:w-auto min-w-[200px]">
-              Book a shoot
+              View the work
             </Button>
           </a>
           <a href="#latest">
             <Button variant="secondary" size="lg" className="px-8 py-4 text-lg font-semibold w-full sm:w-auto min-w-[200px]">
-              View recent work
+              Book a shoot
             </Button>
           </a>
         </motion.div>
@@ -129,7 +129,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        className="absolute bottom-8 left-4 sm:left-6 lg:left-[max(2rem,calc((100vw-80rem)/2+2rem))] z-20"
       >
         <motion.button
           type="button"
