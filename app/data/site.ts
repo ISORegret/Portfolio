@@ -52,7 +52,6 @@ export const siteConfig = {
   featuredStripSlugs: [
     'blue-mustang',
     'green-macan',
-    'blue-porsche',
     'waterfront-auto-show-2026',
     'caffeine-octane-jacksonville',
     'opening-of-the-beaches',
