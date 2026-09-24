@@ -11,7 +11,7 @@ const BLUR_DATA =
 
 export default function HeroSection() {
   const { hero } = siteConfig;
-  const wantsVideo = Boolean(hero.videoSrc && hero.videoSrc.length > 0);
+  const wantsVideo = Boolean(hero.videoSrc);
   const [videoFailed, setVideoFailed] = useState(false);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
 
