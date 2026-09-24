@@ -1,0 +1,34 @@
+name: Import Macan gallery
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: "!contains(github.event.head_commit.message, 'Add Macan gallery images')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download gallery package
+        run: |
+          curl -fL "https://at.adobe.com/N6A67BQGlwoAEi7K" -o /tmp/macan.zip
+          mkdir -p public/gallery/green-macan
+          unzip -o /tmp/macan.zip -d public/gallery/green-macan
+          rm -f public/gallery/green-macan/README.txt
+      - name: Commit gallery images
+        run: |
+          git config user.name "ISORegret"
+          git config user.email "rtaylorbrick@gmail.com"
+          git add public/gallery/green-macan
+          if git diff --cached --quiet; then
+            echo "No gallery changes"
+            exit 0
+          fi
+          git commit -m "Add Macan gallery images"
+          git push origin HEAD:main
