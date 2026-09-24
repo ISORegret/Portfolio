@@ -729,17 +729,17 @@ const projects: Project[] = [
   {
     slug: 'architecture',
     title: 'Architecture',
-    category: 'Real Estate',
+    category: 'Street',
     date: '2025-12-20',
     cover: '/gallery/Architecture/cover.jpg',
     downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/stjohnscountypermitcenter/',
-    blurb: 'Architecture.',
-    seoTitle: 'Architecture & civic spaces — real estate photography Jacksonville | ISO.Regret',
+    blurb: 'Architecture and civic spaces.',
+    seoTitle: 'Architecture & civic spaces photography Jacksonville | ISO.Regret',
     seoDescription:
-      'Interiors, exteriors, and civic architecture — MLS-ready files and editorial-style frames for marketing and portfolios.',
+      'Editorial architecture, civic spaces, interiors, exteriors, and structural details photographed by ISO.Regret in Jacksonville, Florida.',
     story:
-      'Mixed natural and controlled light to keep glass and structure honest while staying inviting — ideal for listings and long-form case studies.',
+      'A street and architectural study focused on structure, geometry, natural light, glass, and the character of civic spaces.',
     images: [
       '/gallery/Architecture/_DSC1481.jpg',
       '/gallery/Architecture/_DSC1486.jpg',
