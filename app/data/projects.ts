@@ -66,6 +66,7 @@ const projects: Project[] = [
     downloadAccess: 'none',
     blurb: 'A Porsche Macan in the last light of the day.',
     seoDescription: '2018 Porsche Macan GTS automotive photography by ISO.Regret in Jacksonville, Florida.',
+    fullAlbumUrl: 'https://isoregret.pixieset.com/macangts2018/',
     images: ['/gallery/green-macan/green-macan.jpg'],
   },
   {
