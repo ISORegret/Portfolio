@@ -1,0 +1,34 @@
+name: Import S550 gallery
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: "!contains(github.event.head_commit.message, 'Add S550 gallery images')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download S550 gallery package
+        run: |
+          curl -fL "https://at.adobe.com/8vno5c08nBfgAuM3" -o /tmp/s550.zip
+          mkdir -p public/gallery/blue-mustang
+          unzip -o /tmp/s550.zip -d public/gallery/blue-mustang
+          rm -rf public/gallery/blue-porsche
+      - name: Commit gallery changes
+        run: |
+          git config user.name "ISORegret"
+          git config user.email "rtaylorbrick@gmail.com"
+          git add -A public/gallery/blue-mustang public/gallery/blue-porsche
+          if git diff --cached --quiet; then
+            echo "No gallery changes"
+            exit 0
+          fi
+          git commit -m "Add S550 gallery images and remove Blue Porsche assets"
+          git push origin HEAD:main
