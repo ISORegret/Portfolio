@@ -43,7 +43,7 @@ export const siteConfig = {
      * 3) Path below must stay `/hero-reel.mp4`. If the file is missing, the hero uses the still only (no broken UI).
      * To disable video entirely, set to ''.
      */
-    videoSrc: '/hero-reel.mp4',
+    videoSrc: '',
     headline: 'Cinematic photography & videography in Jacksonville',
     subline:
       'Automotive events, MLS-ready real estate, and street work—with the same eye for light, color, and story. On-site shoots, polished galleries, files ready for web, print, or social.',
