@@ -35,7 +35,7 @@ export const siteConfig = {
     /** Your image in /public — swap anytime */
     imageSrc: '/gallery/blue-mustang/s550-roller-front.webp',
     imageAlt:
-      'S550 Mustang GT rolling automotive photography in Jacksonville, Florida — ISO.Regret',
+      'S650 Mustang GT Premium rolling automotive photography in Jacksonville, Florida — ISO.Regret',
     /**
      * Step 5 — Optional hero loop (plays under the still image).
      * 1) Export: H.264 .mp4, muted, ~1080p, short loop (e.g. 10–30s), keep file size reasonable for web.
