@@ -43,13 +43,13 @@ export function getProjectBySlug(slug: string): Project | undefined {
 const projects: Project[] = [
   {
     slug: 'blue-mustang',
-    title: 'S550 Mustang GT',
+    title: 'S650 Mustang GT Premium',
     category: 'Automotive',
     date: '2026-09-23',
     cover: '/gallery/blue-mustang/blue-mustang-crosswalk.jpg',
     downloadAccess: 'none',
     blurb: 'Motion, street light, and a Mustang that owns the frame.',
-    seoDescription: 'S550 Ford Mustang GT automotive photography by ISO.Regret in Jacksonville, Florida.',
+    seoDescription: 'S650 Ford Mustang GT Premium automotive photography by ISO.Regret in Jacksonville, Florida.',
     curatedImages: [
       '/gallery/blue-mustang/blue-mustang-crosswalk.jpg',
       '/gallery/blue-mustang/s550-side-profile.webp',
