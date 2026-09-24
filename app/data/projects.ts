@@ -272,7 +272,7 @@ const projects: Project[] = [
     date: '2026-03-09',
     cover: '/gallery/caffeine-octane-jacksonville/cover.jpg',
     downloadAccess: 'none',
-    album: 'https://isoregret.pixieset.com/caffeineandoctanejacksonville/',
+    album: 'https://isoregret.pixieset.com/caffeineandoctane/',
     blurb: 'Cars and coffee energy at the Jacksonville meet.',
     seoTitle: 'Caffeine and Octane Jacksonville — cars & coffee photography | ISO.Regret',
     seoDescription:
