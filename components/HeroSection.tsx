@@ -112,12 +112,12 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mt-10 flex flex-col sm:flex-row gap-3 items-start sm:items-center"
         >
-          <a href="#contact">
+          <a href="#latest">
             <Button size="lg" className="px-8 py-4 text-lg font-semibold w-full sm:w-auto min-w-[200px]">
               View the work
             </Button>
           </a>
-          <a href="#latest">
+          <a href="#contact">
             <Button variant="secondary" size="lg" className="px-8 py-4 text-lg font-semibold w-full sm:w-auto min-w-[200px]">
               Book a shoot
             </Button>
