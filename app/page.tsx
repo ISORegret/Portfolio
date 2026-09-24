@@ -3,104 +3,108 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Instagram, Mail, MapPin } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, Instagram, Mail } from 'lucide-react';
 import { projects } from './data/projects';
 
-const picks = ['blue-mustang','green-macan','caffeine-octane-jacksonville','waterfront-auto-show-2026']
-  .map((slug) => projects.find((p) => p.slug === slug))
-  .filter(Boolean);
+const project = (slug:string) => projects.find(p => p.slug === slug)!;
+const mustang=project('blue-mustang');
+const macan=project('green-macan');
+const event=projects.find(p => p.slug === 'caffeine-octane-jacksonville') || projects.find(p => p.slug === 'waterfront-auto-show-2026')!;
+const more=projects.filter(p=>![mustang.slug,macan.slug,event.slug].includes(p.slug)).slice(0,5);
 
-export default function Page() {
-  return (
-    <div className="editorial-home bg-[#080808] text-white">
-      <section className="relative min-h-[100svh] overflow-hidden">
-        <Image
-          src="/gallery/blue-mustang/blue-mustang-roller.jpg"
-          alt="S550 Mustang GT photographed by ISO.Regret"
-          fill priority sizes="100vw"
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/90" />
-        <div className="absolute inset-x-0 bottom-0 mx-auto max-w-[1500px] px-5 pb-12 sm:px-10 sm:pb-16 lg:px-16 lg:pb-20">
-          <motion.p initial={{opacity:0,y:14}} animate={{opacity:1,y:0}} transition={{duration:.7}}
-            className="mb-4 text-xs font-semibold uppercase tracking-[.32em] text-white/70">
-            Jacksonville, Florida · Automotive Photography
-          </motion.p>
-          <motion.h1 initial={{opacity:0,y:25}} animate={{opacity:1,y:0}} transition={{duration:.8,delay:.1}}
-            className="max-w-5xl font-display text-[clamp(3.6rem,10vw,9rem)] font-bold uppercase leading-[.78] tracking-[-.06em]">
-            ISO<br/><span className="text-[#d3272e]">Regret</span>
-          </motion.h1>
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:.8,delay:.35}}
-            className="mt-8 flex flex-wrap items-center gap-5">
-            <a href="#work" className="inline-flex items-center gap-2 border border-white/30 bg-black/20 px-5 py-3 text-sm font-semibold backdrop-blur-md transition hover:bg-white hover:text-black">
-              View selected work <ArrowRight className="h-4 w-4"/>
-            </a>
-            <a href="#contact" className="text-sm font-semibold text-white/80 transition hover:text-white">Available for shoots →</a>
-          </motion.div>
-        </div>
-      </section>
+function Label({children}:{children:React.ReactNode}) {
+ return <span className="text-[10px] font-semibold uppercase tracking-[.3em] text-white/45">{children}</span>;
+}
 
-      <main>
-        <section id="work" className="mx-auto max-w-[1500px] px-5 py-24 sm:px-10 lg:px-16 lg:py-32">
-          <div className="mb-12 flex items-end justify-between gap-6 border-b border-white/15 pb-5">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[.28em] text-[#d3272e]">Portfolio</p>
-              <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-[-.04em] sm:text-6xl">Selected work</h2>
-            </div>
-            <Link href="/work" className="hidden items-center gap-2 text-sm text-white/60 transition hover:text-white sm:flex">All albums <ArrowRight className="h-4 w-4"/></Link>
-          </div>
-
-          <div className="space-y-16 lg:space-y-24">
-            {picks.map((p:any, i) => (
-              <motion.article key={p.slug} initial={{opacity:0,y:35}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-80px'}} transition={{duration:.65}}
-                className={i % 2 ? 'lg:ml-[16%]' : 'lg:mr-[16%]'}>
-                <Link href={'/gallery/'+encodeURIComponent(p.slug)} className="group block">
-                  <div className={'relative overflow-hidden bg-neutral-900 ' + (i===0 ? 'aspect-[16/9]' : i===1 ? 'aspect-[3/2]' : 'aspect-[16/10]')}>
-                    <Image src={p.cover} alt={p.title} fill sizes="(min-width:1024px) 84vw,100vw" className="object-cover transition duration-700 group-hover:scale-[1.025]"/>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-70"/>
-                    <span className="absolute bottom-4 right-4 border border-white/25 bg-black/25 px-3 py-2 text-[10px] font-semibold uppercase tracking-[.22em] backdrop-blur-md">Open album</span>
-                  </div>
-                  <div className="mt-5 flex items-start justify-between gap-5">
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[.24em] text-[#d3272e]">{p.category}</p>
-                      <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-.025em] sm:text-4xl">{p.title}</h3>
-                    </div>
-                    <ArrowRight className="mt-2 h-5 w-5 text-white/50 transition group-hover:translate-x-1 group-hover:text-white"/>
-                  </div>
-                </Link>
-              </motion.article>
-            ))}
-          </div>
-          <Link href="/work" className="mt-14 inline-flex items-center gap-2 border-b border-white/40 pb-1 text-sm font-semibold sm:hidden">All albums <ArrowRight className="h-4 w-4"/></Link>
-        </section>
-
-        <section className="border-y border-white/10 bg-[#0d0d0d]">
-          <div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-20 sm:px-10 lg:grid-cols-[1.2fr_.8fr] lg:px-16 lg:py-28">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[.28em] text-[#d3272e]">The work</p>
-              <h2 className="mt-4 max-w-3xl font-display text-4xl font-bold uppercase leading-[.95] tracking-[-.04em] sm:text-6xl">Cars should look as good in the frame as they feel from the driver’s seat.</h2>
-            </div>
-            <div className="self-end text-base leading-7 text-white/60 sm:text-lg">
-              <p>Automotive photography and video built around motion, light, paint and the details owners obsess over. Individual shoots, rolling sets, meets and brand content across Northeast Florida.</p>
-              <a href="#contact" className="mt-7 inline-flex items-center gap-2 font-semibold text-white">Plan a shoot <ArrowRight className="h-4 w-4"/></a>
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="mx-auto max-w-[1500px] px-5 py-24 sm:px-10 lg:px-16 lg:py-32">
-          <div className="grid gap-12 lg:grid-cols-2">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[.28em] text-[#d3272e]">Bookings</p>
-              <h2 className="mt-4 font-display text-5xl font-bold uppercase leading-[.9] tracking-[-.05em] sm:text-7xl">Have a car?<br/>Let’s shoot it.</h2>
-            </div>
-            <div className="flex flex-col justify-end gap-5 text-white/70">
-              <a href="mailto:Brickel.Ryan@icloud.com" className="flex items-center gap-3 border-b border-white/15 pb-4 text-lg transition hover:text-white"><Mail className="h-5 w-5 text-[#d3272e]"/>Brickel.Ryan@icloud.com</a>
-              <div className="flex items-center gap-3 border-b border-white/15 pb-4 text-lg"><MapPin className="h-5 w-5 text-[#d3272e]"/>Jacksonville, Florida</div>
-              <a href="https://instagram.com/iso.regret" target="_blank" rel="noreferrer" className="flex items-center gap-3 border-b border-white/15 pb-4 text-lg transition hover:text-white"><Instagram className="h-5 w-5 text-[#d3272e]"/>@iso.regret</a>
-            </div>
-          </div>
-        </section>
-      </main>
+export default function Page(){
+ return <div className="bg-[#070707] text-white selection:bg-white selection:text-black">
+  <section className="relative min-h-[100svh]">
+   <Image src="/gallery/blue-mustang/blue-mustang-roller.jpg" alt="S550 Mustang GT by ISO.Regret" fill priority sizes="100vw" className="object-cover"/>
+   <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80"/>
+   <div className="absolute bottom-0 left-0 right-0 mx-auto max-w-[1600px] px-5 pb-10 sm:px-10 lg:px-16 lg:pb-14">
+    <Label>Jacksonville · Florida</Label>
+    <h1 className="mt-3 font-display text-[clamp(3.7rem,11vw,10rem)] font-bold uppercase leading-[.78] tracking-[-.065em]">ISO<span className="text-white/35">.</span>REGRET</h1>
+    <div className="mt-7 flex items-end justify-between gap-8 border-t border-white/25 pt-5">
+     <p className="max-w-lg text-sm leading-6 text-white/65 sm:text-base">Automotive photography and motion. Built around the car, the location and the light.</p>
+     <a href="#featured" className="hidden items-center gap-2 text-xs font-semibold uppercase tracking-[.18em] sm:flex">Selected work <ArrowDownRight className="h-4 w-4"/></a>
     </div>
-  );
+   </div>
+  </section>
+
+  <main id="featured">
+   <section className="mx-auto max-w-[1600px] px-5 py-24 sm:px-10 lg:px-16 lg:py-36">
+    <div className="grid items-end gap-8 lg:grid-cols-[.36fr_1fr]">
+     <div className="pb-3 lg:pb-14">
+      <Label>01 · Personal</Label>
+      <h2 className="mt-4 font-display text-5xl font-bold uppercase leading-[.86] tracking-[-.055em] sm:text-7xl lg:text-8xl">2018<br/>Macan<br/><span className="text-white/35">GTS</span></h2>
+      <p className="mt-6 max-w-xs text-sm leading-6 text-white/50">Golden-hour Porsche study. Shape, reflections and details without overworking the frame.</p>
+      <Link href={'/gallery/'+macan.slug} className="mt-7 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-xs font-semibold uppercase tracking-[.18em]">View story <ArrowRight className="h-3.5 w-3.5"/></Link>
+     </div>
+     <Link href={'/gallery/'+macan.slug} className="group relative aspect-[4/3] overflow-hidden lg:aspect-[16/10]">
+      <Image src="/gallery/green-macan/05-sunset-three-quarter.webp" alt={macan.title} fill sizes="(min-width:1024px) 70vw,100vw" className="object-cover transition duration-1000 group-hover:scale-[1.015]"/>
+     </Link>
+    </div>
+    <div className="mt-4 grid grid-cols-[1.15fr_.85fr] gap-4 sm:ml-[24%]">
+     <div className="relative aspect-[16/10] overflow-hidden"><Image src="/gallery/green-macan/04-side-profile-forest.webp" alt="" fill sizes="60vw" className="object-cover"/></div>
+     <div className="relative aspect-[4/5] overflow-hidden"><Image src="/gallery/green-macan/22-sunset-wheel-vertical.webp" alt="" fill sizes="35vw" className="object-cover"/></div>
+    </div>
+   </section>
+
+   <section className="overflow-hidden border-y border-white/10 bg-[#0b0b0b] py-24 lg:py-36">
+    <div className="mx-auto max-w-[1600px] px-5 sm:px-10 lg:px-16">
+     <div className="mb-9 flex items-end justify-between">
+      <div><Label>02 · Street / Motion</Label><h2 className="mt-3 font-display text-5xl font-bold uppercase tracking-[-.05em] sm:text-7xl">S550 Mustang GT</h2></div>
+      <span className="hidden text-8xl font-bold tracking-[-.08em] text-white/[.035] lg:block">S550</span>
+     </div>
+     <Link href={'/gallery/'+mustang.slug} className="group block">
+      <div className="relative aspect-[16/8] min-h-[330px] overflow-hidden">
+       <Image src="/gallery/blue-mustang/s550-roller-front.webp" alt={mustang.title} fill sizes="100vw" className="object-cover transition duration-1000 group-hover:scale-[1.015]"/>
+      </div>
+     </Link>
+     <div className="mt-4 grid grid-cols-12 gap-4">
+      <div className="relative col-span-5 aspect-[4/5] overflow-hidden sm:col-span-4"><Image src="/gallery/blue-mustang/s550-front-detail.webp" alt="" fill sizes="34vw" className="object-cover"/></div>
+      <div className="relative col-span-7 mt-12 aspect-[3/2] overflow-hidden sm:col-span-6 sm:col-start-7 sm:mt-20"><Image src="/gallery/blue-mustang/s550-rear-sunset.webp" alt="" fill sizes="55vw" className="object-cover"/></div>
+     </div>
+     <div className="mt-8 flex justify-end"><Link href={'/gallery/'+mustang.slug} className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.18em]">Explore the full set <ArrowRight className="h-4 w-4"/></Link></div>
+    </div>
+   </section>
+
+   <section className="mx-auto max-w-[1600px] px-5 py-24 sm:px-10 lg:px-16 lg:py-36">
+    <div className="grid gap-10 lg:grid-cols-[.42fr_1fr]">
+     <div className="lg:sticky lg:top-28 lg:self-start">
+      <Label>03 · Event coverage</Label>
+      <h2 className="mt-4 font-display text-4xl font-bold uppercase leading-[.9] tracking-[-.045em] sm:text-6xl">{event.title}</h2>
+      <p className="mt-6 max-w-sm text-sm leading-6 text-white/50">{event.blurb}</p>
+      <Link href={'/gallery/'+encodeURIComponent(event.slug)} className="mt-7 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-xs font-semibold uppercase tracking-[.18em]">Open coverage <ArrowRight className="h-3.5 w-3.5"/></Link>
+     </div>
+     <div className="grid grid-cols-2 gap-3">
+      {(event.images||[]).slice(0,6).map((src,i)=><div key={src} className={'relative overflow-hidden '+(i===0?'col-span-2 aspect-[16/9]':i===3?'col-span-2 aspect-[16/7]':'aspect-[4/5]')}><Image src={src} alt="" fill sizes={i===0||i===3?'70vw':'35vw'} className="object-cover"/></div>)}
+     </div>
+    </div>
+   </section>
+
+   <section className="border-t border-white/10 py-20 lg:py-28">
+    <div className="mx-auto max-w-[1600px] px-5 sm:px-10 lg:px-16">
+     <div className="mb-8 flex items-end justify-between"><div><Label>Archive</Label><h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-[-.035em] sm:text-5xl">More work</h2></div><Link href="/work" className="text-xs font-semibold uppercase tracking-[.18em] text-white/55">View all →</Link></div>
+     <div className="-mx-5 flex snap-x gap-3 overflow-x-auto px-5 pb-4 sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16">
+      {more.map((p,i)=><Link href={'/gallery/'+encodeURIComponent(p.slug)} key={p.slug} className="group min-w-[72vw] snap-start sm:min-w-[42vw] lg:min-w-[29vw]">
+       <div className="relative aspect-[3/2] overflow-hidden"><Image src={p.cover} alt={p.title} fill sizes="40vw" className="object-cover transition duration-700 group-hover:scale-[1.02]"/></div>
+       <div className="mt-3 flex items-start justify-between gap-4"><div><p className="text-[9px] uppercase tracking-[.2em] text-white/35">{String(i+4).padStart(2,'0')} · {p.category}</p><h3 className="mt-1 font-display text-xl font-semibold">{p.title}</h3></div><ArrowRight className="mt-1 h-4 w-4 text-white/35"/></div>
+      </Link>)}
+     </div>
+    </div>
+   </section>
+
+   <section id="contact" className="border-t border-white/10 bg-white text-black">
+    <div className="mx-auto grid max-w-[1600px] gap-12 px-5 py-20 sm:px-10 lg:grid-cols-[1fr_.55fr] lg:px-16 lg:py-28">
+     <h2 className="font-display text-5xl font-bold uppercase leading-[.85] tracking-[-.055em] sm:text-7xl lg:text-8xl">Your car.<br/>My camera.<br/><span className="text-black/25">Let’s make it.</span></h2>
+     <div className="flex flex-col justify-end gap-5">
+      <a href="mailto:Brickel.Ryan@icloud.com" className="flex items-center gap-3 border-b border-black/20 pb-4 font-semibold"><Mail className="h-4 w-4"/>Brickel.Ryan@icloud.com</a>
+      <a href="https://instagram.com/iso.regret" target="_blank" rel="noreferrer" className="flex items-center gap-3 border-b border-black/20 pb-4 font-semibold"><Instagram className="h-4 w-4"/>@iso.regret</a>
+      <p className="text-sm text-black/55">Jacksonville, Florida · Available for automotive shoots, events and brand work.</p>
+     </div>
+    </div>
+   </section>
+  </main>
+ </div>
 }
