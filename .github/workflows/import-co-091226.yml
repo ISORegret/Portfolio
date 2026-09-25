@@ -16,7 +16,7 @@ jobs:
       - run: pip install pillow
       - name: Download and optimize gallery
         env:
-          ZIP_URL: https://at.adobe.com/EprwgTiTbNeZVXEC
+          ZIP_URL: https://at.adobe.com/csrUmSHddf3ijHDq
         run: |
           set -e
           rm -rf /tmp/co912 public/gallery/caffeine-octane-jacksonville-2026-09-12
