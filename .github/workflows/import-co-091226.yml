@@ -1,6 +1,8 @@
 name: Import Caffeine Octane 09.12.26
 on:
-  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/import-co-091226.yml'
 permissions:
   contents: write
 jobs:
