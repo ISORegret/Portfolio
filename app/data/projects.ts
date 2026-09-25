@@ -42,6 +42,27 @@ export function getProjectBySlug(slug: string): Project | undefined {
 // Each album: optional `album` = Pixieset URL for the full high-res set. The website is a curated, view-only preview.
 const projects: Project[] = [
   {
+    slug: 'caffeine-octane-jacksonville-2026-09-12',
+    title: 'Caffeine & Octane — Jacksonville · 09.12.26',
+    category: 'Automotive',
+    date: '2026-09-12',
+    cover: '/gallery/caffeine-octane-jacksonville-2026-09-12/cover.webp',
+    downloadAccess: 'none',
+    album: 'https://isoregret.pixieset.com/caffeineandoctane/',
+    blurb: 'Caffeine & Octane Jacksonville — September 12, 2026.',
+    seoTitle: 'Caffeine & Octane Jacksonville — September 12, 2026 | ISO.Regret',
+    seoDescription:
+      'Caffeine & Octane Jacksonville automotive event photography from September 12, 2026 by ISO.Regret.',
+    story:
+      'A late-summer Jacksonville Caffeine & Octane set focused on standout builds, details, and the atmosphere around the meet.',
+    curatedImages: [
+      '/gallery/caffeine-octane-jacksonville-2026-09-12/cover.webp',
+    ],
+    images: [
+      '/gallery/caffeine-octane-jacksonville-2026-09-12/cover.webp',
+    ],
+  },
+  {
     slug: 'blue-mustang',
     title: 'S650 Mustang GT Premium',
     category: 'Automotive',
@@ -272,7 +293,7 @@ const projects: Project[] = [
     date: '2026-03-09',
     cover: '/gallery/caffeine-octane-jacksonville/cover.jpg',
     downloadAccess: 'none',
-    album: 'https://isoregret.pixieset.com/caffeineandoctane/',
+    album: 'https://isoregret.pixieset.com/caffeineandoctanejacksonville/',
     blurb: 'Cars and coffee energy at the Jacksonville meet.',
     seoTitle: 'Caffeine and Octane Jacksonville — cars & coffee photography | ISO.Regret',
     seoDescription:
