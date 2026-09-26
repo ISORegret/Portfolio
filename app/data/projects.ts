@@ -46,7 +46,7 @@ const projects: Project[] = [
     title: 'Caffeine & Octane — Jacksonville · 09.12.26',
     category: 'Automotive',
     date: '2026-09-12',
-    cover: '/gallery/caffeine-octane-jacksonville-2026-09-12/DSC04316.webp',
+    cover: '/gallery/caffeine-octane-jacksonville-2026-09-12/DSC04318.webp',
     downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/caffeineandoctane/',
     blurb: 'Caffeine & Octane Jacksonville — September 12, 2026.',
