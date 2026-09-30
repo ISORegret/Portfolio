@@ -26,6 +26,8 @@ export type Project = {
   seoTitle?: string
   /** Optional meta description; defaults to `blurb` */
   seoDescription?: string
+  /** Maximum on-site images; defaults to 24. */
+  galleryLimit?: number
   images?: string[]
 };
 
@@ -41,6 +43,68 @@ export function getProjectBySlug(slug: string): Project | undefined {
 
 // Each album: optional `album` = Pixieset URL for the full high-res set. The website is a curated, view-only preview.
 const projects: Project[] = [
+  {
+    slug: 'endless-summer-showcase-2026-09-26',
+    title: 'Endless Summer Showcase',
+    category: 'Automotive',
+    date: '2026-09-26',
+    cover: '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-46.webp',
+    downloadAccess: 'none',
+    galleryLimit: 47,
+    blurb: 'Endless Summer Showcase — downtown Jacksonville · September 26, 2026.',
+    seoTitle: 'Endless Summer Showcase Jacksonville 2026 | ISO.Regret',
+    seoDescription: 'A 47-photo album from Endless Summer Showcase in downtown Jacksonville, photographed by ISO.Regret on September 26, 2026.',
+    images: [
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-2.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-3.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-4.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-5.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-6.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-7.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-8.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-9.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-10.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-11.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-12.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-13.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-14.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-15.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-16.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-17.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-18.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-19.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-20.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-21.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-22.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-23.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-24.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-25.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-26.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-27.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-28.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-29.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-30.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-31.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-32.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-33.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-34.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-35.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-36.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-37.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-38.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-39.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-40.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-41.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-42.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-43.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-44.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-45.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-46.webp',
+      '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-47.webp',
+    ],
+  },
+
   {
     slug: 'caffeine-octane-jacksonville-2026-09-12',
     title: 'Caffeine & Octane — Jacksonville · 09.12.26',

@@ -55,7 +55,7 @@ export default function AlbumPage({ params, searchParams }: Props) {
   const back = resolveAlbumBack(searchParams?.from);
 
   const curatedImages = project.curatedImages?.length ? project.curatedImages : project.images ?? [];
-  const allImages = Array.from(new Set([project.cover, ...curatedImages])).slice(0, 24);
+  const allImages = Array.from(new Set([project.cover, ...curatedImages])).slice(0, project.galleryLimit ?? 24);
 
   return (
     <div className="min-h-screen bg-bg">
