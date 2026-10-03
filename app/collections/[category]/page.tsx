@@ -26,7 +26,7 @@ export default function Page({ params }: { params: { category: string } }) {
       ) : (
         <>
           <header>
-            <h1 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">{category}</h1>
+            <h1 className="iso-heading">{category}</h1>
             <p className="text-[rgb(var(--text-muted))] mt-2 text-lg">Albums in this category — open a card for the full set.</p>
             <div className="w-16 h-0.5 bg-accent/60 rounded-full mt-4" aria-hidden />
           </header>

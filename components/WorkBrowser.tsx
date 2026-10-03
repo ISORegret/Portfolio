@@ -21,7 +21,7 @@ export default function WorkBrowser() {
   return (
     <>
       <div
-        className="sticky top-16 z-30 -mx-4 mb-10 overflow-x-auto border-y border-border/50 bg-bg/90 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:overflow-visible sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
+        className="sticky top-[68px] z-30 -mx-4 mb-10 overflow-x-auto border-y border-border/50 bg-bg/90 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:overflow-visible sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
         aria-label="Filter albums"
       >
         <div className="flex min-w-max gap-2 sm:min-w-0 sm:justify-center">
@@ -46,7 +46,7 @@ export default function WorkBrowser() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="iso-home-albums">
         {visibleProjects.map((project) => (
           <ProjectCard key={project.slug} {...project} fromPath="/work" />
         ))}

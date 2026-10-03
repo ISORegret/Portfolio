@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { thumbnailLoader } from '../lib/preparedImageLoader';
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { X, ChevronLeft, ChevronRight, Download, Lock } from 'lucide-react';
 
@@ -177,11 +178,13 @@ export default function AlbumGallery({
         {images.map((src, i) => (
           <button
             type="button"
+            aria-label={`Open ${title} photo ${i + 1}`}
             key={`${src}-${i}`}
             onClick={() => setLightboxIndex(i)}
             className="aspect-[4/3] relative overflow-hidden rounded-token-lg bg-bg-elevated text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
           >
             <Image
+              loader={thumbnailLoader}
               src={src}
               alt={`${title} — photo ${i + 1}`}
               fill

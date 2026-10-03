@@ -1,64 +1,13 @@
 'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import { albumHrefWithFrom } from '../lib/albumBackNavigation';
-import { Card, CardContent, CardHeader, CardTitle } from './ui';
-
-// Minimal blur placeholder for image loading (tiny gray gradient)
-const BLUR_DATA =
-  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQAD8QDu/9k=';
-
-type Props = {
-  slug: string;
-  title: string;
-  category: 'Automotive' | 'Real Estate' | 'Street';
-  cover: string;
-  album?: string;
-  blurb?: string;
-  /** Where the user came from — album page back link matches this */
-  fromPath?: string;
-};
-
-export default function ProjectCard({ slug, title, category, cover, blurb, fromPath }: Props) {
-  const albumPath = fromPath ? albumHrefWithFrom(slug, fromPath) : `/gallery/${encodeURIComponent(slug)}`;
-  return (
-    <Link href={albumPath} className="block group">
-      <Card className="overflow-hidden border-border/60 bg-bg-card hover:border-accent/30 hover:shadow-glow transition-all duration-300 h-full flex flex-col">
-        <div className="relative h-56 overflow-hidden">
-          <Image
-            src={cover}
-            alt={title}
-            fill
-            sizes="(min-width: 1024px) 33vw, 100vw"
-            style={{ objectFit: 'cover' }}
-            className="group-hover:scale-105 transition-transform duration-500 ease-out"
-            placeholder="blur"
-            blurDataURL={BLUR_DATA}
-            unoptimized={cover.includes('pixieset.com')}
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-accent/90 text-neutral-900 px-4 py-2 text-sm font-semibold shadow-lg">
-              View album
-            </span>
-          </div>
-        </div>
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center justify-between text-[rgb(var(--text))]">
-            <span className="truncate font-display font-semibold">{title}</span>
-            <span className="text-xs font-normal text-[rgb(var(--text-muted))] ml-3 shrink-0">{category}</span>
-          </CardTitle>
-        </CardHeader>
-        {blurb && (
-          <CardContent className="pt-0 mt-auto">
-            <p className="text-sm text-[rgb(var(--text-muted))] line-clamp-2">{blurb}</p>
-            <span className="mt-3 inline-flex items-center justify-center rounded-token bg-bg-card border border-border text-[rgb(var(--text))] hover:border-border-muted hover:bg-bg-elevated text-sm font-medium px-4 py-2 transition-colors">
-              View album
-            </span>
-          </CardContent>
-        )}
-      </Card>
-    </Link>
-  );
+import { thumbnailLoader } from '../lib/preparedImageLoader';
+type Props = { slug: string; title: string; category: 'Automotive' | 'Real Estate' | 'Street'; cover: string; album?: string; blurb?: string; fromPath?: string };
+export default function ProjectCard({ slug, title, category, cover, fromPath }: Props) {
+  return <Link href={fromPath ? albumHrefWithFrom(slug, fromPath) : `/gallery/${encodeURIComponent(slug)}`} className="iso-album-card">
+    <div className="iso-album-image"><Image loader={thumbnailLoader} src={cover} alt={title} fill sizes="(min-width: 1024px) 36vw, (min-width: 640px) 50vw, 100vw" className="object-cover" unoptimized={cover.includes('pixieset.com')} referrerPolicy="no-referrer" /></div>
+    <h3>{title}<ArrowUpRight size={20} aria-hidden /></h3><p>{category} · View album</p>
+  </Link>;
 }

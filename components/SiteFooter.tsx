@@ -1,40 +1,6 @@
-'use client';
-
-import { Camera, Instagram } from 'lucide-react';
+import Link from 'next/link';
+import { Instagram } from 'lucide-react';
 import BackToTop from './BackToTop';
-
 export default function SiteFooter() {
-  return (
-    <>
-      <footer className="mt-24 border-t border-border/60">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-8">
-            <div className="flex items-center gap-2.5 font-display font-semibold text-[rgb(var(--text))]">
-              <Camera className="w-5 h-5 text-accent" aria-hidden />
-              <span>ISO.Regret</span>
-            </div>
-            <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[rgb(var(--text-muted))]">
-              <a href="/work" className="hover:text-[rgb(var(--text))] transition-colors">Work</a>
-              <a href="/#services" className="hover:text-[rgb(var(--text))] transition-colors">Services</a>
-              <a href="/#about" className="hover:text-[rgb(var(--text))] transition-colors">About</a>
-              <a href="/#contact" className="hover:text-[rgb(var(--text))] transition-colors">Book</a>
-            </nav>
-          </div>
-          <div className="mt-8 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[rgb(var(--text-muted))]">
-            <p>© {new Date().getFullYear()} ISO.Regret · Jacksonville, FL</p>
-            <a
-              href="https://instagram.com/iso.regret"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 text-accent hover:text-accent-muted transition-colors"
-            >
-              <Instagram className="w-4 h-4" />
-              @iso.regret
-            </a>
-          </div>
-        </div>
-      </footer>
-      <BackToTop />
-    </>
-  );
+  return <><footer className="iso-footer"><Link href="/" className="iso-wordmark">ISO<span>.</span>REGRET</Link><p>Photography &amp; videography<br />Jacksonville &amp; surrounding areas</p><a href="https://instagram.com/iso.regret" target="_blank" rel="noreferrer"><Instagram size={17} aria-hidden /> @iso.regret</a><p>© {new Date().getFullYear()} ISO.Regret</p></footer><BackToTop /></>;
 }
