@@ -68,8 +68,8 @@ export default function AlbumPage({ params, searchParams }: Props) {
           Back to {back.label}
         </Link>
 
-        <header className="text-center mb-12">
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]">
+        <header className="iso-gallery-heading mb-12">
+          <h1 className="iso-heading">
             {project.title}
           </h1>
           <p className="text-[rgb(var(--text-muted))] mt-2 text-sm uppercase tracking-wider">

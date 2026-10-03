@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { thumbnailLoader } from '../lib/preparedImageLoader';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { siteConfig } from '../app/data/site';
@@ -51,6 +52,7 @@ export default function FeaturedStrip() {
                 className="group block relative aspect-[4/5] rounded-token-lg overflow-hidden border border-border/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <Image
+                  loader={thumbnailLoader}
                   src={p.cover}
                   alt={p.title}
                   fill

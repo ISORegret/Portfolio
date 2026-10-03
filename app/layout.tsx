@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import { Syne, DM_Sans } from 'next/font/google'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
-import { ThemeProvider } from '../components/ThemeProvider'
 import { SITE_URL, siteConfig, seoKeywords } from './data/site'
 
 const syne = Syne({
@@ -41,27 +40,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-const themeScript = `
-(function() {
-  try {
-    var t = localStorage.getItem('theme');
-    if (t) document.documentElement.setAttribute('data-theme', t);
-  } catch (e) {}
-})();
-`
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable}`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
+    <html data-theme="dark" lang="en" className={`${syne.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-bg text-[rgb(var(--text))] font-sans antialiased">
-        <ThemeProvider>
           <SiteHeader />
           {children}
           <SiteFooter />
-        </ThemeProvider>
       </body>
     </html>
   )

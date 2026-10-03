@@ -6,8 +6,10 @@
     "clean": "node -e \"const fs=require('fs');try{fs.rmSync('.next',{recursive:true,force:true})}catch(e){if(e.code!=='ENOENT')throw e;}\"",
     "dev": "next dev",
     "dev:clean": "npm run clean && next dev",
+    "prepare:images": "node scripts/prepare-images.cjs",
+    "prebuild": "npm run prepare:images",
     "build": "next build",
-    "build:clean": "npm run clean && next build",
+    "build:clean": "npm run clean && npm run build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -17,7 +19,8 @@
     "next": "14.2.5",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",

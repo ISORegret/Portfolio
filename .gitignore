@@ -9,3 +9,6 @@ out
 
 # TypeScript incremental build cache
 *.tsbuildinfo
+
+# Build-time image variants; originals remain in public/gallery.
+public/prepared/

@@ -52,12 +52,14 @@ export default function ContactForm() {
     <form action={FORMSPREE_ENDPOINT} method="POST" onSubmit={handleSubmit} className="space-y-6">
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <Input required name="name" placeholder="Your name" className="w-full" disabled={status === 'sending'} />
+          <Input aria-label="Your name" autoComplete="name" required name="name" placeholder="Your name" className="w-full" disabled={status === 'sending'} />
         </div>
         <div>
           <Input
             required
             type="email"
+            aria-label="Email address"
+            autoComplete="email"
             name="email"
             placeholder="Email address"
             className="w-full"
@@ -69,6 +71,8 @@ export default function ContactForm() {
         <Input
           name="phone"
           type="tel"
+          aria-label="Phone number (optional)"
+          autoComplete="tel"
           placeholder="Phone number (optional)"
           className="w-full"
           disabled={status === 'sending'}
@@ -77,6 +81,7 @@ export default function ContactForm() {
       <div>
         <Input
           name="subject"
+          aria-label="Shoot type or subject"
           placeholder="Shoot type / subject"
           className="w-full"
           disabled={status === 'sending'}
@@ -86,13 +91,14 @@ export default function ContactForm() {
         <Textarea
           required
           name="message"
+          aria-label="Tell me about your project"
           placeholder="Tell me about your project… date, location, vibe, and deliverables"
           className="w-full min-h-[120px]"
           disabled={status === 'sending'}
         />
       </div>
       {status === 'error' && (
-        <p className="text-sm text-red-400">Something went wrong. Please try again or email me directly.</p>
+        <p role="alert" className="text-sm text-red-400">Something went wrong. Please try again or email me directly.</p>
       )}
       <Button type="submit" className="w-full sm:w-auto px-8 py-3 text-lg font-semibold" disabled={status === 'sending'}>
         {status === 'sending' ? (
