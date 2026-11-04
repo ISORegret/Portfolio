@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import FilmGallery from '../../components/FilmGallery';
 import WorkBrowser from '../../components/WorkBrowser';
 import { SITE_URL } from '../data/site';
 
@@ -28,6 +29,7 @@ export default function WorkPage() {
         </header>
 
         <WorkBrowser />
+        <FilmGallery />
       </div>
     </main>
   );
