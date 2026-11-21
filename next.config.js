@@ -3,8 +3,8 @@ const nextConfig = {
   images: {
     loader: 'custom',
     loaderFile: './lib/preparedImageLoader.ts',
-    deviceSizes: [640, 1280, 2048],
-    imageSizes: [640],
+    deviceSizes: [640, 1080, 1280, 2048],
+    imageSizes: [384, 640],
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'i.imgur.com' },

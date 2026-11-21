@@ -1,12 +1,15 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { SITE_URL } from '../data/site';
+import { withBrand } from '../../lib/brandedTitle';
+
+const title = withBrand('Photography albums');
 
 export const metadata: Metadata = {
-  title: 'Photography albums',
+  title,
   description: 'Curated photography albums by ISO.Regret.',
   openGraph: {
-    title: 'Photography albums | ISO.Regret',
+    title: title.absolute,
     description: 'Curated photography albums by ISO.Regret.',
     url: `${SITE_URL}/work`,
   },

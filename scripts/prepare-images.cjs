@@ -4,6 +4,15 @@ const path = require('node:path');
 const sharp = require('sharp');
 const { createHash } = require('node:crypto');
 
+const WIDTHS = [640, 1080, 1280, 2048];
+
+function orientedSize(meta) {
+  let width = meta.width || 3;
+  let height = meta.height || 2;
+  if ((meta.orientation || 1) >= 5) [width, height] = [height, width];
+  return { width, height };
+}
+
 async function walk(directory) {
   const entries = await fs.readdir(directory, { withFileTypes: true });
   const nested = await Promise.all(entries.map(entry => entry.isDirectory()
@@ -15,6 +24,21 @@ async function walk(directory) {
 async function main() {
   const root = path.resolve('public');
   const files = await walk(path.join(root, 'gallery'));
+  const dimensions = {};
+  for (const file of files) {
+    const rel = `/${path.relative(root, file).split(path.sep).join('/')}`;
+    try {
+      const meta = await sharp(file).metadata();
+      dimensions[rel] = orientedSize(meta);
+    } catch (error) {
+      console.warn(`No dimensions for ${rel}: ${error.message}`);
+      dimensions[rel] = { width: 3, height: 2 };
+    }
+  }
+  const metaPath = path.resolve('lib/image-meta.json');
+  await fs.writeFile(metaPath, JSON.stringify(dimensions));
+  console.log(`Wrote dimensions for ${files.length} photos.`);
+
   let cursor = 0;
   let sourceBytes = 0;
   let thumbnailBytes = 0;
@@ -31,7 +55,7 @@ async function main() {
       const fingerprint = createHash('sha256').update(await fs.readFile(file)).digest('hex');
       const fingerprintPath = path.join(output, '.source-sha256');
       const priorFingerprint = await fs.readFile(fingerprintPath, 'utf8').catch(() => null);
-      for (const width of [640, 1280, 2048]) {
+      for (const width of WIDTHS) {
         const destination = path.join(output, `${width}.webp`);
         const existing = await fs.stat(destination).catch(() => null);
         if (!existing || priorFingerprint !== fingerprint) {

@@ -20,23 +20,22 @@ export default function Page({ params }: { params: { category: string } }) {
     : [];
 
   return (
-    <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-10">
+    <main className="shell space-y-10 py-28">
       {!category ? (
-        <h1 className="font-display text-2xl font-semibold text-[rgb(var(--text))]">Category not found.</h1>
+        <h1 className="display text-4xl">Category not found.</h1>
       ) : (
         <>
           <header>
-            <h1 className="iso-heading">{category}</h1>
-            <p className="text-[rgb(var(--text-muted))] mt-2 text-lg">Albums in this category — open a card for the full set.</p>
-            <div className="w-16 h-0.5 bg-accent/60 rounded-full mt-4" aria-hidden />
+            <h1 className="display text-[clamp(3rem,7vw,5rem)]">{category}</h1>
+            <p className="mt-4 text-lg text-[rgb(var(--text-muted))]">Albums in this category — open a card for the full set.</p>
           </header>
 
           {list.length === 0 ? (
             category === 'Real Estate'
-              ? <p className="text-[rgb(var(--text-muted))] italic">🏡 Real Estate projects — Coming Soon.</p>
+              ? <p className="text-[rgb(var(--text-muted))]">Real Estate projects — Coming Soon.</p>
               : <p className="text-[rgb(var(--text-muted))]">No projects yet.</p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="masonry">
               {list.map((p) => (
                 <ProjectCard
                   key={p.slug}
@@ -44,8 +43,7 @@ export default function Page({ params }: { params: { category: string } }) {
                   title={p.title}
                   category={p.category}
                   cover={p.cover}
-                  album={p.album}
-                  blurb={p.blurb}
+                  date={p.date}
                   fromPath={`/collections/${catKey}`}
                 />
               ))}

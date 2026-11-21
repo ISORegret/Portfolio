@@ -1,36 +1,37 @@
-import type { Metadata } from 'next';
-import FilmGallery from '../../components/FilmGallery';
-import WorkBrowser from '../../components/WorkBrowser';
-import { SITE_URL } from '../data/site';
+import type { Metadata } from 'next'
+import FilmGallery from '../../components/FilmGallery'
+import WorkBrowser from '../../components/WorkBrowser'
+import { withBrand } from '../../lib/brandedTitle'
+import { SITE_URL } from '../data/site'
+
+const title = withBrand('Work')
+const description = 'Curated automotive, real estate, and street photography albums by ISO.Regret.'
 
 export const metadata: Metadata = {
-  title: 'Work',
-  description: 'Curated automotive, real estate, and street photography albums by ISO.Regret.',
+  title,
+  description,
   openGraph: {
-    title: 'Work | ISO.Regret',
-    description: 'Curated automotive, real estate, and street photography albums by ISO.Regret.',
+    title: title.absolute,
+    description,
     url: `${SITE_URL}/work`,
   },
   alternates: { canonical: `${SITE_URL}/work` },
-};
+}
 
 export default function WorkPage() {
   return (
-    <main className="min-h-screen bg-bg px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <header className="mx-auto mb-10 max-w-2xl text-center sm:mb-12">
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-accent">Selected work</p>
-          <h1 className="iso-heading">
-            FIND YOUR FRAME.
-          </h1>
-          <p className="mt-4 text-lg text-[rgb(var(--text-muted))]">
+    <main>
+      <div className="shell pb-8 pt-28">
+        <header className="mb-12 max-w-2xl">
+          <p className="eyebrow">Selected work</p>
+          <h1 className="display mt-3 text-[clamp(3.2rem,7vw,5.5rem)]">Find your frame.</h1>
+          <p className="mt-5 text-lg text-[rgb(var(--text-muted))]">
             Curated albums here. Full-resolution galleries and downloads on Pixieset.
           </p>
         </header>
-
         <WorkBrowser />
-        <FilmGallery />
       </div>
+      <FilmGallery index="" />
     </main>
-  );
+  )
 }
