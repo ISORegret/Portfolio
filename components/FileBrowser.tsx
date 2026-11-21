@@ -1,10 +1,9 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import AlbumCard from './AlbumCard'
 import { albumHrefWithFrom } from '../lib/albumBackNavigation'
-import { fileLabel, formatDotDate, formatShortDate, yearOf } from '../lib/format'
+import { yearOf } from '../lib/format'
 
 export type BrowserFile = {
   kind: 'photo' | 'film'
@@ -17,15 +16,19 @@ export type BrowserFile = {
   href: string
 }
 
-const categories = ['All', 'Automotive', 'Real Estate', 'Street', 'Film'] as const
+const categoryOrder = ['Automotive', 'Real Estate', 'Street', 'Film'] as const
 
 type SortMode = 'newest' | 'oldest' | 'number'
 
 export default function FileBrowser({ files }: { files: BrowserFile[] }) {
-  const [category, setCategory] = useState<(typeof categories)[number]>('All')
+  const [category, setCategory] = useState('All')
   const [year, setYear] = useState('All')
   const [sort, setSort] = useState<SortMode>('newest')
-  const [view, setView] = useState<'list' | 'grid'>('list')
+
+  const categories = useMemo(() => {
+    const found = new Set(files.map((file) => file.category))
+    return ['All', ...categoryOrder.filter((item) => found.has(item))]
+  }, [files])
 
   const years = useMemo(() => {
     const found = new Set<string>()
@@ -62,7 +65,7 @@ export default function FileBrowser({ files }: { files: BrowserFile[] }) {
           ))}
         </div>
         <div className="flex flex-wrap items-end gap-4">
-          <label className="block text-[0.72rem] uppercase tracking-[0.1em] text-[rgb(var(--text-muted))]">
+          <label className="block text-sm text-[rgb(var(--text-muted))]">
             Year
             <select
               value={year}
@@ -76,7 +79,7 @@ export default function FileBrowser({ files }: { files: BrowserFile[] }) {
               ))}
             </select>
           </label>
-          <label className="block text-[0.72rem] uppercase tracking-[0.1em] text-[rgb(var(--text-muted))]">
+          <label className="block text-sm text-[rgb(var(--text-muted))]">
             Sort
             <select
               value={sort}
@@ -85,73 +88,33 @@ export default function FileBrowser({ files }: { files: BrowserFile[] }) {
             >
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
-              <option value="number">File number</option>
+              <option value="number">Number</option>
             </select>
           </label>
-          <div className="ml-auto flex gap-2" role="group" aria-label="View">
-            <button type="button" className="choice" aria-pressed={view === 'list'} onClick={() => setView('list')}>
-              List
-            </button>
-            <button type="button" className="choice" aria-pressed={view === 'grid'} onClick={() => setView('grid')}>
-              Grid
-            </button>
-          </div>
         </div>
       </div>
 
-      <p className="py-3 text-[0.72rem] uppercase tracking-[0.1em] text-[rgb(var(--text-muted))]" aria-live="polite">
-        {visible.length} {visible.length === 1 ? 'file' : 'files'}
+      <p className="py-3 text-sm text-[rgb(var(--text-muted))]" aria-live="polite">
+        {visible.length} {visible.length === 1 ? 'gallery' : 'galleries'}
       </p>
 
       {visible.length === 0 ? (
-        <p className="border border-[color:var(--line)] bg-bg-elevated px-4 py-8 text-[0.82rem] leading-relaxed text-[rgb(var(--text-muted))]">
-          {category === 'Real Estate' ? 'Real Estate projects — Coming Soon.' : 'No files in this filter.'}
+        <p className="border border-[color:var(--line)] bg-bg-elevated px-4 py-8 text-sm leading-relaxed text-[rgb(var(--text-muted))]">
+          {category === 'Real Estate' ? 'Real Estate projects — Coming Soon.' : 'Nothing in this filter.'}
         </p>
-      ) : view === 'list' ? (
-        <div className="border-t border-[color:var(--line-strong)]">
-          {visible.map((file) => (
-            <Link
-              key={file.slug}
-              href={file.kind === 'photo' ? albumHrefWithFrom(file.slug, '/files') : file.href}
-              className="file-row"
-            >
-              <span>{fileLabel(file.fileNumber)}</span>
-              <span className="file-title">{file.title}</span>
-              <span className="file-cat">{file.category}</span>
-              <span>{formatShortDate(file.date) ?? '—'}</span>
-            </Link>
-          ))}
-        </div>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((file, index) => (
-            <Link
+            <AlbumCard
               key={file.slug}
               href={file.kind === 'photo' ? albumHrefWithFrom(file.slug, '/files') : file.href}
-              className="group block border border-[color:var(--line)] bg-bg-elevated"
-            >
-              <div className="relative aspect-[4/3] bg-black">
-                <Image
-                  src={file.cover}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover"
-                  priority={index < 2}
-                />
-              </div>
-              <div className="border-t border-[color:var(--line)] px-3 py-3">
-                <p className="text-[0.68rem] uppercase tracking-[0.12em] text-[rgb(var(--accent))]">
-                  File nº {fileLabel(file.fileNumber)} / {file.category}
-                </p>
-                <h2 className="mt-2 text-[0.85rem] uppercase leading-snug tracking-[0.04em] group-hover:text-[rgb(var(--accent))]">
-                  {file.title}
-                </h2>
-                <p className="mt-2 text-[0.68rem] uppercase tracking-[0.08em] text-[rgb(var(--text-muted))]">
-                  {formatDotDate(file.date) ?? 'Date not on file'}
-                </p>
-              </div>
-            </Link>
+              title={file.title}
+              category={file.category}
+              cover={file.cover}
+              date={file.date}
+              fileNumber={file.fileNumber}
+              priority={index < 3}
+            />
           ))}
         </div>
       )}

@@ -33,33 +33,38 @@ function FilmCard({ film, onOpen }: { film: FilmFile; onOpen: (film: FilmFile) =
   }
 
   return (
-    <article id={film.slug} className="min-w-0 border border-[color:var(--line)] bg-bg-elevated">
-      <p className="border-b border-[color:var(--line)] px-3 py-2 text-[0.68rem] uppercase tracking-[0.12em] text-[rgb(var(--text-muted))]">
-        File nº {fileLabel(film.fileNumber)} / Film
-      </p>
-      <div className="relative bg-black" onMouseEnter={playPreview} onMouseLeave={stopPreview} onFocus={playPreview} onBlur={stopPreview}>
-        <video
-          ref={videoRef}
-          className="aspect-[9/16] w-full object-cover"
-          muted
-          loop
-          playsInline
-          preload="none"
-          poster={film.poster}
-          aria-hidden
-        >
-          <source src={film.src} type="video/mp4" />
-        </video>
-        <button
-          type="button"
-          onClick={() => onOpen(film)}
-          className="absolute inset-0 flex items-end bg-gradient-to-t from-black/70 via-transparent to-transparent p-4 text-left"
-          aria-label={`Play ${film.title}`}
-        >
-          <span className="file-tag">Play</span>
-        </button>
-      </div>
-      <h3 className="display px-3 py-4 text-3xl">{film.title}</h3>
+    <article id={film.slug} className="min-w-0 border border-[color:var(--line-strong)] bg-bg-elevated">
+      <button
+        type="button"
+        onClick={() => onOpen(film)}
+        onMouseEnter={playPreview}
+        onMouseLeave={stopPreview}
+        onFocus={playPreview}
+        onBlur={stopPreview}
+        className="block w-full text-left"
+        aria-label={`Play ${film.title}`}
+      >
+        <div className="relative bg-black">
+          <video
+            ref={videoRef}
+            className="aspect-[9/16] w-full object-cover"
+            muted
+            loop
+            playsInline
+            preload="none"
+            poster={film.poster}
+            aria-hidden
+          >
+            <source src={film.src} type="video/mp4" />
+          </video>
+        </div>
+        <div className="border-t border-[color:var(--line)] p-4">
+          <p className="text-xs uppercase tracking-[0.08em] text-[rgb(var(--text-muted))]">Film</p>
+          <h3 className="mt-1 text-2xl leading-snug">{film.title}</h3>
+          <p className="mt-3 text-sm font-medium uppercase tracking-[0.08em] text-[rgb(var(--accent))]">Play film</p>
+          <p className="mt-2 text-[0.68rem] text-[rgb(var(--text-subtle))]">No. {fileLabel(film.fileNumber)}</p>
+        </div>
+      </button>
     </article>
   )
 }
@@ -107,15 +112,13 @@ export default function FilmGallery({ films }: { films: FilmFile[] }) {
                 ref={closeRef}
                 type="button"
                 onClick={() => setActive(null)}
-                className="absolute right-4 top-4 grid h-11 w-11 place-items-center border border-[color:var(--line-strong)] text-[rgb(var(--text))]"
-                aria-label="Close film"
+                className="absolute right-4 top-4 inline-flex min-h-11 items-center gap-2 border border-[color:var(--line-strong)] px-4 text-base text-[rgb(var(--text))]"
               >
-                <X aria-hidden />
+                <X className="h-4 w-4" aria-hidden />
+                Close
               </button>
               <figure className="w-full max-w-sm" onClick={(event) => event.stopPropagation()}>
-                <p className="mb-3 text-[0.68rem] uppercase tracking-[0.12em] text-[rgb(var(--text-muted))]">
-                  File nº {fileLabel(active.fileNumber)} / Film
-                </p>
+                <p className="mb-3 text-sm text-[rgb(var(--text-muted))]">Film · {active.title}</p>
                 <video key={active.src} className="max-h-[80vh] w-full bg-black" controls autoPlay playsInline poster={active.poster}>
                   <source src={active.src} type="video/mp4" />
                   <a href={active.src}>Watch {active.title}</a>
