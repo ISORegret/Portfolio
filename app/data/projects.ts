@@ -17,6 +17,11 @@ export type Project = {
   downloadAccess?: 'none' | 'open' | 'code'
   /** Required when `downloadAccess` is `'code'` (share with client like Pixieset). */
   downloadCode?: string
+  /**
+   * External full-res download page, such as a Pixieset gallery.
+   * Never store the download PIN here or anywhere else on the site.
+   */
+  downloadUrl?: string
   blurb?: string
   /** Longer context for the album page (how/why you shot it) */
   story?: string
@@ -61,6 +66,7 @@ const projects: Project[] = [
     date: '2026-11-14',
     cover: '/gallery/cruise-2026/DSC07127.webp',
     downloadAccess: 'none',
+    downloadUrl: 'https://isoregret.pixieset.com/cruise2026/',
     galleryLimit: 123,
     blurb: 'Cruise 2026, photographed by ISO.Regret.',
     seoTitle: 'Cruise 2026 | ISO.Regret',

@@ -108,6 +108,19 @@ export default function AlbumPage({ params, searchParams }: Props) {
         </div>
       ) : null}
 
+      {project.downloadUrl ? (
+        <div className="mt-6 flex flex-col gap-4 border border-[color:var(--line)] bg-bg-elevated px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[0.78rem] uppercase tracking-[0.08em]">Full-resolution files</p>
+            <p className="mt-1 text-[0.78rem] text-[rgb(var(--text-muted))]">PIN required</p>
+          </div>
+          <a href={project.downloadUrl} target="_blank" rel="noopener noreferrer" className="btn btn-yellow btn-sm">
+            Download full-res on Pixieset
+            <ExternalLink className="h-4 w-4" aria-hidden />
+          </a>
+        </div>
+      ) : null}
+
       <div className="mt-8">
         <AlbumGallery
           slug={project.slug}
