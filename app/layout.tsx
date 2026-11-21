@@ -1,23 +1,23 @@
 import './globals.css'
-import type { Metadata } from 'next'
-import { Archivo, IBM_Plex_Mono } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Cormorant_Garamond, Outfit } from 'next/font/google'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
 import { SITE_URL, siteConfig, seoKeywords } from './data/site'
 
-const display = Archivo({
-  subsets: ['latin'],
-  weight: 'variable',
-  display: 'swap',
-  variable: '--font-display',
-  axes: ['wdth'],
-})
-
-const mono = IBM_Plex_Mono({
+const display = Cormorant_Garamond({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
   display: 'swap',
-  variable: '--font-mono',
+  variable: '--font-display',
+})
+
+const sans = Outfit({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  display: 'swap',
+  variable: '--font-sans',
 })
 
 const ogImage = {
@@ -52,6 +52,11 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
+export const viewport: Viewport = {
+  themeColor: '#090909',
+  colorScheme: 'dark',
+}
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': ['Photographer', 'LocalBusiness'],
@@ -73,12 +78,12 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-bg font-sans text-[rgb(var(--text))] antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <a
           href="#content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:bg-[rgb(var(--accent))] focus:px-4 focus:py-2 focus:text-[rgb(var(--ink))]"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:bg-[rgb(var(--text))] focus:px-4 focus:py-2 focus:text-[rgb(var(--ink))]"
         >
           Skip to content
         </a>

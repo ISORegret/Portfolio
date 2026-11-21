@@ -2,10 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { X } from 'lucide-react'
 import { useReducedMotion } from 'framer-motion'
-import { fileLabel } from '../lib/format'
-
 export type FilmFile = {
   slug: string
   title: string
@@ -33,7 +30,7 @@ function FilmCard({ film, onOpen }: { film: FilmFile; onOpen: (film: FilmFile) =
   }
 
   return (
-    <article id={film.slug} className="min-w-0 border border-[color:var(--line-strong)] bg-bg-elevated">
+    <article id={film.slug} className="min-w-0">
       <button
         type="button"
         onClick={() => onOpen(film)}
@@ -41,13 +38,13 @@ function FilmCard({ film, onOpen }: { film: FilmFile; onOpen: (film: FilmFile) =
         onMouseLeave={stopPreview}
         onFocus={playPreview}
         onBlur={stopPreview}
-        className="block w-full text-left"
+        className="album-tile"
         aria-label={`Play ${film.title}`}
       >
-        <div className="relative bg-black">
+        <span className="album-media is-portrait">
           <video
             ref={videoRef}
-            className="aspect-[9/16] w-full object-cover"
+            className="album-photo absolute inset-0 h-full w-full object-cover"
             muted
             loop
             playsInline
@@ -57,13 +54,11 @@ function FilmCard({ film, onOpen }: { film: FilmFile; onOpen: (film: FilmFile) =
           >
             <source src={film.src} type="video/mp4" />
           </video>
-        </div>
-        <div className="border-t border-[color:var(--line)] p-4">
-          <p className="text-xs uppercase tracking-[0.08em] text-[rgb(var(--text-muted))]">Film</p>
-          <h3 className="mt-1 text-2xl leading-snug">{film.title}</h3>
-          <p className="mt-3 text-sm font-medium uppercase tracking-[0.08em] text-[rgb(var(--accent))]">Play film</p>
-          <p className="mt-2 text-[0.68rem] text-[rgb(var(--text-subtle))]">No. {fileLabel(film.fileNumber)}</p>
-        </div>
+        </span>
+        <span className="album-caption">
+          <span className="album-kicker">Film</span>
+          <span className="album-title">{film.title}</span>
+        </span>
       </button>
     </article>
   )
@@ -93,7 +88,7 @@ export default function FilmGallery({ films }: { films: FilmFile[] }) {
 
   return (
     <>
-      <div className="mx-auto grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-6">
         {films.map((film) => (
           <FilmCard key={film.slug} film={film} onOpen={setActive} />
         ))}
@@ -108,22 +103,15 @@ export default function FilmGallery({ films }: { films: FilmFile[] }) {
               aria-label={active.title}
               onClick={() => setActive(null)}
             >
-              <button
-                ref={closeRef}
-                type="button"
-                onClick={() => setActive(null)}
-                className="absolute right-4 top-4 inline-flex min-h-11 items-center gap-2 border border-[color:var(--line-strong)] px-4 text-base text-[rgb(var(--text))]"
-              >
-                <X className="h-4 w-4" aria-hidden />
+              <button ref={closeRef} type="button" onClick={() => setActive(null)} className="text-btn absolute right-4 top-4 text-[rgb(var(--text))]">
                 Close
               </button>
               <figure className="w-full max-w-sm" onClick={(event) => event.stopPropagation()}>
-                <p className="mb-3 text-sm text-[rgb(var(--text-muted))]">Film · {active.title}</p>
                 <video key={active.src} className="max-h-[80vh] w-full bg-black" controls autoPlay playsInline poster={active.poster}>
                   <source src={active.src} type="video/mp4" />
                   <a href={active.src}>Watch {active.title}</a>
                 </video>
-                <figcaption className="display mt-3 text-3xl">{active.title}</figcaption>
+                <figcaption className="mt-4 font-display text-3xl font-medium">{active.title}</figcaption>
               </figure>
             </div>,
             document.body,

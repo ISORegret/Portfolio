@@ -43,7 +43,7 @@ function pad(value: number) {
 export default function AlbumGallery({ slug, title, images, downloadAccess, downloadCode }: Props) {
   const reduce = useReducedMotion()
   const [index, setIndex] = useState(0)
-  const [mode, setMode] = useState<'frame' | 'grid'>('frame')
+  const [mode, setMode] = useState<'frame' | 'grid'>('grid')
   const [unlocked, setUnlocked] = useState(false)
   const [showCodeModal, setShowCodeModal] = useState(false)
   const [codeInput, setCodeInput] = useState('')
@@ -179,8 +179,8 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
   return (
     <div>
       {codeRequired && !unlocked ? (
-        <div className="mb-6 border border-[color:var(--line)] bg-bg-elevated px-4 py-4">
-          <p className="text-[0.78rem] uppercase tracking-[0.08em]">Client downloads</p>
+        <div className="shell mb-8">
+          <p className="eyebrow">Client downloads</p>
           <p className="mt-2 text-[0.78rem] leading-relaxed text-[rgb(var(--text-muted))]">
             Enter the access code you were given to enable saving photos from this album (this browser only).
           </p>
@@ -199,9 +199,9 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
               placeholder="Access code"
               aria-label="Access code"
               aria-invalid={codeError}
-              className="w-full max-w-xs border border-[color:var(--line)] bg-bg px-3 py-2 text-sm"
+              className="line-control max-w-xs"
             />
-            <button type="button" onClick={tryCode} className="btn btn-line btn-sm w-fit">
+            <button type="button" onClick={tryCode} className="text-btn is-accent">
               Unlock downloads
             </button>
           </div>
@@ -213,13 +213,16 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
         </div>
       ) : null}
 
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-[0.68rem] uppercase tracking-[0.12em] text-[rgb(var(--text-muted))]">
-          {mode === 'frame' ? 'One frame' : 'Grid'} · arrow keys and swipe
-        </p>
-        <button type="button" className="choice" aria-pressed={mode === 'grid'} onClick={() => setMode(mode === 'frame' ? 'grid' : 'frame')}>
-          {mode === 'frame' ? 'View as grid' : 'View one frame'}
-        </button>
+      <div className="shell mb-3 flex flex-wrap items-center justify-between gap-3">
+        <p className="eyebrow">{mode === 'frame' ? 'Arrow keys and swipe' : 'Gallery'}</p>
+        <div className="flex gap-5" role="group" aria-label="Gallery view">
+          <button type="button" className="choice" aria-pressed={mode === 'grid'} onClick={() => setMode('grid')}>
+            Grid
+          </button>
+          <button type="button" className="choice" aria-pressed={mode === 'frame'} onClick={() => setMode('frame')}>
+            One frame
+          </button>
+        </div>
       </div>
 
       {mode === 'frame' ? (
@@ -256,16 +259,16 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
               </div>
               <p className="hidden text-[0.72rem] uppercase tracking-[0.08em] text-[rgb(var(--text-muted))] sm:block">{title}</p>
               <div className="flex items-center gap-2 justify-self-start sm:justify-self-end">
-                <button type="button" className="btn btn-line btn-sm" onClick={goPrev} aria-label="Previous photo">
+                <button type="button" className="text-btn" onClick={goPrev} aria-label="Previous photo">
                   <ChevronLeft className="h-4 w-4" aria-hidden />
                   Prev
                 </button>
-                <button type="button" className="btn btn-line btn-sm" onClick={goNext} aria-label="Next photo">
+                <button type="button" className="text-btn" onClick={goNext} aria-label="Next photo">
                   Next
                   <ChevronRight className="h-4 w-4" aria-hidden />
                 </button>
                 {canDownload ? (
-                  <button type="button" className="btn btn-line btn-sm" onClick={() => void downloadCurrent()}>
+                  <button type="button" className="text-btn" onClick={() => void downloadCurrent()}>
                     <Download className="h-4 w-4" aria-hidden />
                     Download
                   </button>
@@ -273,7 +276,7 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
                 {codeRequired && !unlocked ? (
                   <button
                     type="button"
-                    className="btn btn-line btn-sm"
+                    className="text-btn"
                     onClick={() => {
                       setCodeError(false)
                       setCodeInput('')
@@ -334,8 +337,8 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
               aria-label="Download access code"
               onClick={() => setShowCodeModal(false)}
             >
-              <div className="w-full max-w-sm border border-[color:var(--line-strong)] bg-bg p-5" onClick={(event) => event.stopPropagation()}>
-                <h2 className="display text-4xl">Download access</h2>
+              <div className="w-full max-w-sm bg-[rgb(var(--bg))] px-1 py-6" onClick={(event) => event.stopPropagation()}>
+                <h2 className="font-display text-4xl font-medium">Download access</h2>
                 <p className="mt-3 text-[0.78rem] leading-relaxed text-[rgb(var(--text-muted))]">
                   Enter the code for this album to enable downloads for this session.
                 </p>
@@ -353,7 +356,7 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
                   placeholder="Access code"
                   aria-label="Access code"
                   aria-invalid={codeError}
-                  className="mt-4 w-full border border-[color:var(--line)] bg-bg-elevated px-3 py-2 text-sm"
+                  className="line-control mt-4"
                 />
                 {codeError ? (
                   <p className="mt-2 text-sm text-red-300" role="alert">
@@ -361,10 +364,10 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
                   </p>
                 ) : null}
                 <div className="mt-4 flex justify-end gap-2">
-                  <button type="button" onClick={() => setShowCodeModal(false)} className="btn btn-line btn-sm">
+                  <button type="button" onClick={() => setShowCodeModal(false)} className="text-btn">
                     Cancel
                   </button>
-                  <button type="button" onClick={tryCode} className="btn btn-yellow btn-sm">
+                  <button type="button" onClick={tryCode} className="text-btn is-accent">
                     Unlock
                   </button>
                 </div>

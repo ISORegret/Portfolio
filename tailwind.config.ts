@@ -8,9 +8,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-mono)', 'ui-monospace', 'monospace'],
-        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
-        display: ['var(--font-display)', 'Arial Narrow', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Outfit', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
       },
       colors: {
         bg: 'rgb(var(--bg) / <alpha-value>)',
