@@ -32,21 +32,16 @@ export const siteConfig = {
   colorStory:
     'True-to-life color for listings, punch and atmosphere for cars and events, and mood when the story calls for it—graded for wherever your images live.',
   hero: {
-    /** Your image in /public — swap anytime */
-    imageSrc: '/gallery/blue-mustang/s550-roller-front.webp',
-    imageAlt:
-      'S650 Mustang GT Premium rolling automotive photography in Jacksonville, Florida — ISO.Regret',
+    /** Poster still. Shown on its own when video is off or motion is reduced. */
+    imageSrc: '/hero-poster.jpg',
+    imageAlt: 'Orange sports car filmed from behind at a meet — ISO.Regret',
     /**
-     * Step 5 — Optional hero loop (plays under the still image).
-     * 1) Export: H.264 .mp4, muted, ~1080p, short loop (e.g. 10–30s), keep file size reasonable for web.
-     * 2) Save as: public/hero-reel.mp4
-     * 3) Path below must stay `/hero-reel.mp4`. If the file is missing, the hero uses the still only (no broken UI).
-     * To disable video entirely, set to ''.
+     * Muted full-bleed loop. H.264, 1080p, faststart, no audio.
+     * Set to '' to use the poster only.
      */
-    videoSrc: '',
-    headline: 'Cars. Motion. Atmosphere.',
-    subline:
-      'Automotive photography and short-form video for owners, events, and brands across Jacksonville and Northeast Florida.',
+    videoSrc: '/hero-reel.mp4',
+    headline: 'Look again.',
+    subline: 'Photography with a little attitude.\nJacksonville. Wherever the story goes.',
   },
   /** Slugs of projects to show in the horizontal “selected work” strip (order preserved) */
   featuredStripSlugs: [

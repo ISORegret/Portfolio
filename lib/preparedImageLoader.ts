@@ -1,15 +1,13 @@
-import type { ImageLoaderProps } from 'next/image';
+import type { ImageLoaderProps } from 'next/image'
+
+const WIDTHS = [640, 1080, 1280, 2048]
 
 export function preparedImageUrl(src: string, width: number): string {
-  if (!src.startsWith('/gallery/')) return src;
-  const size = width <= 640 ? 640 : width <= 1280 ? 1280 : 2048;
-  return `/prepared${src}/${size}.webp`;
-}
-
-export function thumbnailLoader({ src, width }: ImageLoaderProps): string {
-  return preparedImageUrl(src, Math.min(width, 1280));
+  if (!src.startsWith('/gallery/')) return src
+  const size = WIDTHS.find((candidate) => width <= candidate) ?? WIDTHS[WIDTHS.length - 1]
+  return `/prepared${src}/${size}.webp`
 }
 
 export default function preparedImageLoader({ src, width }: ImageLoaderProps): string {
-  return preparedImageUrl(src, width);
+  return preparedImageUrl(src, width)
 }

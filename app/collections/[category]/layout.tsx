@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { SITE_URL } from '../../data/site';
+import { withBrand } from '../../../lib/brandedTitle';
 
 const titleMap: Record<string, string> = {
   automotive: 'Automotive albums',
@@ -15,16 +16,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const key = params.category.toLowerCase();
   const label = titleMap[key];
-  if (!label) return { title: 'Category | ISO.Regret' };
+  if (!label) return { title: withBrand('Category') };
 
-  const title = `${label} | ISO.Regret`;
+  const title = withBrand(label);
   const description = `Browse ${label.toLowerCase()} — Jacksonville, FL. ISO.Regret photography.`;
   const url = `${SITE_URL}/collections/${encodeURIComponent(key)}`;
 
   return {
     title,
     description,
-    openGraph: { title, description, url },
+    openGraph: { title: title.absolute, description, url },
     alternates: { canonical: url },
   };
 }

@@ -1,96 +1,55 @@
-'use client';
+'use client'
 
-import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
-import { siteConfig } from '../app/data/site';
-import { Card, CardContent, CardHeader, CardTitle } from './ui';
+import { motion, useReducedMotion } from 'framer-motion'
+import { siteConfig } from '../app/data/site'
+import SectionHeading from './SectionHeading'
 
 export default function PricingPackages() {
-  const { packages } = siteConfig;
+  const reduce = useReducedMotion()
+  const { packages } = siteConfig
 
   return (
-    <section id="packages" className="scroll-mt-24" aria-labelledby="packages-heading">
-      <div className="text-center mb-14">
-        <motion.h2
-          id="packages-heading"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--text))]"
-        >
-          Packages & starting rates
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-[rgb(var(--text-muted))] mt-4 text-lg max-w-2xl mx-auto"
-        >
+    <section id="packages" className="section scroll-mt-24" aria-labelledby="packages-heading">
+      <div className="shell">
+        <SectionHeading index="04" eyebrow="Starting at" title="Packages" id="packages-heading" />
+        <p className="-mt-6 mb-10 max-w-2xl text-[rgb(var(--text-muted))] md:-mt-8">
           Every project is scoped to your deliverables — these tiers are a starting point. Final quote after a quick call or form.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          whileInView={{ opacity: 1, scaleX: 1 }}
-          viewport={{ once: true }}
-          className="w-16 h-0.5 bg-accent/60 mx-auto mt-6 rounded-full origin-center"
-        />
-      </div>
-
-      <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
-        {packages.map((pkg, i) => (
-          <motion.div
-            key={pkg.name}
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.08 }}
-          >
-            <Card
-              className={`h-full flex flex-col relative overflow-hidden ${
-                pkg.featured ? 'border-accent/50 shadow-glow ring-1 ring-accent/20 md:scale-[1.02]' : ''
+        </p>
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {packages.map((pkg, index) => (
+            <motion.article
+              key={pkg.name}
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: index * 0.05 }}
+              className={`flex h-full flex-col border bg-bg-card p-5 ${
+                pkg.featured ? 'border-[rgb(var(--accent))]' : 'border-[rgb(var(--border-muted))]'
               }`}
             >
-              {pkg.featured ? (
-                <div className="absolute top-0 right-0 rounded-bl-token bg-accent text-neutral-900 text-xs font-bold px-3 py-1">
-                  Most booked
-                </div>
-              ) : null}
-              <CardHeader>
-                <p className="text-sm font-medium text-accent">{pkg.price}</p>
-                <CardTitle className="text-xl mt-1">{pkg.name}</CardTitle>
-                <p className="text-[rgb(var(--text-muted))] text-sm mt-2 leading-relaxed">{pkg.description}</p>
-              </CardHeader>
-              <CardContent className="pt-0 flex flex-col flex-1">
-                <ul className="space-y-2.5 flex-1">
-                  {pkg.bullets.map((b) => (
-                    <li key={b} className="flex gap-2 text-sm text-[rgb(var(--text-muted))]">
-                      <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" aria-hidden />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={pkg.href}
-                  className={`mt-6 inline-flex justify-center items-center rounded-token text-center font-semibold py-3 px-4 transition-colors ${
-                    pkg.featured
-                      ? 'bg-accent text-neutral-900 hover:bg-accent-muted'
-                      : 'border border-border bg-bg-elevated hover:bg-border/30 text-[rgb(var(--text))]'
-                  }`}
-                >
-                  {pkg.cta}
-                </a>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+              <p className="eyebrow">Starting at</p>
+              <p className="mt-3 text-sm text-[rgb(var(--accent-muted))]">{pkg.price}</p>
+              <h3 className="mt-3 font-display text-[1.7rem] leading-none">{pkg.name}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-[rgb(var(--text-muted))]">{pkg.description}</p>
+              <ul className="mt-5 flex-1 space-y-2.5 text-sm text-[rgb(var(--text-muted))]">
+                {pkg.bullets.map((bullet) => (
+                  <li key={bullet} className="flex gap-2">
+                    <span className="mt-2 h-px w-3 shrink-0 bg-[rgb(var(--accent))]" aria-hidden />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href={pkg.href} className={`btn mt-6 ${pkg.featured ? 'btn-primary' : 'btn-line'}`}>
+                {pkg.cta}
+              </a>
+            </motion.article>
+          ))}
+        </div>
+        <p className="mt-8 max-w-2xl text-sm leading-relaxed text-[rgb(var(--text-subtle))]">
+          Deliverables: web-optimized previews on this site; full high-res and guest access via Pixieset when applicable.
+          Turnaround typically 48–72 hours unless otherwise agreed.
+        </p>
       </div>
-
-      <p className="text-center text-sm text-[rgb(var(--text-subtle))] mt-10 max-w-2xl mx-auto">
-        Deliverables: web-optimized previews on this site; full high-res and guest access via Pixieset when applicable.
-        Turnaround typically 48–72 hours unless otherwise agreed.
-      </p>
     </section>
-  );
+  )
 }
