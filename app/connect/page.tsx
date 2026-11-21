@@ -33,26 +33,26 @@ export default function ConnectPage() {
   return (
     <main className="shell py-16 md:py-24">
       <p className="eyebrow">Ryan / Jacksonville, Florida</p>
-      <h1 className="display mt-3 text-[clamp(3.4rem,8vw,6.5rem)]">
+      <h1 className="display mt-3 text-[clamp(3rem,7vw,5.5rem)]">
         ISO<span className="text-[rgb(var(--accent))]">.</span>Regret
       </h1>
       <p className="mt-5 max-w-md text-[0.85rem] leading-relaxed text-[rgb(var(--text-muted))]">
         Automotive photography and film built around light, motion, and the details that make a car worth remembering.
       </p>
-      <div className="mt-10 max-w-xl border-t border-[color:var(--line-strong)]">
+      <div className="mt-10 max-w-xl">
         {links.map((link) => (
           <a
             key={link.label}
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noreferrer' : undefined}
-            className="flex items-center justify-between gap-4 border-b border-[color:var(--line)] py-4 hover:bg-bg-elevated"
+            className="flex items-center justify-between gap-4 border-t border-[color:var(--line)] py-5"
           >
             <span>
-              <span className="block text-[0.85rem] uppercase tracking-[0.06em]">{link.label}</span>
-              <span className="mt-1 block text-[0.72rem] text-[rgb(var(--text-muted))]">{link.detail}</span>
+              <span className="block font-display text-3xl font-medium leading-tight">{link.label}</span>
+              <span className="mt-1 block text-sm text-[rgb(var(--text-muted))]">{link.detail}</span>
             </span>
-            <ArrowUpRight size={18} aria-hidden />
+            <ArrowUpRight size={16} aria-hidden className="shrink-0 text-[rgb(var(--text-subtle))]" />
           </a>
         ))}
       </div>

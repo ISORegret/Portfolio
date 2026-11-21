@@ -58,11 +58,11 @@ export default function SpecBuilder() {
 
   if (status === 'success') {
     return (
-      <div className="border border-[color:var(--line-strong)] bg-bg-card px-6 py-10" role="status">
+      <div className="py-6" role="status">
         <CheckCircle2 className="mb-4 h-8 w-8 text-[rgb(var(--accent))]" aria-hidden />
-        <h3 className="display text-4xl">Message sent</h3>
+        <h3 className="font-display text-4xl font-medium">Message sent</h3>
         <p className="mt-3 text-[0.82rem] leading-relaxed text-[rgb(var(--text-muted))]">I’ll get back to you within 24 hours.</p>
-        <button type="button" onClick={() => setStatus('idle')} className="btn-text mt-4">
+        <button type="button" onClick={() => setStatus('idle')} className="text-link mt-2">
           Spec another shoot
         </button>
       </div>
@@ -130,11 +130,11 @@ export default function SpecBuilder() {
         <input type="hidden" name="addons" value={addOns.join(', ')} />
       </fieldset>
 
-      <div className="border border-[color:var(--line-strong)] bg-bg-card p-4" aria-live="polite">
+      <div className="quote-block border-t border-[color:var(--line)] pt-6" aria-live="polite">
         <p className="eyebrow">Starting at</p>
         {matched ? (
           <>
-            <p className="display mt-3 text-3xl">{matched.name}</p>
+            <p className="mt-3 font-display text-3xl font-medium leading-tight">{matched.name}</p>
             <p className="mt-3 text-[0.95rem] text-[rgb(var(--accent))]">{matched.price}</p>
             <p className="mt-3 text-[0.78rem] leading-relaxed text-[rgb(var(--text-muted))]">{matched.description}</p>
             {realEstate ? (
@@ -194,7 +194,7 @@ export default function SpecBuilder() {
         </p>
       ) : null}
 
-      <button type="submit" className="btn btn-yellow w-full sm:w-auto" disabled={locked}>
+      <button type="submit" className="btn btn-line" disabled={locked}>
         {locked ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />

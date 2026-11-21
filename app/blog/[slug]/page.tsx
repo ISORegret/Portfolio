@@ -31,7 +31,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main className="shell max-w-3xl py-12 md:py-16">
-      <Link href="/blog" className="btn-text -ml-1 text-sm">
+      <Link href="/blog" className="back-link">
         <ArrowLeft className="h-4 w-4" aria-hidden />
         Back to journal
       </Link>
@@ -39,7 +39,7 @@ export default async function BlogPostPage({ params }: Props) {
         <time className="text-sm text-[rgb(var(--text-subtle))]" dateTime={post.date}>
           {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         </time>
-        <h1 className="display mt-3 text-[clamp(2.8rem,6vw,4.5rem)]">{post.title}</h1>
+        <h1 className="display mt-3 text-[clamp(2.5rem,5vw,4rem)]">{post.title}</h1>
         <p className="mt-4 text-lg text-[rgb(var(--text-muted))]">{post.excerpt}</p>
         <div className="mt-10 text-[1.05rem] leading-8 text-[rgb(var(--text-muted))]">
           <ReactMarkdown

@@ -18,23 +18,23 @@ export default function Page({ params }: { params: { category: string } }) {
     : []
 
   return (
-    <main className="shell py-12 md:py-16">
+    <main className="pb-16 md:pb-24">
       {!category ? (
-        <h1 className="display text-5xl">Category not found.</h1>
+        <h1 className="shell pt-14 font-display text-5xl">Category not found.</h1>
       ) : (
         <>
-          <header>
+          <header className="shell pb-8 pt-14 md:pt-20">
             <p className="eyebrow">Photos</p>
-            <h1 className="display mt-3 text-[clamp(3rem,7vw,5.5rem)]">{category}</h1>
+            <h1 className="display mt-3 text-[clamp(2.8rem,6vw,4.75rem)]">{category}</h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--text-muted))]">Galleries in this category.</p>
           </header>
 
           {list.length === 0 ? (
-            <p className="mt-10 border border-[color:var(--line)] bg-bg-elevated px-4 py-8 text-sm text-[rgb(var(--text-muted))]">
+            <p className="shell py-16 text-sm text-[rgb(var(--text-muted))]">
               {category === 'Real Estate' ? 'Real Estate projects — Coming Soon.' : 'No projects yet.'}
             </p>
           ) : (
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="album-grid">
               {list.map((file) => (
                 <AlbumCard
                   key={file.slug}

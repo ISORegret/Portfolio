@@ -3,48 +3,40 @@ import Wordmark from './Wordmark'
 import BackToTop from './BackToTop'
 import { bookShootHref, navLinks } from '../lib/nav'
 
-const footerLinks = [...navLinks, { href: bookShootHref, label: 'Book a shoot' }]
+const footerLinks = [
+  ...navLinks,
+  { href: '/#rates', label: 'Rates' },
+  { href: '/blog', label: 'Journal' },
+  { href: bookShootHref, label: 'Book a shoot' },
+]
 
 export default function SiteFooter() {
   return (
     <>
-      <footer className="border-t border-[color:var(--line-strong)] bg-[rgb(var(--bg))]">
-        <div className="shell grid gap-8 py-12 md:grid-cols-[1.4fr_1fr] md:py-14">
-          <div>
-            <Wordmark />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[rgb(var(--text-muted))]">
-              Photography and videography. Jacksonville and the surrounding areas.
-            </p>
-            <p className="mt-4 text-sm text-[rgb(var(--text-muted))]">
-              <a href="mailto:Brickel.Ryan@icloud.com" className="inline-flex min-h-11 items-center hover:text-[rgb(var(--text))]">
-                Brickel.Ryan@icloud.com
-              </a>
-            </p>
-          </div>
-          <nav aria-label="Footer">
-            <ul className="space-y-1 text-base">
-              {footerLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="inline-flex min-h-11 items-center text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))]">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <a
-                  href="https://www.instagram.com/iso.regret/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex min-h-11 items-center text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))]"
-                >
-                  Instagram @iso.regret
-                </a>
-              </li>
-            </ul>
+      <footer className="border-t border-[color:var(--line)] bg-[rgb(var(--bg))]">
+        <div className="shell py-14 md:py-16">
+          <Wordmark />
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-[rgb(var(--text-muted))]">
+            Photography and videography. Jacksonville and the surrounding areas.
+          </p>
+          <nav aria-label="Footer" className="mt-8 flex flex-wrap gap-x-6">
+            {footerLinks.map((link) => (
+              <Link key={link.label} href={link.href} className="text-link">
+                {link.label}
+              </Link>
+            ))}
+            <a href="https://www.instagram.com/iso.regret/" target="_blank" rel="noreferrer" className="text-link">
+              Instagram
+            </a>
           </nav>
-        </div>
-        <div className="shell border-t border-[color:var(--line)] py-4 text-sm text-[rgb(var(--text-subtle))]">
-          © {new Date().getFullYear()} ISO.Regret
+          <p className="mt-8 text-sm text-[rgb(var(--text-muted))]">
+            <a href="mailto:Brickel.Ryan@icloud.com" className="hover:text-[rgb(var(--text))]">
+              Brickel.Ryan@icloud.com
+            </a>
+          </p>
+          <p className="mt-6 text-[0.68rem] uppercase tracking-[0.18em] text-[rgb(var(--text-subtle))]">
+            © {new Date().getFullYear()} ISO.Regret
+          </p>
         </div>
       </footer>
       <BackToTop />

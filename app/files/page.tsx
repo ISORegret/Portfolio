@@ -32,14 +32,14 @@ export default function FilesPage() {
     }))
 
   return (
-    <main className="shell py-12 md:py-16">
-      <h1 className="display text-[clamp(3.2rem,7vw,6rem)]">Photos</h1>
-      <p className="mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--text-muted))]">
-        Every photo gallery. Filter by category or year, then open one.
-      </p>
-      <div className="mt-8">
-        <FileBrowser files={files} />
+    <main className="pb-16 md:pb-24">
+      <div className="shell pb-8 pt-14 md:pt-20">
+        <h1 className="display text-[clamp(2.8rem,6vw,4.75rem)]">Photos</h1>
+        <p className="mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--text-muted))]">
+          Every photo gallery. Filter by category or year, then open one.
+        </p>
       </div>
+      <FileBrowser files={files} />
     </main>
   )
 }

@@ -43,11 +43,11 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="border border-[rgb(var(--border))] bg-bg-card px-6 py-10 text-center" role="status">
-        <CheckCircle2 className="mx-auto mb-4 h-10 w-10 text-[rgb(var(--accent))]" aria-hidden />
-        <h3 className="font-display text-3xl">Message sent</h3>
+      <div className="py-8" role="status">
+        <CheckCircle2 className="mb-4 h-8 w-8 text-[rgb(var(--accent))]" aria-hidden />
+        <h3 className="font-display text-4xl font-medium">Message sent</h3>
         <p className="mt-3 text-[rgb(var(--text-muted))]">I’ll get back to you within 24 hours.</p>
-        <button type="button" onClick={() => setStatus('idle')} className="btn-text mx-auto mt-6">
+        <button type="button" onClick={() => setStatus('idle')} className="text-link mt-4">
           Send another message
         </button>
       </div>
@@ -105,7 +105,7 @@ export default function ContactForm() {
           Something went wrong. Please try again or email me directly.
         </p>
       ) : null}
-      <button type="submit" className="btn btn-primary w-full sm:w-auto" disabled={locked}>
+      <button type="submit" className="btn btn-line" disabled={locked}>
         {locked ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />

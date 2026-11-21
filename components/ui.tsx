@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 const fieldClass =
-  'w-full border border-[rgb(var(--border-muted))] bg-bg-elevated px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--text-muted))]'
+  'w-full border-0 border-b border-[color:var(--line-strong)] bg-transparent px-0 py-3 text-[0.95rem] text-[rgb(var(--text))] outline-none placeholder:text-[rgb(var(--text-subtle))] focus:border-[rgb(var(--accent))]'
 
 export function Button({
   className = '',
@@ -11,15 +11,15 @@ export function Button({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'default' | 'secondary'; size?: 'sm' | 'md' | 'lg' }) {
   const base = 'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))] focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-60'
   const variants = {
-    default: 'bg-accent text-[rgb(var(--ink))] hover:bg-accent-muted',
-    secondary: 'border border-border bg-bg-card text-[rgb(var(--text))] hover:border-[rgb(var(--accent))]',
+    default: 'border border-[color:var(--line-strong)] bg-transparent text-[rgb(var(--text))] hover:border-[rgb(var(--accent))] hover:text-[rgb(var(--accent))]',
+    secondary: 'border border-[color:var(--line)] bg-transparent text-[rgb(var(--text))] hover:border-[rgb(var(--accent))]',
   } as const
   const sizes = { sm: 'text-sm px-3 py-1.5', md: 'text-sm px-4 py-2', lg: 'text-base px-6 py-3' } as const
   return <button className={`${base} ${variants[variant]} ${sizes[size]} ${className}`} {...props} />
 }
 
 export function Card({ className = '', children }: React.PropsWithChildren<{ className?: string }>) {
-  return <div className={`border border-border/70 bg-bg-card ${className}`}>{children}</div>
+  return <div className={className}>{children}</div>
 }
 
 export function CardHeader({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) {
@@ -61,7 +61,7 @@ export function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-sm text-[rgb(var(--text-muted))]">{label}</span>
+      <span className="eyebrow mb-2 block">{label}</span>
       {children}
       {hint ? <span className="mt-1 block text-xs text-[rgb(var(--text-subtle))]">{hint}</span> : null}
     </label>

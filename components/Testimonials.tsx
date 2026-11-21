@@ -2,17 +2,17 @@ import { testimonials } from '../app/data/testimonials'
 
 export default function Testimonials() {
   return (
-    <section className="border-t border-[color:var(--line-strong)]" aria-labelledby="testimonials-heading">
-      <div className="shell py-16 md:py-20">
+    <section aria-labelledby="testimonials-heading">
+      <div className="shell pb-20 md:pb-28">
         <p className="eyebrow">On file</p>
-        <h2 id="testimonials-heading" className="display mt-3 text-[clamp(3rem,6vw,5.2rem)]">
+        <h2 id="testimonials-heading" className="display mt-3 text-[clamp(2.6rem,5vw,4.25rem)]">
           In their words
         </h2>
-        <ul className="mt-8 border-t border-[color:var(--line-strong)]">
+        <ul className="mt-8">
           {testimonials.map((item) => (
-            <li key={item.name} className="grid gap-4 border-b border-[color:var(--line)] py-6 md:grid-cols-[1fr_16rem] md:gap-10">
+            <li key={item.name} className="grid gap-4 border-t border-[color:var(--line)] py-8 md:grid-cols-[1fr_16rem] md:gap-12">
               <blockquote>
-                <p className="text-[0.95rem] leading-relaxed">“{item.quote}”</p>
+                <p className="font-display text-[1.65rem] font-normal italic leading-snug">“{item.quote}”</p>
               </blockquote>
               <footer className="text-[0.72rem] uppercase leading-relaxed tracking-[0.08em] text-[rgb(var(--text-muted))]">
                 <p className="text-[rgb(var(--text))]">{item.name}</p>

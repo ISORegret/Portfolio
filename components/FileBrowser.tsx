@@ -56,22 +56,18 @@ export default function FileBrowser({ files }: { files: BrowserFile[] }) {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 border-y border-[color:var(--line-strong)] py-4">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+      <div className="shell flex flex-col gap-6">
+        <div className="flex flex-wrap gap-x-5 gap-y-1" role="group" aria-label="Filter by category">
           {categories.map((item) => (
             <button key={item} type="button" className="choice" aria-pressed={category === item} onClick={() => setCategory(item)}>
               {item}
             </button>
           ))}
         </div>
-        <div className="flex flex-wrap items-end gap-4">
-          <label className="block text-sm text-[rgb(var(--text-muted))]">
-            Year
-            <select
-              value={year}
-              onChange={(event) => setYear(event.target.value)}
-              className="mt-2 block min-h-11 border border-[color:var(--line)] bg-bg-elevated px-3 text-[rgb(var(--text))]"
-            >
+        <div className="flex flex-wrap items-end gap-8">
+          <label className="block min-w-[9rem] text-[rgb(var(--text-subtle))]">
+            <span className="eyebrow">Year</span>
+            <select value={year} onChange={(event) => setYear(event.target.value)} className="line-control">
               {years.map((item) => (
                 <option key={item} value={item}>
                   {item === 'All' ? 'All years' : item}
@@ -79,31 +75,26 @@ export default function FileBrowser({ files }: { files: BrowserFile[] }) {
               ))}
             </select>
           </label>
-          <label className="block text-sm text-[rgb(var(--text-muted))]">
-            Sort
-            <select
-              value={sort}
-              onChange={(event) => setSort(event.target.value as SortMode)}
-              className="mt-2 block min-h-11 border border-[color:var(--line)] bg-bg-elevated px-3 text-[rgb(var(--text))]"
-            >
+          <label className="block min-w-[9rem] text-[rgb(var(--text-subtle))]">
+            <span className="eyebrow">Sort</span>
+            <select value={sort} onChange={(event) => setSort(event.target.value as SortMode)} className="line-control">
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
               <option value="number">Number</option>
             </select>
           </label>
         </div>
+        <p className="eyebrow" aria-live="polite">
+          {visible.length} {visible.length === 1 ? 'gallery' : 'galleries'}
+        </p>
       </div>
 
-      <p className="py-3 text-sm text-[rgb(var(--text-muted))]" aria-live="polite">
-        {visible.length} {visible.length === 1 ? 'gallery' : 'galleries'}
-      </p>
-
       {visible.length === 0 ? (
-        <p className="border border-[color:var(--line)] bg-bg-elevated px-4 py-8 text-sm leading-relaxed text-[rgb(var(--text-muted))]">
+        <p className="shell py-16 text-sm leading-relaxed text-[rgb(var(--text-muted))]">
           {category === 'Real Estate' ? 'Real Estate projects — Coming Soon.' : 'Nothing in this filter.'}
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="album-grid mt-8">
           {visible.map((file, index) => (
             <AlbumCard
               key={file.slug}
