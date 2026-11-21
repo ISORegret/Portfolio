@@ -13,6 +13,12 @@ const nextConfig = {
       { protocol: 'https', hostname: '*.pixieset.com' }
     ]
   },
+  async redirects() {
+    return [
+      { source: '/work', destination: '/files', permanent: true },
+      { source: '/gallery', destination: '/files', permanent: true },
+    ]
+  },
   async headers() {
     return [{ source: '/prepared/:path*', headers: [
       { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 const fieldClass =
-  'w-full rounded-token border border-border bg-bg-elevated px-3 py-3 text-sm text-[rgb(var(--text))] outline-none transition-colors placeholder:text-[rgb(var(--text-subtle))] focus:border-[rgb(var(--accent))]'
+  'w-full border border-[rgb(var(--border-muted))] bg-bg-elevated px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--text-muted))]'
 
 export function Button({
   className = '',

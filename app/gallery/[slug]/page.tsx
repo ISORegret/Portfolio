@@ -8,6 +8,7 @@ import { resolveAlbumBack } from '../../../lib/albumBackNavigation'
 import { imageSize } from '../../../lib/imageSize'
 import { withBrand } from '../../../lib/brandedTitle'
 import { SITE_URL } from '../../data/site'
+import { fileLabel, formatDotDate, getFileBySlug, visibleImageSrcs } from '../../../lib/files'
 
 type Props = {
   params: { slug: string }
@@ -47,66 +48,75 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-function formatDate(iso: string) {
-  const date = new Date(`${iso}T12:00:00`)
-  if (Number.isNaN(date.getTime())) return iso
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-}
-
 export default function AlbumPage({ params, searchParams }: Props) {
   const project = getProjectBySlug(params.slug)
   if (!project) notFound()
 
+  const file = getFileBySlug(project.slug)
   const back = resolveAlbumBack(searchParams?.from)
-  const curatedImages = project.curatedImages?.length ? project.curatedImages : project.images ?? []
-  const allImages = Array.from(new Set([project.cover, ...curatedImages]))
-    .slice(0, project.galleryLimit ?? 24)
-    .map((src) => ({ src, ...imageSize(src) }))
+  const images = visibleImageSrcs(project).map((src) => ({ src, ...imageSize(src) }))
+  const meta = [
+    file ? `File nº ${fileLabel(file.fileNumber)}` : null,
+    formatDotDate(project.date),
+    project.location,
+  ]
+    .filter(Boolean)
+    .join(' — ')
 
   return (
-    <main className="shell pb-24 pt-28">
-      <Link href={back.href} className="btn-text -ml-1 text-sm">
+    <main className="shell py-8 md:py-12">
+      <Link href={back.href} className="btn-text -ml-1 text-[0.72rem]">
         <ArrowLeft className="h-4 w-4" aria-hidden />
         Back to {back.label}
       </Link>
 
-      <header className="mt-10 max-w-3xl">
-        <p className="eyebrow">
-          {project.category}
-          <span className="mx-2 text-[rgb(var(--border))]">·</span>
-          <time dateTime={project.date}>{formatDate(project.date)}</time>
-        </p>
-        <h1 className="display mt-4 text-[clamp(2.8rem,6vw,5.2rem)]">{project.title}</h1>
-        {project.blurb ? <p className="mt-5 text-lg leading-relaxed text-[rgb(var(--text-muted))]">{project.blurb}</p> : null}
-        {project.story ? (
-          <p className="mt-5 border-t border-[rgb(var(--border-muted))] pt-5 text-base leading-relaxed text-[rgb(var(--text-subtle))]">
-            {project.story}
-          </p>
+      <header className="mt-6 border-b border-[color:var(--line-strong)]">
+        <p className="text-[0.72rem] uppercase tracking-[0.14em] text-[rgb(var(--text-muted))]">{meta}</p>
+        <h1 className="display mt-3 max-w-4xl text-[clamp(3rem,7vw,6.2rem)]">{project.title}</h1>
+        {project.blurb ? <p className="mt-4 max-w-2xl text-[0.85rem] leading-relaxed text-[rgb(var(--text-muted))]">{project.blurb}</p> : null}
+        {file ? (
+          <dl className="spec-grid mt-6">
+            {file.specs.map((spec) => (
+              <div key={spec.label}>
+                <dt>
+                  <span>{spec.label}</span>
+                </dt>
+                <dd>
+                  <strong>{spec.value}</strong>
+                </dd>
+              </div>
+            ))}
+          </dl>
         ) : null}
+        {project.story ? (
+          <p className="max-w-2xl py-5 text-[0.82rem] leading-relaxed text-[rgb(var(--text-muted))]">{project.story}</p>
+        ) : (
+          <div className="h-5" />
+        )}
       </header>
 
       {project.album ? (
-        <div className="mt-10 flex flex-col gap-4 border border-[rgb(var(--border-muted))] bg-bg-card px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-4 border border-[color:var(--line)] bg-bg-elevated px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-medium">Want the full shoot?</p>
-            <p className="mt-1 text-sm text-[rgb(var(--text-muted))]">View every image in high resolution on Pixieset.</p>
+            <p className="text-[0.78rem] uppercase tracking-[0.08em]">Want the full shoot?</p>
+            <p className="mt-1 text-[0.78rem] text-[rgb(var(--text-muted))]">View every image in high resolution on Pixieset.</p>
           </div>
-          <a href={project.album} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">
+          <a href={project.album} target="_blank" rel="noopener noreferrer" className="btn btn-yellow btn-sm">
             View full gallery
             <ExternalLink className="h-4 w-4" aria-hidden />
           </a>
         </div>
       ) : null}
 
-      <p className="mb-6 mt-10 text-sm text-[rgb(var(--text-subtle))]">Curated selection — open any image to view it larger.</p>
-
-      <AlbumGallery
-        slug={project.slug}
-        title={project.title}
-        images={allImages}
-        downloadAccess={project.downloadAccess ?? 'none'}
-        downloadCode={project.downloadCode}
-      />
+      <div className="mt-8">
+        <AlbumGallery
+          slug={project.slug}
+          title={project.title}
+          images={images}
+          downloadAccess={project.downloadAccess ?? 'none'}
+          downloadCode={project.downloadCode}
+        />
+      </div>
     </main>
   )
 }

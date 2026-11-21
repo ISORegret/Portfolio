@@ -1,22 +1,26 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Barlow_Condensed, Outfit } from 'next/font/google'
+import { Archivo, IBM_Plex_Mono } from 'next/font/google'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
 import StickyBookBar from '../components/StickyBookBar'
 import { SITE_URL, siteConfig, seoKeywords } from './data/site'
+import { buildArchive } from '../lib/files'
+import { floorRate } from '../lib/quote'
 
-const display = Barlow_Condensed({
+const display = Archivo({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-display',
+  weight: 'variable',
   display: 'swap',
+  variable: '--font-display',
+  axes: ['wdth'],
 })
 
-const sans = Outfit({
+const mono = IBM_Plex_Mono({
   subsets: ['latin'],
-  variable: '--font-sans',
+  weight: ['400', '500', '600'],
   display: 'swap',
+  variable: '--font-mono',
 })
 
 const ogImage = {
@@ -71,9 +75,11 @@ const jsonLd = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const fileCount = buildArchive().length
+
   return (
-    <html lang="en" data-theme="dark" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-bg pb-24 font-sans text-[rgb(var(--text))] antialiased md:pb-0">
+    <html lang="en" className={`${display.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body className="min-h-screen bg-bg pb-20 font-sans text-[rgb(var(--text))] antialiased md:pb-0">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <a
           href="#content"
@@ -81,10 +87,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <SiteHeader />
+        <SiteHeader fileCount={fileCount} />
         {children}
         <SiteFooter />
-        <StickyBookBar />
+        <StickyBookBar startingAt={floorRate()} />
       </body>
     </html>
   )

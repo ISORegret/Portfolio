@@ -4,16 +4,17 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import { useReducedMotion } from 'framer-motion'
-import SectionHeading from './SectionHeading'
+import { fileLabel } from '../lib/format'
 
-export const films = [
-  { title: 'Tilt Time', src: '/films/tilt-time.mp4', poster: '/films/tilt-time-poster.jpg' },
-  { title: 'Panel Pours', src: '/films/panel-pours.mp4', poster: '/films/panel-pours-poster.jpg' },
-]
+export type FilmFile = {
+  slug: string
+  title: string
+  src: string
+  poster: string
+  fileNumber: number
+}
 
-type Film = (typeof films)[number]
-
-function FilmCard({ film, onOpen }: { film: Film; onOpen: (film: Film) => void }) {
+function FilmCard({ film, onOpen }: { film: FilmFile; onOpen: (film: FilmFile) => void }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const reduce = useReducedMotion()
 
@@ -32,8 +33,11 @@ function FilmCard({ film, onOpen }: { film: Film; onOpen: (film: Film) => void }
   }
 
   return (
-    <figure className="min-w-0">
-      <div className="group relative overflow-hidden bg-black" onMouseEnter={playPreview} onMouseLeave={stopPreview} onFocus={playPreview} onBlur={stopPreview}>
+    <article id={film.slug} className="min-w-0 border border-[color:var(--line)] bg-bg-elevated">
+      <p className="border-b border-[color:var(--line)] px-3 py-2 text-[0.68rem] uppercase tracking-[0.12em] text-[rgb(var(--text-muted))]">
+        File nº {fileLabel(film.fileNumber)} / Film
+      </p>
+      <div className="relative bg-black" onMouseEnter={playPreview} onMouseLeave={stopPreview} onFocus={playPreview} onBlur={stopPreview}>
         <video
           ref={videoRef}
           className="aspect-[9/16] w-full object-cover"
@@ -49,21 +53,19 @@ function FilmCard({ film, onOpen }: { film: Film; onOpen: (film: Film) => void }
         <button
           type="button"
           onClick={() => onOpen(film)}
-          className="absolute inset-0 flex items-end bg-gradient-to-t from-black/55 via-transparent to-transparent p-4 text-left"
+          className="absolute inset-0 flex items-end bg-gradient-to-t from-black/70 via-transparent to-transparent p-4 text-left"
           aria-label={`Play ${film.title}`}
         >
-          <span className="border border-white/40 bg-black/40 px-3 py-1.5 text-xs tracking-wide text-white backdrop-blur-sm">
-            Play
-          </span>
+          <span className="file-tag">Play</span>
         </button>
       </div>
-      <figcaption className="mt-4 font-display text-2xl">{film.title}</figcaption>
-    </figure>
+      <h3 className="display px-3 py-4 text-3xl">{film.title}</h3>
+    </article>
   )
 }
 
-export default function FilmGallery({ index = '02' }: { index?: string }) {
-  const [active, setActive] = useState<Film | null>(null)
+export default function FilmGallery({ films }: { films: FilmFile[] }) {
+  const [active, setActive] = useState<FilmFile | null>(null)
   const [mounted, setMounted] = useState(false)
   const closeRef = useRef<HTMLButtonElement>(null)
 
@@ -85,52 +87,45 @@ export default function FilmGallery({ index = '02' }: { index?: string }) {
   }, [active])
 
   return (
-    <section id="films" className="section" aria-labelledby="films-heading">
-      <div className="shell">
-        <SectionHeading index={index || undefined} eyebrow="Construction in motion" title="Films" id="films-heading" />
-        <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-2">
-          {films.map((film) => (
-            <FilmCard key={film.src} film={film} onOpen={setActive} />
-          ))}
-        </div>
+    <>
+      <div className="mx-auto grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
+        {films.map((film) => (
+          <FilmCard key={film.slug} film={film} onOpen={setActive} />
+        ))}
       </div>
 
       {mounted && active
         ? createPortal(
-        <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label={active.title}
-          onClick={() => setActive(null)}
-        >
-          <button
-            ref={closeRef}
-            type="button"
-            onClick={() => setActive(null)}
-            className="absolute right-4 top-4 grid h-11 w-11 place-items-center text-white/80 hover:text-white"
-            aria-label="Close film"
-          >
-            <X aria-hidden />
-          </button>
-          <figure className="w-full max-w-sm" onClick={(event) => event.stopPropagation()}>
-            <video
-              key={active.src}
-              className="max-h-[80vh] w-full bg-black"
-              controls
-              autoPlay
-              playsInline
-              poster={active.poster}
+            <div
+              className="fixed inset-0 z-[80] flex items-center justify-center bg-black/90 p-4"
+              role="dialog"
+              aria-modal="true"
+              aria-label={active.title}
+              onClick={() => setActive(null)}
             >
-              <source src={active.src} type="video/mp4" />
-              <a href={active.src}>Watch {active.title}</a>
-            </video>
-            <figcaption className="mt-3 text-center text-sm text-white/80">{active.title}</figcaption>
-          </figure>
-        </div>,
+              <button
+                ref={closeRef}
+                type="button"
+                onClick={() => setActive(null)}
+                className="absolute right-4 top-4 grid h-11 w-11 place-items-center border border-[color:var(--line-strong)] text-[rgb(var(--text))]"
+                aria-label="Close film"
+              >
+                <X aria-hidden />
+              </button>
+              <figure className="w-full max-w-sm" onClick={(event) => event.stopPropagation()}>
+                <p className="mb-3 text-[0.68rem] uppercase tracking-[0.12em] text-[rgb(var(--text-muted))]">
+                  File nº {fileLabel(active.fileNumber)} / Film
+                </p>
+                <video key={active.src} className="max-h-[80vh] w-full bg-black" controls autoPlay playsInline poster={active.poster}>
+                  <source src={active.src} type="video/mp4" />
+                  <a href={active.src}>Watch {active.title}</a>
+                </video>
+                <figcaption className="display mt-3 text-3xl">{active.title}</figcaption>
+              </figure>
+            </div>,
             document.body,
           )
         : null}
-    </section>
+    </>
   )
 }

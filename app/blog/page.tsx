@@ -14,7 +14,7 @@ export default function BlogPage() {
   const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date))
 
   return (
-    <main className="shell py-28">
+    <main className="shell py-12 md:py-16">
       <header className="mb-14 max-w-2xl">
         <p className="eyebrow">Behind the shot</p>
         <h1 className="display mt-3 text-[clamp(3.2rem,7vw,5.5rem)]">Journal</h1>

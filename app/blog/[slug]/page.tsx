@@ -30,7 +30,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound()
 
   return (
-    <main className="shell max-w-3xl py-28">
+    <main className="shell max-w-3xl py-12 md:py-16">
       <Link href="/blog" className="btn-text -ml-1 text-sm">
         <ArrowLeft className="h-4 w-4" aria-hidden />
         Back to journal
