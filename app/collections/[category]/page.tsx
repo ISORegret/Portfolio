@@ -1,56 +1,55 @@
-'use client';
-
-import ProjectCard from '../../../components/ProjectCard';
-import { projects } from '../../data/projects';
+import Link from 'next/link'
+import { albumHrefWithFrom } from '../../../lib/albumBackNavigation'
+import { buildArchive } from '../../../lib/files'
+import { fileLabel, formatDotDate } from '../../../lib/format'
 
 const titleMap: Record<string, 'Automotive' | 'Real Estate' | 'Street'> = {
-  'automotive': 'Automotive',
+  automotive: 'Automotive',
   'real-estate': 'Real Estate',
-  'street': 'Street',
-};
+  street: 'Street',
+}
 
 export default function Page({ params }: { params: { category: string } }) {
-  const catKey = params.category.toLowerCase();
-  const category = titleMap[catKey];
-
+  const catKey = params.category.toLowerCase()
+  const category = titleMap[catKey]
   const list = category
-    ? projects
-        .filter((p) => p.category === category)
-        .sort((a, b) => b.date.localeCompare(a.date))
-    : [];
+    ? buildArchive()
+        .filter((file) => file.kind === 'photo' && file.category === category)
+        .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+    : []
 
   return (
-    <main className="shell space-y-10 py-28">
+    <main className="shell py-12 md:py-16">
       {!category ? (
-        <h1 className="display text-4xl">Category not found.</h1>
+        <h1 className="display text-5xl">Category not found.</h1>
       ) : (
         <>
           <header>
-            <h1 className="display text-[clamp(3rem,7vw,5rem)]">{category}</h1>
-            <p className="mt-4 text-lg text-[rgb(var(--text-muted))]">Albums in this category — open a card for the full set.</p>
+            <p className="eyebrow">Files</p>
+            <h1 className="display mt-3 text-[clamp(3rem,7vw,5.5rem)]">{category}</h1>
+            <p className="mt-4 max-w-xl text-[0.82rem] leading-relaxed text-[rgb(var(--text-muted))]">
+              Albums in this category — open a file for the set.
+            </p>
           </header>
 
           {list.length === 0 ? (
-            category === 'Real Estate'
-              ? <p className="text-[rgb(var(--text-muted))]">Real Estate projects — Coming Soon.</p>
-              : <p className="text-[rgb(var(--text-muted))]">No projects yet.</p>
+            <p className="mt-10 border border-[color:var(--line)] bg-bg-elevated px-4 py-8 text-[0.82rem] text-[rgb(var(--text-muted))]">
+              {category === 'Real Estate' ? 'Real Estate projects — Coming Soon.' : 'No projects yet.'}
+            </p>
           ) : (
-            <div className="masonry">
-              {list.map((p) => (
-                <ProjectCard
-                  key={p.slug}
-                  slug={p.slug}
-                  title={p.title}
-                  category={p.category}
-                  cover={p.cover}
-                  date={p.date}
-                  fromPath={`/collections/${catKey}`}
-                />
+            <div className="mt-8 border-t border-[color:var(--line-strong)]">
+              {list.map((file) => (
+                <Link key={file.slug} href={albumHrefWithFrom(file.slug, `/collections/${catKey}`)} className="file-row">
+                  <span>{fileLabel(file.fileNumber)}</span>
+                  <span className="file-title">{file.title}</span>
+                  <span className="file-cat">{file.category}</span>
+                  <span>{formatDotDate(file.date)}</span>
+                </Link>
               ))}
             </div>
           )}
         </>
       )}
     </main>
-  );
+  )
 }

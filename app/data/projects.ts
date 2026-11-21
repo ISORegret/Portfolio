@@ -20,6 +20,17 @@ export type Project = {
   blurb?: string
   /** Longer context for the album page (how/why you shot it) */
   story?: string
+  /**
+   * Shoot location, only when the album title, blurb, or story names a place.
+   * Leave empty rather than guessing from the studio's city.
+   */
+  location?: string
+  /** Optional spec-sheet fields. The site hides each one when it is empty. */
+  color?: string
+  light?: string
+  rig?: string
+  /** Client finals, when that count is known. Separate from the on-site photo count. */
+  framesDelivered?: string
   /** Hand-picked web portfolio sequence. Falls back to the first 23 album images plus the cover. */
   curatedImages?: string[]
   /** Optional SEO title; defaults to `title` */
@@ -48,6 +59,7 @@ const projects: Project[] = [
     title: 'Endless Summer Showcase',
     category: 'Automotive',
     date: '2026-09-26',
+    location: 'Downtown Jacksonville',
     cover: '/gallery/endless-summer-showcase-2026-09-26/EndlessSummershowcase-46.webp',
     downloadAccess: 'none',
     galleryLimit: 36,
@@ -148,6 +160,7 @@ const projects: Project[] = [
     title: 'Caffeine & Octane — Jacksonville · 09.12.26',
     category: 'Automotive',
     date: '2026-09-12',
+    location: 'Jacksonville',
     cover: '/gallery/caffeine-octane-jacksonville-2026-09-12/DSC04318.webp',
     downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/caffeineandoctane/',
@@ -312,6 +325,7 @@ const projects: Project[] = [
     title: 'Waterfront Auto Show 2026 — St. Marys, GA',
     category: 'Automotive',
     date: '2026-04-15',
+    location: 'St. Marys, GA',
     cover: '/gallery/waterfront-auto-show-2026/cover.jpg',
     downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/waterfrontautoshow2026stmaryga/',
@@ -428,6 +442,7 @@ const projects: Project[] = [
     title: 'Caffeine and Octane — Jacksonville',
     category: 'Automotive',
     date: '2026-03-09',
+    location: 'Jacksonville',
     cover: '/gallery/caffeine-octane-jacksonville/cover.jpg',
     downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/caffeineandoctanejacksonville/',
@@ -469,6 +484,7 @@ const projects: Project[] = [
     title: 'Boat Ramp — Jacksonville',
     category: 'Automotive',
     date: '2026-02-10',
+    location: 'Jacksonville',
     cover: '/gallery/boat-ramp-jacksonville/cover.jpg',
     downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/boatrampjacksonville/',
@@ -543,6 +559,7 @@ const projects: Project[] = [
     title: 'Opening of the Beaches',
     category: 'Automotive',
     date: '2025-09-01',
+    location: 'Downtown Jacksonville Beach',
     cover: '/gallery/opening-of-the-beaches/cover.jpg',
     downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/OpeningoftheBeaches/',
@@ -655,6 +672,7 @@ const projects: Project[] = [
     title: 'Dames Point',
     category: 'Automotive',
     date: '2025-10-01',
+    location: 'Dames Point',
     cover: '/gallery/damespoint/cover.jpg',
     downloadAccess: 'none',
     album: 'https://isoregret.pixieset.com/damespoint/',

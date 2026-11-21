@@ -5,7 +5,7 @@ import { SITE_URL } from './data/site'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
-  const staticRoutes = ['', '/work', '/blog', '/connect', '/collections/automotive', '/collections/real-estate', '/collections/street']
+  const staticRoutes = ['', '/files', '/films', '/blog', '/connect', '/collections/automotive', '/collections/real-estate', '/collections/street']
 
   return [
     ...staticRoutes.map((path) => ({

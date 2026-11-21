@@ -3,7 +3,8 @@
 import Image from 'next/image'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { ChevronLeft, ChevronRight, Download, Lock, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Download, Lock } from 'lucide-react'
+import { useReducedMotion } from 'framer-motion'
 
 function downloadFilename(src: string, index: number): string {
   const path = src.split('?')[0]
@@ -35,20 +36,28 @@ type Props = {
   downloadCode?: string
 }
 
+function pad(value: number) {
+  return String(value).padStart(2, '0')
+}
+
 export default function AlbumGallery({ slug, title, images, downloadAccess, downloadCode }: Props) {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const reduce = useReducedMotion()
+  const [index, setIndex] = useState(0)
+  const [mode, setMode] = useState<'frame' | 'grid'>('frame')
   const [unlocked, setUnlocked] = useState(false)
   const [showCodeModal, setShowCodeModal] = useState(false)
   const [codeInput, setCodeInput] = useState('')
   const [codeError, setCodeError] = useState(false)
-  const closeRef = useRef<HTMLButtonElement>(null)
-  const triggerRef = useRef<HTMLElement | null>(null)
+  const [mounted, setMounted] = useState(false)
   const touchRef = useRef<{ x: number; y: number } | null>(null)
-  const swipedRef = useRef(false)
+  const railRef = useRef<HTMLDivElement>(null)
 
   const storageKey = useMemo(() => storageKeyForSlug(slug), [slug])
   const codeRequired = downloadAccess === 'code' && typeof downloadCode === 'string' && downloadCode.trim().length > 0
   const canDownload = downloadAccess === 'open' || (codeRequired && unlocked)
+  const current = images[index]
+
+  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     try {
@@ -76,24 +85,23 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
     else setCodeError(true)
   }, [codeInput, downloadCode, persistUnlock])
 
-  const goPrev = useCallback(() => {
-    setLightboxIndex((index) => (index === null ? null : index === 0 ? images.length - 1 : index - 1))
-  }, [images.length])
+  const go = useCallback(
+    (next: number) => {
+      if (images.length === 0) return
+      const wrapped = (next + images.length) % images.length
+      setIndex(wrapped)
+      setMode('frame')
+    },
+    [images.length],
+  )
 
-  const goNext = useCallback(() => {
-    setLightboxIndex((index) => (index === null ? null : index === images.length - 1 ? 0 : index + 1))
-  }, [images.length])
-
-  const close = useCallback(() => {
-    setLightboxIndex(null)
-    triggerRef.current?.focus()
-  }, [])
+  const goPrev = useCallback(() => go(index - 1), [go, index])
+  const goNext = useCallback(() => go(index + 1), [go, index])
 
   const downloadCurrent = useCallback(async () => {
-    if (lightboxIndex === null || !canDownload) return
-    const src = images[lightboxIndex].src
-    const name = downloadFilename(src, lightboxIndex)
-    const absoluteUrl = new URL(src, window.location.href).href
+    if (!current || !canDownload) return
+    const name = downloadFilename(current.src, index)
+    const absoluteUrl = new URL(current.src, window.location.href).href
     try {
       const res = await fetch(absoluteUrl)
       if (!res.ok) throw new Error('fetch failed')
@@ -110,28 +118,43 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
     } catch {
       window.open(absoluteUrl, '_blank', 'noopener,noreferrer')
     }
-  }, [lightboxIndex, images, canDownload])
+  }, [current, canDownload, index])
 
   useEffect(() => {
-    if (lightboxIndex === null) return
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    closeRef.current?.focus()
+    if (mode !== 'frame') return
     const onKey = (event: KeyboardEvent) => {
+      const target = event.target
+      if (target instanceof HTMLElement) {
+        const tag = target.tagName
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable) return
+      }
       if (showCodeModal) {
         if (event.key === 'Escape') setShowCodeModal(false)
         return
       }
-      if (event.key === 'Escape') close()
-      if (event.key === 'ArrowLeft') goPrev()
-      if (event.key === 'ArrowRight') goNext()
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        go(index - 1)
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        go(index + 1)
+      }
     }
     window.addEventListener('keydown', onKey)
-    return () => {
-      document.body.style.overflow = previous
-      window.removeEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [mode, go, index, showCodeModal])
+
+  useEffect(() => {
+    const rail = railRef.current
+    const thumb = rail?.querySelector<HTMLElement>('[aria-current="true"]')
+    if (!rail || !thumb) return
+    if (rail.scrollHeight > rail.clientHeight + 8) {
+      rail.scrollTop = Math.max(0, thumb.offsetTop - rail.clientHeight / 2 + thumb.offsetHeight / 2)
+    } else {
+      rail.scrollLeft = Math.max(0, thumb.offsetLeft - rail.clientWidth / 2 + thumb.offsetWidth / 2)
     }
-  }, [lightboxIndex, close, goPrev, goNext, showCodeModal])
+  }, [index, mode])
 
   function onTouchStart(event: React.TouchEvent) {
     touchRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }
@@ -143,23 +166,22 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
     const dy = event.changedTouches[0].clientY - touchRef.current.y
     touchRef.current = null
     if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return
-    swipedRef.current = true
     if (dx < 0) goNext()
     else goPrev()
   }
 
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  if (!current) {
+    return <p className="text-[0.82rem] text-[rgb(var(--text-muted))]">No photos on file for this album.</p>
+  }
 
-  const showUnlockBanner = codeRequired && !unlocked
-  const current = lightboxIndex === null ? null : images[lightboxIndex]
+  const progress = `${((index + 1) / images.length) * 100}%`
 
   return (
-    <>
-      {showUnlockBanner ? (
-        <div className="mb-8 border border-[rgb(var(--border))] bg-bg-elevated px-4 py-4 sm:px-5">
-          <p className="text-sm font-medium">Client downloads</p>
-          <p className="mt-1 text-sm text-[rgb(var(--text-muted))]">
+    <div>
+      {codeRequired && !unlocked ? (
+        <div className="mb-6 border border-[color:var(--line)] bg-bg-elevated px-4 py-4">
+          <p className="text-[0.78rem] uppercase tracking-[0.08em]">Client downloads</p>
+          <p className="mt-2 text-[0.78rem] leading-relaxed text-[rgb(var(--text-muted))]">
             Enter the access code you were given to enable saving photos from this album (this browser only).
           </p>
           <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -177,7 +199,7 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
               placeholder="Access code"
               aria-label="Access code"
               aria-invalid={codeError}
-              className="w-full max-w-xs border border-border bg-bg px-3 py-2 text-sm"
+              className="w-full max-w-xs border border-[color:var(--line)] bg-bg px-3 py-2 text-sm"
             />
             <button type="button" onClick={tryCode} className="btn btn-line btn-sm w-fit">
               Unlock downloads
@@ -191,199 +213,165 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
         </div>
       ) : null}
 
-      <div className="masonry">
-        {images.map((image, index) => (
-          <figure key={`${image.src}-${index}`}>
-            <button
-              type="button"
-              aria-label={`Open ${title} photo ${index + 1}`}
-              onClick={(event) => {
-                triggerRef.current = event.currentTarget
-                setLightboxIndex(index)
-              }}
-              className="block w-full overflow-hidden bg-bg-elevated text-left"
-            >
-              <Image
-                src={image.src}
-                alt={`${title} — photo ${index + 1}`}
-                width={image.width}
-                height={image.height}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="h-auto w-full transition duration-700 hover:scale-[1.015]"
-                style={{ width: '100%', height: 'auto' }}
-                priority={index < 2}
-                placeholder="blur"
-                blurDataURL={BLUR_DATA}
-                unoptimized={image.src.includes('pixieset.com')}
-                referrerPolicy="no-referrer"
-              />
-            </button>
-          </figure>
-        ))}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-[0.68rem] uppercase tracking-[0.12em] text-[rgb(var(--text-muted))]">
+          {mode === 'frame' ? 'One frame' : 'Grid'} · arrow keys and swipe
+        </p>
+        <button type="button" className="choice" aria-pressed={mode === 'grid'} onClick={() => setMode(mode === 'frame' ? 'grid' : 'frame')}>
+          {mode === 'frame' ? 'View as grid' : 'View one frame'}
+        </button>
       </div>
 
-      {mounted && current && lightboxIndex !== null
-        ? createPortal(
-        <div
-          className="fixed inset-0 z-[80] bg-black"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Photo viewer"
-          onClick={() => {
-            if (swipedRef.current) {
-              swipedRef.current = false
-              return
-            }
-            close()
-          }}
-        >
-          <div className="absolute right-3 top-3 z-10 flex items-center gap-1 sm:right-5 sm:top-5">
-            {canDownload ? (
-              <button
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  void downloadCurrent()
-                }}
-                className="grid h-11 w-11 place-items-center text-white/80 hover:text-white"
-                aria-label="Download this photo"
-              >
-                <Download aria-hidden />
-              </button>
-            ) : null}
-            {codeRequired && !unlocked ? (
-              <button
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  setCodeError(false)
-                  setCodeInput('')
-                  setShowCodeModal(true)
-                }}
-                className="grid h-11 w-11 place-items-center text-white/80 hover:text-white"
-                aria-label="Enter access code to download"
-              >
-                <Lock aria-hidden />
-              </button>
-            ) : null}
-            <button
-              ref={closeRef}
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation()
-                close()
-              }}
-              className="grid h-11 w-11 place-items-center text-white/80 hover:text-white"
-              aria-label="Close"
+      {mode === 'frame' ? (
+        <div className="frame-stage">
+          <div>
+            <div
+              className="frame-fit"
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
             >
-              <X aria-hidden />
-            </button>
-          </div>
-
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation()
-              goPrev()
-            }}
-            className="absolute left-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center text-white/80 hover:text-white sm:left-4"
-            aria-label="Previous photo"
-          >
-            <ChevronLeft className="h-7 w-7" aria-hidden />
-          </button>
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation()
-              goNext()
-            }}
-            className="absolute right-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center text-white/80 hover:text-white sm:right-4"
-            aria-label="Next photo"
-          >
-            <ChevronRight className="h-7 w-7" aria-hidden />
-          </button>
-
-          <div
-            className="flex h-full items-center justify-center px-12 pb-24 pt-16 sm:px-20"
-            onClick={(event) => event.stopPropagation()}
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-          >
-            <div className="relative h-full w-full">
               <Image
                 key={current.src}
                 src={current.src}
-                alt={`${title} — photo ${lightboxIndex + 1}`}
-                fill
-                className="object-contain"
-                sizes="100vw"
-                priority
+                alt={`${title} — photo ${index + 1} of ${images.length}`}
+                width={current.width}
+                height={current.height}
+                sizes="(min-width: 1024px) 72vw, 100vw"
+                className={reduce ? undefined : 'frame-fade'}
+                priority={index === 0}
                 placeholder="blur"
                 blurDataURL={BLUR_DATA}
                 unoptimized={current.src.includes('pixieset.com')}
                 referrerPolicy="no-referrer"
               />
             </div>
+            <div className="frame-bar px-4 pb-4 sm:px-6">
+              <div>
+                <p className="frame-count" aria-live="polite">
+                  {pad(index + 1)} <span className="text-[rgb(var(--text-subtle))]">/ {pad(images.length)}</span>
+                </p>
+                <div className="frame-line" aria-hidden>
+                  <span style={{ width: progress }} />
+                </div>
+              </div>
+              <p className="hidden text-[0.72rem] uppercase tracking-[0.08em] text-[rgb(var(--text-muted))] sm:block">{title}</p>
+              <div className="flex items-center gap-2 justify-self-start sm:justify-self-end">
+                <button type="button" className="btn btn-line btn-sm" onClick={goPrev} aria-label="Previous photo">
+                  <ChevronLeft className="h-4 w-4" aria-hidden />
+                  Prev
+                </button>
+                <button type="button" className="btn btn-line btn-sm" onClick={goNext} aria-label="Next photo">
+                  Next
+                  <ChevronRight className="h-4 w-4" aria-hidden />
+                </button>
+                {canDownload ? (
+                  <button type="button" className="btn btn-line btn-sm" onClick={() => void downloadCurrent()} aria-label="Download this photo">
+                    <Download className="h-4 w-4" aria-hidden />
+                  </button>
+                ) : null}
+                {codeRequired && !unlocked ? (
+                  <button
+                    type="button"
+                    className="btn btn-line btn-sm"
+                    onClick={() => {
+                      setCodeError(false)
+                      setCodeInput('')
+                      setShowCodeModal(true)
+                    }}
+                    aria-label="Enter access code to download"
+                  >
+                    <Lock className="h-4 w-4" aria-hidden />
+                  </button>
+                ) : null}
+              </div>
+            </div>
           </div>
-
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-6 pb-6 pt-16 text-center">
-            <p className="text-sm text-white/75">{title}</p>
-            <p className="mt-1 font-display text-2xl text-white" aria-live="polite">
-              {lightboxIndex + 1}
-              <span className="text-white/45"> / {images.length}</span>
-            </p>
+          <div className="frame-rail" ref={railRef} aria-label="Frames">
+            {images.map((image, imageIndex) => (
+              <button
+                key={`${image.src}-d-${imageIndex}`}
+                type="button"
+                aria-current={imageIndex === index}
+                aria-label={`Photo ${imageIndex + 1}`}
+                onClick={() => setIndex(imageIndex)}
+              >
+                <Image src={image.src} alt="" width={136} height={92} className="h-full w-full object-cover" sizes="68px" />
+              </button>
+            ))}
           </div>
-        </div>,
-            document.body,
-          )
-        : null}
+        </div>
+      ) : (
+        <div className="photo-grid">
+          {images.map((image, imageIndex) => (
+            <figure key={`${image.src}-g-${imageIndex}`}>
+              <button type="button" className="block w-full" onClick={() => go(imageIndex)} aria-label={`Open photo ${imageIndex + 1} in the frame viewer`}>
+                <Image
+                  src={image.src}
+                  alt={`${title} — photo ${imageIndex + 1} of ${images.length}`}
+                  width={image.width}
+                  height={image.height}
+                  sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw"
+                  className="h-auto w-full"
+                  style={{ width: '100%', height: 'auto' }}
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA}
+                  unoptimized={image.src.includes('pixieset.com')}
+                  referrerPolicy="no-referrer"
+                />
+              </button>
+            </figure>
+          ))}
+        </div>
+      )}
 
       {mounted && showCodeModal
         ? createPortal(
-        <div
-          className="fixed inset-0 z-[90] flex items-center justify-center bg-black/70 p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Download access code"
-          onClick={() => setShowCodeModal(false)}
-        >
-          <div className="w-full max-w-sm border border-[rgb(var(--border))] bg-bg p-5" onClick={(event) => event.stopPropagation()}>
-            <h2 className="font-display text-3xl">Download access</h2>
-            <p className="mt-2 text-sm text-[rgb(var(--text-muted))]">Enter the code for this album to enable downloads for this session.</p>
-            <input
-              type="password"
-              autoComplete="off"
-              value={codeInput}
-              onChange={(event) => {
-                setCodeInput(event.target.value)
-                setCodeError(false)
-              }}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') tryCode()
-              }}
-              placeholder="Access code"
-              aria-label="Access code"
-              aria-invalid={codeError}
-              className="mt-4 w-full border border-border bg-bg-elevated px-3 py-2 text-sm"
-            />
-            {codeError ? (
-              <p className="mt-2 text-sm text-red-300" role="alert">
-                Code does not match.
-              </p>
-            ) : null}
-            <div className="mt-4 flex justify-end gap-2">
-              <button type="button" onClick={() => setShowCodeModal(false)} className="btn btn-line btn-sm">
-                Cancel
-              </button>
-              <button type="button" onClick={tryCode} className="btn btn-primary btn-sm">
-                Unlock
-              </button>
-            </div>
-          </div>
-        </div>,
+            <div
+              className="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 p-4"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Download access code"
+              onClick={() => setShowCodeModal(false)}
+            >
+              <div className="w-full max-w-sm border border-[color:var(--line-strong)] bg-bg p-5" onClick={(event) => event.stopPropagation()}>
+                <h2 className="display text-4xl">Download access</h2>
+                <p className="mt-3 text-[0.78rem] leading-relaxed text-[rgb(var(--text-muted))]">
+                  Enter the code for this album to enable downloads for this session.
+                </p>
+                <input
+                  type="password"
+                  autoComplete="off"
+                  value={codeInput}
+                  onChange={(event) => {
+                    setCodeInput(event.target.value)
+                    setCodeError(false)
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter') tryCode()
+                  }}
+                  placeholder="Access code"
+                  aria-label="Access code"
+                  aria-invalid={codeError}
+                  className="mt-4 w-full border border-[color:var(--line)] bg-bg-elevated px-3 py-2 text-sm"
+                />
+                {codeError ? (
+                  <p className="mt-2 text-sm text-red-300" role="alert">
+                    Code does not match.
+                  </p>
+                ) : null}
+                <div className="mt-4 flex justify-end gap-2">
+                  <button type="button" onClick={() => setShowCodeModal(false)} className="btn btn-line btn-sm">
+                    Cancel
+                  </button>
+                  <button type="button" onClick={tryCode} className="btn btn-yellow btn-sm">
+                    Unlock
+                  </button>
+                </div>
+              </div>
+            </div>,
             document.body,
           )
         : null}
-    </>
+    </div>
   )
 }
