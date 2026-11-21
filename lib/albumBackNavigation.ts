@@ -21,25 +21,25 @@ const ALLOWED = new Set([
 ])
 
 const LABELS: Record<string, string> = {
-  '/': 'Home',
-  '/files': 'Files',
-  '/films': 'Films',
-  '/work': 'Files',
-  '/gallery': 'Files',
-  '/blog': 'Journal',
-  '/#films': 'Films',
-  '/#rates': 'Rates',
-  '/#spec': 'Spec your shoot',
-  '/#contact': 'Spec your shoot',
-  '/#about': 'Home',
-  '/collections/automotive': 'Automotive',
-  '/collections/real-estate': 'Real estate',
-  '/collections/street': 'Street',
+  '/': 'photos',
+  '/files': 'photos',
+  '/films': 'films',
+  '/work': 'photos',
+  '/gallery': 'photos',
+  '/blog': 'journal',
+  '/#films': 'films',
+  '/#rates': 'rates',
+  '/#spec': 'contact',
+  '/#contact': 'contact',
+  '/#about': 'about',
+  '/collections/automotive': 'automotive',
+  '/collections/real-estate': 'real estate',
+  '/collections/street': 'street',
 }
 
 export type AlbumBackTarget = { href: string; label: string }
 
-const DEFAULT_BACK: AlbumBackTarget = { href: '/files', label: 'Files' }
+const DEFAULT_BACK: AlbumBackTarget = { href: '/files', label: 'photos' }
 
 export function resolveAlbumBack(fromParam: string | string[] | undefined): AlbumBackTarget {
   const raw = Array.isArray(fromParam) ? fromParam[0] : fromParam
@@ -54,11 +54,16 @@ export function resolveAlbumBack(fromParam: string | string[] | undefined): Albu
 
   if (!ALLOWED.has(decoded)) return DEFAULT_BACK
 
-  if (decoded === '/work' || decoded === '/gallery') return { href: '/files', label: 'Files' }
+  if (decoded === '/' || decoded === '/work' || decoded === '/gallery' || decoded === '/files') {
+    return { href: '/files', label: 'photos' }
+  }
+
+  if (decoded === '/#films') return { href: '/films', label: 'films' }
+  if (decoded === '/#contact' || decoded === '/#spec') return { href: '/#contact', label: 'contact' }
 
   return {
     href: decoded,
-    label: LABELS[decoded] ?? 'Back',
+    label: LABELS[decoded] ?? 'photos',
   }
 }
 

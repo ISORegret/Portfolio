@@ -3,10 +3,7 @@ import type { Metadata } from 'next'
 import { Archivo, IBM_Plex_Mono } from 'next/font/google'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
-import StickyBookBar from '../components/StickyBookBar'
 import { SITE_URL, siteConfig, seoKeywords } from './data/site'
-import { buildArchive } from '../lib/files'
-import { floorRate } from '../lib/quote'
 
 const display = Archivo({
   subsets: ['latin'],
@@ -75,11 +72,9 @@ const jsonLd = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const fileCount = buildArchive().length
-
   return (
     <html lang="en" className={`${display.variable} ${mono.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-bg pb-20 font-sans text-[rgb(var(--text))] antialiased md:pb-0">
+      <body className="min-h-screen bg-bg font-sans text-[rgb(var(--text))] antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <a
           href="#content"
@@ -87,10 +82,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <SiteHeader fileCount={fileCount} />
+        <SiteHeader />
         {children}
         <SiteFooter />
-        <StickyBookBar startingAt={floorRate()} />
       </body>
     </html>
   )

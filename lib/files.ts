@@ -106,3 +106,14 @@ export function photoFilesNewestFirst(): ArchiveFile[] {
     .filter((file) => file.kind === 'photo')
     .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
 }
+
+/** Neighbors in the same order as the Photos page (newest first). */
+export function adjacentPhotoAlbums(slug: string): { previous?: ArchiveFile; next?: ArchiveFile } {
+  const photos = photoFilesNewestFirst()
+  const index = photos.findIndex((file) => file.slug === slug)
+  if (index < 0) return {}
+  return {
+    previous: index > 0 ? photos[index - 1] : undefined,
+    next: index < photos.length - 1 ? photos[index + 1] : undefined,
+  }
+}

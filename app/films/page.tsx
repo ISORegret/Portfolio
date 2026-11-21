@@ -22,11 +22,8 @@ export default function FilmsPage() {
 
   return (
     <main className="shell py-12 md:py-16">
-      <p className="eyebrow">Construction in motion</p>
-      <h1 className="display mt-3 text-[clamp(3.2rem,7vw,6rem)]">Films</h1>
-      <p className="mt-4 max-w-xl text-[0.82rem] leading-relaxed text-[rgb(var(--text-muted))]">
-        Each film is its own file. Play opens the player.
-      </p>
+      <h1 className="display text-[clamp(3.2rem,7vw,6rem)]">Films</h1>
+      <p className="mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--text-muted))]">Play a film.</p>
       <div className="mt-8">
         <FilmGallery
           films={films.map((film) => ({

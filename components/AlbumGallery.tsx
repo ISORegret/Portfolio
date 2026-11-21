@@ -265,8 +265,9 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
                   <ChevronRight className="h-4 w-4" aria-hidden />
                 </button>
                 {canDownload ? (
-                  <button type="button" className="btn btn-line btn-sm" onClick={() => void downloadCurrent()} aria-label="Download this photo">
+                  <button type="button" className="btn btn-line btn-sm" onClick={() => void downloadCurrent()}>
                     <Download className="h-4 w-4" aria-hidden />
+                    Download
                   </button>
                 ) : null}
                 {codeRequired && !unlocked ? (
@@ -278,9 +279,9 @@ export default function AlbumGallery({ slug, title, images, downloadAccess, down
                       setCodeInput('')
                       setShowCodeModal(true)
                     }}
-                    aria-label="Enter access code to download"
                   >
                     <Lock className="h-4 w-4" aria-hidden />
+                    Enter code
                   </button>
                 ) : null}
               </div>
