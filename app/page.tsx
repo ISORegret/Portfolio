@@ -8,6 +8,7 @@ import ShootFilter, { type MockTile } from '../components/ShootFilter'
 import FaqAccordion from '../components/FaqAccordion'
 import SpecBuilder from '../components/SpecBuilder'
 import { buildArchive } from '../lib/files'
+import { albumHrefWithFrom } from '../lib/albumBackNavigation'
 
 import { projects } from '../app/data/projects'
 
@@ -42,6 +43,7 @@ const realTiles: MockTile[] = wallSpec.map((spec, index) => {
     img: project.cover,
     alt: `${project.title} — photographed by ISO.Regret`,
     tag: 'Stills',
+    href: albumHrefWithFrom(spec.slug, '/'),
   }
 })
 
@@ -76,6 +78,7 @@ export default function Page() {
     alt: `${film.title} — film by ISO.Regret`,
     tag: 'Film',
     film: true,
+    href: `/films#${film.slug}`,
   }))
 
   return (

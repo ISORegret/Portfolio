@@ -1321,6 +1321,15 @@ button.album-tile {
   position: relative;
   overflow: hidden;
   background: var(--m-panel, #121214);
+  cursor: pointer;
+}
+
+/* Stretched link: the whole tile is tappable, taking you to its album/film page. */
+.tile-link {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  cursor: pointer;
 }
 
 .tile img {
