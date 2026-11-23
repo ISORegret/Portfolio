@@ -5,16 +5,34 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePathname } from 'next/navigation'
 import Wordmark from './Wordmark'
-import { bookShootHref, isNavActive, navLinks } from '../lib/nav'
+import { isNavActive, navLinks } from '../lib/nav'
 
 export default function SiteHeader() {
   const pathname = usePathname()
   const [hash, setHash] = useState('')
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [overHero, setOverHero] = useState(false)
   const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => setMounted(true), [])
+
+  /**
+   * Easton Chang header: on the homepage, while the hero fills the
+   * first screen, the header floats transparently over the image
+   * (wordmark top-left, links top-right, no bar, no border). The
+   * moment the page scrolls, it turns into the solid header.
+   */
+  useEffect(() => {
+    if (pathname !== '/') {
+      setOverHero(false)
+      return
+    }
+    const onScroll = () => setOverHero(window.scrollY <= 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [pathname])
 
   useEffect(() => {
     setOpen(false)
@@ -48,7 +66,7 @@ export default function SiteHeader() {
   }
 
   return (
-    <header className="site-header">
+    <header className={`site-header${overHero ? ' site-header--over-hero' : ''}`}>
       <div className="shell flex h-[var(--header-h)] items-center gap-6">
         <Wordmark onClick={() => onNavigate('/')} className="shrink-0" />
         <nav className="site-nav" aria-label="Main">
@@ -67,9 +85,6 @@ export default function SiteHeader() {
             )
           })}
         </nav>
-        <Link href={bookShootHref} className="nav-cta site-book" onClick={() => onNavigate(bookShootHref)}>
-          Contact
-        </Link>
         <button
           type="button"
           className="menu-toggle site-menu-button"
@@ -105,9 +120,6 @@ export default function SiteHeader() {
                     </Link>
                   )
                 })}
-                <Link href={bookShootHref} className="nav-cta mt-8 self-start" onClick={() => onNavigate(bookShootHref)}>
-                  Contact
-                </Link>
               </nav>
             </div>,
             document.body,
