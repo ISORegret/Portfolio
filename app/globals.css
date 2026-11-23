@@ -38,8 +38,10 @@ main {
 
 /* ---------- Loading + transition animations (Nov 23) ---------- */
 
-/* Bottega53-style loader: giant wordmark + 0–100% counter, curtain lift.
-   Timer-driven in SiteLoader.tsx (~1.6s total, once per session). */
+/* Bottega53-style loader: S650 full-screen + giant wordmark + slow
+   0–100% counter, then the photo morphs into the hero frame.
+   Timer-driven in SiteLoader.tsx (~2.1s count + ~0.8s morph,
+   ~2.9s total, once per session). */
 .site-loader {
   position: fixed;
   inset: 0;
@@ -49,10 +51,54 @@ main {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  background: #0a0a0b;
+  /* No solid background — the S650 photo (below) is the backdrop. */
+  background: transparent;
   color: rgb(var(--text));
   cursor: pointer;
   transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The S650: full-screen during the count, then left/top/width/height
+   animate to the hero frame measured at runtime (FLIP morph). */
+.site-loader-media {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition:
+    left 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    top 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-loader-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Darkens the photo so the wordmark stays legible; fades away as
+   the photo shrinks into the hero, so the landing is the clean hero. */
+.site-loader-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(90% 80% at 50% 40%, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(to top, rgba(12, 9, 6, 0.6) 0%, rgba(12, 9, 6, 0.15) 50%, rgba(12, 9, 6, 0.35) 100%);
+  transition: opacity 350ms ease;
+}
+
+.site-loader--morphing {
+  pointer-events: none;
+}
+
+.site-loader--morphing .site-loader-shade {
+  opacity: 0;
 }
 
 .site-loader--leaving {
@@ -60,13 +106,19 @@ main {
 }
 
 .site-loader-inner {
+  position: relative;
+  z-index: 10;
   text-align: center;
   transition: opacity 300ms ease;
 }
 
 .site-loader--leaving .site-loader-inner,
 .site-loader--leaving .site-loader-count,
-.site-loader--leaving .site-loader-skip {
+.site-loader--leaving .site-loader-skip,
+.site-loader--morphing .site-loader-inner,
+.site-loader--morphing .site-loader-count,
+.site-loader--morphing .site-loader-skip,
+.site-loader--morphing .site-loader-bar {
   opacity: 0;
 }
 
@@ -76,26 +128,32 @@ main {
   font-weight: 600;
   letter-spacing: 0.34em;
   text-transform: uppercase;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
 }
 
 .site-loader-wordmark {
   margin-top: 0.5rem;
-  font-size: clamp(2.8rem, 10vw, 6.5rem);
+  /* Ryan's tweak: noticeably bigger — hero-scale, filling the viewport width. */
+  font-size: clamp(4rem, 15vw, 11rem);
+  line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.45);
 }
 
 .site-loader-sub {
   margin-top: 0.6rem;
-  color: rgb(var(--text-muted));
+  color: rgba(245, 239, 228, 0.85);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
 }
 
 .site-loader-count {
   position: absolute;
+  z-index: 10;
   right: clamp(1rem, 5vw, 3rem);
   bottom: clamp(1rem, 4vw, 2.5rem);
   font-family: var(--font-display), Georgia, serif;
@@ -103,6 +161,7 @@ main {
   font-weight: 500;
   line-height: 1;
   color: #f7f1e6;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
   transition: opacity 300ms ease;
 }
 
@@ -132,10 +191,12 @@ main {
 
 .site-loader-bar {
   position: absolute;
+  z-index: 10;
   left: 0;
   bottom: 0;
   height: 2px;
   background: rgb(var(--accent));
+  transition: opacity 300ms ease;
 }
 
 #films,

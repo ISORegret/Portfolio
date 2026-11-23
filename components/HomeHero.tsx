@@ -14,40 +14,62 @@ const EASE = [0.22, 1, 0.36, 1] as const
  * italic gold, and the market line with gold dots underneath.
  * The nav/wordmark live in the sticky SiteHeader above this section.
  *
- * Entrance (motion only, content unchanged): the hero image drifts in
- * with a slow Ken Burns scale (1.08 → 1 over ~1.6s) while the wordmark
- * and market line fade up in stagger. On a first visit it starts as
- * the loader lifts (~1.25s in); on repeat visits — or with reduced
- * motion — it plays immediately / not at all.
+ * Entrance (motion only, content unchanged):
+ * - First visit: the SiteLoader morphs the full-screen S650 into
+ *   this hero's frame — that IS the entrance, so the hero image
+ *   stays at scale 1 (no second Ken Burns zoom) and the wordmark /
+ *   market line simply fade up once the loader lands
+ *   ('iso-loader-complete', fallback ~4.2s).
+ * - Repeat visits (no loader): the gentle Ken Burns scale
+ *   (1.08 → 1 over ~1.6s) plays immediately, as before.
+ * Reduced motion: everything appears instantly.
  */
 export default function HomeHero() {
   const { hero, brandName } = siteConfig
   const reduce = useReducedMotion()
+  // Read the session flag synchronously at first render, so the
+  // initial scale is right before paint: 'loader' on a first visit
+  // (morph lands it at scale 1), 'normal' on repeat visits.
+  const [mode, setMode] = useState<'loader' | 'normal'>(() => {
+    if (typeof window === 'undefined') return 'loader'
+    try {
+      return window.sessionStorage.getItem('iso-loader-seen') ? 'normal' : 'loader'
+    } catch {
+      return 'loader'
+    }
+  })
   const [started, setStarted] = useState(false)
 
   useEffect(() => {
     if (reduce) {
+      setMode('normal')
       setStarted(true)
       return
     }
-    let seen = false
-    try {
-      seen = Boolean(window.sessionStorage.getItem('iso-loader-seen'))
-    } catch {
-      seen = false
+    if (mode === 'normal') {
+      setStarted(true)
+      return
     }
-    const t = window.setTimeout(() => setStarted(true), seen ? 0 : 1250)
-    return () => window.clearTimeout(t)
-  }, [reduce])
+    const onDone = () => setStarted(true)
+    window.addEventListener('iso-loader-complete', onDone)
+    const fallback = window.setTimeout(() => setStarted(true), 4200)
+    return () => {
+      window.removeEventListener('iso-loader-complete', onDone)
+      window.clearTimeout(fallback)
+    }
+  }, [reduce, mode])
 
   const instant = Boolean(reduce)
+  // Loader first visit: image is already landed at scale 1 by the
+  // morph — hold it there. Repeat visits: drift in from 1.08.
+  const imageScale = mode === 'loader' ? 1 : 1.08
 
   return (
     <section className="home-hero" aria-label={brandName}>
       <div className="hero-main">
         <motion.div
           className="absolute inset-0"
-          initial={instant ? false : { scale: 1.08 }}
+          initial={instant ? false : { scale: imageScale }}
           animate={started ? { scale: 1 } : {}}
           transition={{ duration: 1.6, ease: EASE }}
         >
