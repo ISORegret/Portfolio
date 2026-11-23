@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 /**
- * The design mock's Shoots wall, exactly: 7 numbered tiles (stand-ins
- * holding the layout), 12-col grid — wide 7, narrow 5, third 4 —
- * STILLS/FILM tag pills, caption + gold category line, and working
- * All / Automotive / Real Estate / Events / Film filters.
- * Images live in public/mock/ (decoded from .b64 at build time).
+ * The design mock's Shoots wall, exactly: 7 numbered tiles, 12-col grid —
+ * wide 7, narrow 5, third 4 — STILLS/FILM tag pills, caption + gold
+ * category line, and working All / Automotive / Real Estate / Events / Film
+ * filters. The tiles are Ryan's real albums (covers from projects.ts);
+ * the Film filter shows his two real films. No real-estate albums exist
+ * in the repo, so that filter shows the honest empty state.
  */
 export type MockTile = {
   n: string
@@ -30,10 +32,11 @@ const filters = [
 ] as const
 type Filter = (typeof filters)[number]['id']
 
-export default function ShootFilter({ tiles }: { tiles: MockTile[] }) {
+export default function ShootFilter({ tiles, films = [] }: { tiles: MockTile[]; films?: MockTile[] }) {
   const [active, setActive] = useState<Filter>('all')
 
-  const visible = active === 'all' ? tiles : tiles.filter((tile) => tile.cats.includes(active))
+  const visible =
+    active === 'film' ? films : active === 'all' ? tiles : tiles.filter((tile) => tile.cats.includes(active))
 
   return (
     <div>
@@ -59,22 +62,28 @@ export default function ShootFilter({ tiles }: { tiles: MockTile[] }) {
         </div>
       </div>
 
-      <div className="wall">
-        {visible.map((tile) => (
-          <figure key={tile.n} className={`tile ${tile.span}`} data-cat={tile.cats.join(' ')}>
-            <img src={tile.img} alt={tile.alt} loading="lazy" />
-            <span className="num">{tile.n}</span>
-            <span className={`tag${tile.film ? ' film' : ''}`}>{tile.tag}</span>
-            <figcaption>
-              <span className="t">{tile.title}</span>
-              <span className="c">{tile.caption}</span>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-      <p className="standin">
-        Frames 02–07 are stand-in photography holding the layout — your own shoots drop straight into the same slots.
-      </p>
+      {visible.length === 0 ? (
+        <p className="mt-10 max-w-xl text-[rgb(var(--text-muted))]">
+          No real-estate shoots on file yet — the archive holds the automotive, street and event work.{' '}
+          <Link href="/files" className="text-link">
+            Browse the archive
+          </Link>
+        </p>
+      ) : (
+        <div className="wall">
+          {visible.map((tile) => (
+            <figure key={tile.title} className={`tile ${tile.span}`} data-cat={tile.cats.join(' ')}>
+              <img src={tile.img} alt={tile.alt} loading="lazy" />
+              {tile.n ? <span className="num">{tile.n}</span> : null}
+              <span className={`tag${tile.film ? ' film' : ''}`}>{tile.tag}</span>
+              <figcaption>
+                <span className="t">{tile.title}</span>
+                <span className="c">{tile.caption}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

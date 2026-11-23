@@ -9,84 +9,41 @@ import FaqAccordion from '../components/FaqAccordion'
 import SpecBuilder from '../components/SpecBuilder'
 import { buildArchive } from '../lib/files'
 
+import { projects } from '../app/data/projects'
+
 /**
- * The design mock's 7 Shoots tiles, exactly — including the stand-ins.
- * Do NOT substitute real albums: the mock is the brief.
+ * The design mock's exact Shoots wall — 7 numbered tiles, 12-col grid
+ * (wide 7, narrow 5, third 4), STILLS/FILM tag pills, caption + gold
+ * category line, working All / Automotive / Real Estate / Events / Film
+ * filters — but the tiles are Ryan's REAL albums, not the mock's stand-ins.
+ * Covers/titles come from app/data/projects.ts so they stay in sync.
+ * Order: newest first. No real-estate albums exist in the repo, so the
+ * Real Estate filter shows the empty state (see ShootFilter).
  */
-const mockTiles: MockTile[] = [
-  {
-    n: '01',
-    title: 'Corvette C8 — St. Marys Waterfront',
-    caption: 'Waterfront Auto Show 2026',
-    cats: ['automotive'],
-    span: 'wide',
-    img: '/mock/hero-c8.jpg',
-    alt: 'Amplify Orange Corvette C8 at the St. Marys waterfront',
+const wallSpec = [
+  { slug: 'cruise-2026', caption: 'MSC Grandiosa · Nov 2026', cats: ['events'], span: 'wide' },
+  { slug: 'endless-summer-showcase-2026-09-26', caption: 'Downtown Jacksonville', cats: ['automotive'], span: 'narrow' },
+  { slug: 'blue-mustang', caption: 'Jacksonville', cats: ['automotive'], span: 'third' },
+  { slug: 'green-macan', caption: 'Jacksonville', cats: ['automotive'], span: 'third' },
+  { slug: 'caffeine-octane-jacksonville-2026-09-12', caption: 'Jacksonville · Sep 2026', cats: ['automotive', 'events'], span: 'third' },
+  { slug: 'waterfront-auto-show-2026', caption: 'St. Marys, GA', cats: ['automotive', 'events'], span: 'narrow' },
+  { slug: 'caffeine-octane-jacksonville', caption: 'Jacksonville', cats: ['automotive', 'events'], span: 'wide' },
+] as const
+
+const realTiles: MockTile[] = wallSpec.map((spec, index) => {
+  const project = projects.find((p) => p.slug === spec.slug)
+  if (!project) throw new Error(`Wall album missing from projects.ts: ${spec.slug}`)
+  return {
+    n: String(index + 1).padStart(2, '0'),
+    title: project.title,
+    caption: spec.caption,
+    cats: [...spec.cats],
+    span: spec.span,
+    img: project.cover,
+    alt: `${project.title} — photographed by ISO.Regret`,
     tag: 'Stills',
-  },
-  {
-    n: '02',
-    title: 'Porsche 911 GT3 RS — Studio',
-    caption: 'Jacksonville',
-    cats: ['automotive'],
-    span: 'narrow',
-    img: '/mock/studio-gt3.jpg',
-    alt: 'Matte black Porsche 911 GT3 RS under studio light',
-    tag: 'Stills',
-  },
-  {
-    n: '03',
-    title: 'Twilight Listing — Ponte Vedra Beach',
-    caption: 'Real Estate',
-    cats: ['realestate'],
-    span: 'third',
-    img: '/mock/twilight-home.jpg',
-    alt: 'Luxury home photographed at twilight with warm light in every window',
-    tag: 'Stills',
-  },
-  {
-    n: '04',
-    title: 'Skylight House — Interiors',
-    caption: 'Real Estate',
-    cats: ['realestate'],
-    span: 'third',
-    img: '/mock/interior-light.jpg',
-    alt: 'Sunlit modern interior with a skylight ceiling',
-    tag: 'Stills',
-  },
-  {
-    n: '05',
-    title: 'Porsche 911 Turbo — Coastal Run',
-    caption: 'Motion',
-    cats: ['automotive', 'film'],
-    span: 'third',
-    img: '/mock/coastal-911.webp',
-    alt: 'Porsche 911 Turbo driving a coastal road at dusk',
-    tag: 'Film',
-    film: true,
-  },
-  {
-    n: '06',
-    title: 'Evening Reception — Epping Forest Yacht Club',
-    caption: 'Events · Jacksonville',
-    cats: ['events'],
-    span: 'narrow',
-    img: '/mock/event-sparkler.jpg',
-    alt: 'Couple leaving an evening reception through a tunnel of sparklers',
-    tag: 'Stills',
-  },
-  {
-    n: '07',
-    title: 'Night Meet — Jacksonville',
-    caption: 'Events',
-    cats: ['events', 'film'],
-    span: 'wide',
-    img: '/mock/meet-night.jpg',
-    alt: 'Crowd and modified cars at a night meet under string lights',
-    tag: 'Film + Stills',
-    film: true,
-  },
-]
+  }
+})
 
 const faqs = [
   {
@@ -109,6 +66,17 @@ const faqs = [
 
 export default function Page() {
   const films = buildArchive().filter((file) => file.kind === 'film' && file.src && file.poster)
+  const filmTiles: MockTile[] = films.map((film) => ({
+    n: '',
+    title: film.title,
+    caption: 'Film',
+    cats: ['film'],
+    span: 'third',
+    img: film.poster ?? film.cover,
+    alt: `${film.title} — film by ISO.Regret`,
+    tag: 'Film',
+    film: true,
+  }))
 
   return (
     <main>
@@ -127,7 +95,7 @@ export default function Page() {
 
       <section id="shoots" className="band band-charcoal" aria-labelledby="shoots-heading">
         <div className="shell">
-          <ShootFilter tiles={mockTiles} />
+          <ShootFilter tiles={realTiles} films={filmTiles} />
         </div>
       </section>
 
