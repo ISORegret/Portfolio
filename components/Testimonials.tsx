@@ -2,10 +2,10 @@ import { testimonials } from '../app/data/testimonials'
 
 export default function Testimonials() {
   return (
-    <section aria-labelledby="testimonials-heading">
-      <div className="shell pb-20 md:pb-28">
+    <section className="band band-warm" aria-labelledby="testimonials-heading">
+      <div className="shell">
         <p className="eyebrow">On file</p>
-        <h2 id="testimonials-heading" className="display mt-3 text-[clamp(2.6rem,5vw,4.25rem)]">
+        <h2 id="testimonials-heading" className="display display-xl mt-3">
           In their words
         </h2>
         <ul className="mt-8">

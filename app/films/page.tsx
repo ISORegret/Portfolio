@@ -21,8 +21,10 @@ export default function FilmsPage() {
   const films = buildArchive().filter((file) => file.kind === 'film' && file.src && file.poster)
 
   return (
-    <main className="shell py-14 md:py-20">
-      <h1 className="display text-[clamp(2.8rem,6vw,4.75rem)]">Films</h1>
+    <main className="band band-ink">
+      <div className="shell">
+      <p className="eyebrow">Motion</p>
+      <h1 className="display display-xl mt-3">Films</h1>
       <p className="mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--text-muted))]">Play a film.</p>
       <div className="mt-8">
         <FilmGallery
@@ -34,6 +36,7 @@ export default function FilmsPage() {
             fileNumber: film.fileNumber,
           }))}
         />
+      </div>
       </div>
     </main>
   )

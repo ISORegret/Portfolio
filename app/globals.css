@@ -4,19 +4,19 @@
 
 :root {
   color-scheme: dark;
-  --bg: 9 9 9;
-  --bg-elevated: 16 16 16;
-  --bg-card: 18 18 18;
-  --border: 196 190 180;
-  --border-muted: 72 68 62;
-  --text: 243 240 234;
-  --text-muted: 176 170 160;
-  --text-subtle: 132 126 116;
-  --accent: 196 168 130;
-  --accent-muted: 168 144 112;
-  --ink: 9 9 9;
-  --line: rgba(243, 240, 234, 0.12);
-  --line-strong: rgba(243, 240, 234, 0.22);
+  --bg: 11 10 9;
+  --bg-elevated: 26 23 20;
+  --bg-card: 34 29 24;
+  --border: 214 186 140;
+  --border-muted: 92 74 54;
+  --text: 245 239 228;
+  --text-muted: 196 184 166;
+  --text-subtle: 154 140 120;
+  --accent: 214 176 112;
+  --accent-muted: 168 132 78;
+  --ink: 11 10 9;
+  --line: rgba(214, 176, 112, 0.22);
+  --line-strong: rgba(214, 176, 112, 0.42);
   --header-h: 4.5rem;
   --radius: 0;
   --radius-lg: 0;
@@ -39,7 +39,10 @@ html {
 }
 
 body {
-  background: rgb(var(--bg));
+  background:
+    radial-gradient(1100px 520px at 8% -8%, rgba(214, 176, 112, 0.14), transparent 58%),
+    radial-gradient(800px 480px at 100% 0%, rgba(88, 62, 36, 0.28), transparent 52%),
+    #0b0a09;
   color: rgb(var(--text));
   font-family: var(--font-sans), 'Outfit', system-ui, sans-serif;
   font-weight: 300;
@@ -94,9 +97,19 @@ select:-webkit-autofill {
   font-family: var(--font-display), Georgia, 'Times New Roman', serif;
   font-weight: 500;
   font-stretch: normal;
-  letter-spacing: -0.02em;
-  line-height: 0.96;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
   text-transform: none;
+}
+
+.display-xl {
+  font-size: clamp(3.5rem, 7.4vw, 6.4rem);
+}
+
+.measure {
+  max-width: 38rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
 .wordmark {
@@ -115,18 +128,18 @@ select:-webkit-autofill {
 
 .eyebrow {
   font-family: var(--font-sans), 'Outfit', system-ui, sans-serif;
-  font-size: 0.68rem;
-  font-weight: 400;
-  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgb(var(--text-subtle));
+  color: rgb(var(--accent));
 }
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: #090909;
+  background: #100e0c;
   border-bottom: 1px solid var(--line);
 }
 
@@ -172,12 +185,17 @@ select:-webkit-autofill {
   border-bottom-color: rgb(var(--accent));
 }
 
-.book-link {
+.text-link,
+.book-link,
+.nav-link[aria-current='page'] {
   color: rgb(var(--accent));
 }
 
-.book-link:hover {
-  color: rgb(var(--text));
+.nav-link:hover,
+.text-link:hover,
+.book-link:hover,
+.menu-link:hover {
+  color: #f4e2c4;
 }
 
 .text-btn.is-accent {
@@ -253,6 +271,36 @@ select:-webkit-autofill {
   align-items: flex-end;
   justify-content: space-between;
   gap: 0.75rem 1.5rem;
+  margin-top: 0.85rem;
+}
+
+.band {
+  position: relative;
+  padding: 4.25rem 0 4.75rem;
+  background: #0b0a09;
+  border-top: 1px solid rgba(214, 176, 112, 0.35);
+}
+
+.band-charcoal {
+  background:
+    linear-gradient(180deg, rgba(214, 176, 112, 0.07), transparent 90px),
+    #1a1613;
+}
+
+.band-warm {
+  background:
+    radial-gradient(700px 280px at 80% 0%, rgba(214, 176, 112, 0.12), transparent 70%),
+    #241c16;
+}
+
+.band-ink {
+  background: #0c0b0a;
+}
+
+@media (min-width: 768px) {
+  .band {
+    padding: 6rem 0 6.5rem;
+  }
 }
 
 .btn,
@@ -311,11 +359,37 @@ select:-webkit-autofill {
 }
 
 .home-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: minmax(68vh, 1fr) 34vw;
+  gap: 4px;
+  min-height: calc(100svh - var(--header-h));
+  background: #1a140f;
+}
+
+.hero-main {
   position: relative;
-  height: calc(100svh - var(--header-h));
-  min-height: 520px;
+  grid-column: 1 / -1;
+  min-height: 68vh;
   overflow: hidden;
   background: #000;
+}
+
+.hero-side {
+  display: contents;
+}
+
+.hero-frame {
+  position: relative;
+  display: block;
+  min-height: 34vw;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero-frame img,
+.hero-main img {
+  transition: transform 900ms ease;
 }
 
 .hero-media {
@@ -328,25 +402,48 @@ select:-webkit-autofill {
 
 .hero-shade {
   background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.22) 34%, rgba(0, 0, 0, 0.05) 58%, rgba(0, 0, 0, 0.28) 100%);
+    radial-gradient(90% 80% at 70% 40%, transparent 0%, rgba(0, 0, 0, 0.28) 70%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(to top, rgba(12, 9, 6, 0.82) 0%, rgba(12, 9, 6, 0.28) 36%, rgba(12, 9, 6, 0.08) 62%);
+}
+
+.hero-copy {
+  max-width: 16ch;
+}
+
+.hero-kicker {
+  color: rgb(var(--accent));
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
 }
 
 .hero-name {
+  margin-top: 0.7rem;
   font-family: var(--font-display), Georgia, serif;
   font-weight: 500;
-  font-size: clamp(2.85rem, 10vw, 7rem);
-  letter-spacing: -0.03em;
-  line-height: 0.88;
-  color: rgb(var(--text));
+  font-style: italic;
+  font-size: clamp(4.2rem, 11vw, 8.4rem);
+  letter-spacing: -0.035em;
+  line-height: 0.84;
+  color: #f7f1e6;
+}
+
+.hero-rule {
+  width: 4.5rem;
+  height: 1px;
+  margin-top: 1.15rem;
+  background: rgb(var(--accent));
 }
 
 .hero-line {
   margin-top: 1rem;
-  max-width: 36rem;
-  color: rgba(243, 240, 234, 0.82);
-  font-size: 0.75rem;
+  max-width: 22rem;
+  color: rgba(245, 239, 228, 0.88);
+  font-size: 0.78rem;
   font-weight: 400;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.22em;
+  line-height: 1.6;
   text-transform: uppercase;
 }
 
@@ -401,8 +498,8 @@ button.album-tile {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  padding: 0.8rem 1rem 1.35rem;
-  background: rgb(var(--bg));
+  padding: 0.85rem 1rem 1.2rem;
+  background: transparent;
 }
 
 .album-kicker,
@@ -667,10 +764,45 @@ button.album-tile {
   border-top: 1px solid var(--line);
 }
 
+@media (min-width: 900px) {
+  .home-hero {
+    grid-template-columns: minmax(0, 1.7fr) minmax(240px, 0.85fr);
+    grid-template-rows: 1fr;
+    height: calc(100svh - var(--header-h));
+    min-height: 640px;
+  }
+
+  .hero-main {
+    grid-column: auto;
+    min-height: 0;
+    height: 100%;
+  }
+
+  .hero-side {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+    min-height: 0;
+  }
+
+  .hero-frame {
+    min-height: 0;
+    height: 100%;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
+  .album-tile:hover,
+  .hero-frame:hover,
+  .hero-main:hover {
+    z-index: 1;
+  }
+
   .album-tile:hover .album-photo,
-  .album-tile:focus-visible .album-photo {
-    transform: scale(1.03);
+  .album-tile:focus-visible .album-photo,
+  .hero-frame:hover img,
+  .hero-main:hover img {
+    transform: scale(1.06);
   }
 }
 
