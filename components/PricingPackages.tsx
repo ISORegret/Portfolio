@@ -30,7 +30,7 @@ export default function PricingPackages() {
               initial={reduce ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '120px 0px -40px 0px' }}
-              transition={{ duration: 0.45, delay: index * 0.05 }}
+              transition={{ duration: 0.65, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className={`rate-card flex h-full flex-col border bg-bg-card p-5 md:p-7 ${
                 pkg.featured ? 'border-[rgb(var(--accent))]' : 'border-[rgb(var(--border-muted))]'
               }`}

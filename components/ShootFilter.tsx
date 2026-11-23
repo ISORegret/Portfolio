@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { motion, useReducedMotion } from 'framer-motion'
 
 /**
  * The design mock's Shoots wall, exactly: 7 numbered tiles, 12-col grid —
@@ -36,6 +37,7 @@ type Filter = (typeof filters)[number]['id']
 
 export default function ShootFilter({ tiles, films = [] }: { tiles: MockTile[]; films?: MockTile[] }) {
   const [active, setActive] = useState<Filter>('all')
+  const reduce = useReducedMotion()
 
   const visible =
     active === 'film' ? films : active === 'all' ? tiles : tiles.filter((tile) => tile.cats.includes(active))
@@ -44,7 +46,7 @@ export default function ShootFilter({ tiles, films = [] }: { tiles: MockTile[]; 
     <div>
       <div className="m-sec-head">
         <div>
-          <span className="caps">Selected work</span>
+          <span className="caps">Stills — Selected work</span>
           <h2 id="shoots-heading" className="display display-md mt-3">
             Shoots
           </h2>
@@ -73,8 +75,16 @@ export default function ShootFilter({ tiles, films = [] }: { tiles: MockTile[]; 
         </p>
       ) : (
         <div className="wall">
-          {visible.map((tile) => (
-            <figure key={tile.title} className={`tile ${tile.span}`} data-cat={tile.cats.join(' ')}>
+          {visible.map((tile, index) => (
+            <motion.figure
+              key={tile.title}
+              className={`tile ${tile.span}`}
+              data-cat={tile.cats.join(' ')}
+              initial={reduce ? false : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '80px 0px -40px 0px' }}
+              transition={{ duration: 0.7, delay: (index % 3) * 0.07, ease: [0.22, 1, 0.36, 1] }}
+            >
               <img src={tile.img} alt={tile.alt} loading="lazy" />
               {tile.n ? <span className="num">{tile.n}</span> : null}
               <span className={`tag${tile.film ? ' film' : ''}`}>{tile.tag}</span>
@@ -85,7 +95,7 @@ export default function ShootFilter({ tiles, films = [] }: { tiles: MockTile[]; 
               <Link href={tile.href} className="tile-link" aria-label={tile.title}>
                 <span className="sr-only">{tile.title}</span>
               </Link>
-            </figure>
+            </motion.figure>
           ))}
         </div>
       )}
