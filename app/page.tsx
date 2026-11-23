@@ -17,13 +17,13 @@ export default function Page() {
     <main>
       <HomeHero />
 
-      <section className="band band-charcoal" aria-labelledby="photos-heading">
+      <section id="shoots" className="band band-charcoal" aria-labelledby="shoots-heading">
         <div className="shell">
           <Reveal>
-            <p className="eyebrow">Galleries</p>
+            <p className="eyebrow">Selected work</p>
             <div className="section-head">
-              <h2 id="photos-heading" className="display display-xl">
-                Photos
+              <h2 id="shoots-heading" className="display display-xl">
+                Shoots
               </h2>
               <Link href="/files" className="text-link">
                 All photos
@@ -40,6 +40,7 @@ export default function Page() {
               category={file.category}
               cover={file.cover}
               date={file.date}
+              location={file.location}
               priority={index < 3}
             />
           ))}

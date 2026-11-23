@@ -32,6 +32,7 @@ html {
 
 #films,
 #rates,
+#shoots,
 #spec,
 #contact,
 #about {
@@ -359,36 +360,20 @@ select:-webkit-autofill {
 }
 
 .home-hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: minmax(68vh, 1fr) 34vw;
-  gap: 4px;
   min-height: calc(100svh - var(--header-h));
   background: #1a140f;
 }
 
 .hero-main {
   position: relative;
-  grid-column: 1 / -1;
-  min-height: 68vh;
+  height: calc(100svh - var(--header-h));
+  min-height: 640px;
   overflow: hidden;
   background: #000;
 }
 
-.hero-side {
-  display: contents;
-}
-
-.hero-frame {
-  position: relative;
-  display: block;
-  min-height: 34vw;
-  overflow: hidden;
-  background: #000;
-}
-
-.hero-frame img,
-.hero-main img {
+.hero-main img,
+.hero-main video {
   transition: transform 900ms ease;
 }
 
@@ -407,7 +392,32 @@ select:-webkit-autofill {
 }
 
 .hero-copy {
-  max-width: 16ch;
+  max-width: none;
+}
+
+.hero-wordmark {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(3.4rem, 11.5vw, 9.5rem);
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  color: #f7f1e6;
+  text-transform: uppercase;
+}
+
+.hero-scroll {
+  margin-top: 2.5rem;
+  align-self: flex-start;
+  color: rgba(245, 239, 228, 0.78);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.hero-scroll:hover {
+  color: rgb(var(--accent));
 }
 
 .hero-kicker {
@@ -766,42 +776,25 @@ button.album-tile {
 
 @media (min-width: 900px) {
   .home-hero {
-    grid-template-columns: minmax(0, 1.7fr) minmax(240px, 0.85fr);
-    grid-template-rows: 1fr;
     height: calc(100svh - var(--header-h));
     min-height: 640px;
   }
 
   .hero-main {
-    grid-column: auto;
-    min-height: 0;
-    height: 100%;
-  }
-
-  .hero-side {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 4px;
-    min-height: 0;
-  }
-
-  .hero-frame {
-    min-height: 0;
     height: 100%;
   }
 }
 
 @media (hover: hover) and (pointer: fine) {
   .album-tile:hover,
-  .hero-frame:hover,
   .hero-main:hover {
     z-index: 1;
   }
 
   .album-tile:hover .album-photo,
   .album-tile:focus-visible .album-photo,
-  .hero-frame:hover img,
-  .hero-main:hover img {
+  .hero-main:hover img,
+  .hero-main:hover video {
     transform: scale(1.06);
   }
 }
