@@ -26,9 +26,8 @@ const faqs = [
     a: 'Galleries are typically ready 48–72 hours after the shoot, and I reply to enquiries within 24 hours.',
   },
   {
-    // PLACEHOLDER — no rain policy is published on the site yet. Ryan to fill in.
     q: 'What if it rains on event day?',
-    a: 'Rain policy to be confirmed — email Ryan and he’ll confirm the plan for your date.',
+    a: 'Shoots go ahead rain or shine where it’s safe to do so — I work around the weather and chase the light. If severe weather makes the shoot impossible, we reschedule your date free of charge.',
   },
   {
     // Derived from site copy: "Jacksonville. Wherever the story goes." + "across the First Coast".
@@ -36,9 +35,8 @@ const faqs = [
     a: 'Based in Jacksonville, shooting across the First Coast — and wherever the story goes.',
   },
   {
-    // PLACEHOLDER — no raw-file policy is published on the site yet. Ryan to fill in.
     q: 'Can I get the raw files?',
-    a: 'To be confirmed — ask Ryan when you enquire.',
+    a: 'No — delivery is the edited gallery only (Pixieset, high resolution). Raw files are not included.',
   },
 ] as const
 
