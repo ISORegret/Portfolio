@@ -15,54 +15,39 @@ const EASE = [0.22, 1, 0.36, 1] as const
  * The nav/wordmark live in the sticky SiteHeader above this section.
  *
  * Entrance (motion only, content unchanged):
- * - First visit: the SiteLoader morphs the full-screen S650 into
- *   this hero's frame — that IS the entrance, so the hero image
- *   stays at scale 1 (no second Ken Burns zoom) and the wordmark /
- *   market line simply fade up once the loader lands
- *   ('iso-loader-complete', fallback ~4.2s).
- * - Repeat visits (no loader): the gentle Ken Burns scale
- *   (1.08 → 1 over ~1.6s) plays immediately, as before.
- * Reduced motion: everything appears instantly.
+ * - The SiteLoader morphs the full-screen S650 into this hero's
+ *   frame — that IS the entrance, so the hero image stays at scale 1
+ *   (no second Ken Burns zoom) and the wordmark / market line simply
+ *   fade up once the loader lands ('iso-loader-complete', fallback ~5s).
+ *   The loader now plays on every full page load (no once-per-session
+ *   gate — that gate is what hid the loader from Ryan on a revisit),
+ *   so the hero always waits for it. Reduced motion: instant.
  */
 export default function HomeHero() {
   const { hero, brandName } = siteConfig
   const reduce = useReducedMotion()
-  // Read the session flag synchronously at first render, so the
-  // initial scale is right before paint: 'loader' on a first visit
-  // (morph lands it at scale 1), 'normal' on repeat visits.
-  const [mode, setMode] = useState<'loader' | 'normal'>(() => {
-    if (typeof window === 'undefined') return 'loader'
-    try {
-      return window.sessionStorage.getItem('iso-loader-seen') ? 'normal' : 'loader'
-    } catch {
-      return 'loader'
-    }
-  })
   const [started, setStarted] = useState(false)
 
   useEffect(() => {
     if (reduce) {
-      setMode('normal')
       setStarted(true)
       return
     }
-    if (mode === 'normal') {
-      setStarted(true)
-      return
-    }
+    // The loader always plays on a full page load now, so always wait
+    // for it to land; the fallback covers a loader that never fires.
     const onDone = () => setStarted(true)
     window.addEventListener('iso-loader-complete', onDone)
-    const fallback = window.setTimeout(() => setStarted(true), 4200)
+    const fallback = window.setTimeout(() => setStarted(true), 5000)
     return () => {
       window.removeEventListener('iso-loader-complete', onDone)
       window.clearTimeout(fallback)
     }
-  }, [reduce, mode])
+  }, [reduce])
 
   const instant = Boolean(reduce)
-  // Loader first visit: image is already landed at scale 1 by the
-  // morph — hold it there. Repeat visits: drift in from 1.08.
-  const imageScale = mode === 'loader' ? 1 : 1.08
+  // The morph IS the entrance: the hero image is already landed at
+  // scale 1 by it — hold it there, no second zoom.
+  const imageScale = 1
 
   return (
     <section className="home-hero" aria-label={brandName}>

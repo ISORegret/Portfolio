@@ -40,8 +40,10 @@ main {
 
 /* Bottega53-style loader: S650 full-screen + giant wordmark + slow
    0–100% counter, then the photo morphs into the hero frame.
-   Timer-driven in SiteLoader.tsx (~2.1s count + ~0.8s morph,
-   ~2.9s total, once per session). */
+   Timer-driven in SiteLoader.tsx: ~2.1s count, then a two-stage
+   morph — shrink to a framed inset (~0.7s), land on the hero frame
+   (~0.6s), ~3.4s total. Plays on EVERY full page load (the old
+   once-per-session gate hid it from Ryan on a revisit). */
 .site-loader {
   position: fixed;
   inset: 0;
@@ -51,15 +53,20 @@ main {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  /* No solid background — the S650 photo (below) is the backdrop. */
+  /* No solid background during the count — the S650 photo (below)
+     is the backdrop. It goes dark during the morph so the shrink
+     reads against a clean surround instead of the hero behind it. */
   background: transparent;
   color: rgb(var(--text));
   cursor: pointer;
-  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 300ms ease;
 }
 
 /* The S650: full-screen during the count, then left/top/width/height
-   animate to the hero frame measured at runtime (FLIP morph). */
+   animate — first to a framed inset (the visible shrink), then to
+   the hero frame measured at runtime (FLIP morph). */
 .site-loader-media {
   position: absolute;
   left: 0;
@@ -68,10 +75,19 @@ main {
   height: 100%;
   overflow: hidden;
   transition:
-    left 800ms cubic-bezier(0.22, 1, 0.36, 1),
-    top 800ms cubic-bezier(0.22, 1, 0.36, 1),
-    width 800ms cubic-bezier(0.22, 1, 0.36, 1),
-    height 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    left 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    top 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The framed inset stage: rounded corners + shadow, so the photo is
+   unmistakably smaller than full-screen before it lands on the hero. */
+.site-loader-media--framed {
+  border-radius: 16px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
 }
 
 .site-loader-img {
@@ -95,6 +111,9 @@ main {
 
 .site-loader--morphing {
   pointer-events: none;
+  /* Dark surround while the photo shrinks — the shrink only reads
+     if the space around the inset isn't the same photo underneath. */
+  background: #0a0a0b;
 }
 
 .site-loader--morphing .site-loader-shade {
