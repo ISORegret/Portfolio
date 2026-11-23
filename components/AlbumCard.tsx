@@ -11,9 +11,11 @@ type Props = {
   fileNumber?: number
   priority?: boolean
   sizes?: string
+  /** When set, the caption kicker shows the shoot location instead of the category. */
+  location?: string
 }
 
-export default function AlbumCard({ href, title, category, cover, date, priority, sizes }: Props) {
+export default function AlbumCard({ href, title, category, cover, date, priority, sizes, location }: Props) {
   const dateLabel = formatLongDate(date)
 
   return (
@@ -29,7 +31,7 @@ export default function AlbumCard({ href, title, category, cover, date, priority
         />
       </span>
       <span className="album-caption">
-        <span className="album-kicker">{category}</span>
+        <span className="album-kicker">{location ?? category}</span>
         <span className="album-title">{title}</span>
         {dateLabel ? <span className="album-date">{dateLabel}</span> : null}
       </span>
