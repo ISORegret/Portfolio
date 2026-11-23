@@ -6,22 +6,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { siteConfig } from '../app/data/site'
 
-function HeroTitle({ headline }: { headline: string }) {
-  const cleaned = headline.replace(/\.$/, '')
-  const words = cleaned.split(/\s+/)
-  if (words.length === 2) {
-    return (
-      <>
-        {words[0]}
-        <br />
-        {words[1]}
-        <span className="text-[rgb(var(--accent))]">.</span>
-      </>
-    )
-  }
-  return <>{headline}</>
-}
-
 export default function HeroSection() {
   const { hero } = siteConfig
   const reduce = useReducedMotion()
@@ -101,14 +85,12 @@ export default function HeroSection() {
         <div className="shell relative z-10 pb-8 md:pb-10">
           <div className="max-w-xl">
             <h1 className="display text-[clamp(3.4rem,6vw,4.75rem)]">
-              <HeroTitle headline={hero.headline} />
+              ISO <em className="text-[rgb(var(--accent))]">Regret</em>
+              <br />
+              Media
             </h1>
             <p className="mt-5 max-w-md text-base leading-relaxed text-[rgb(var(--text))] md:text-lg">
-              {hero.subline.split('\n').map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
+              Automotive, real estate &amp; events — Jacksonville, FL.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
               <a href="/#latest" className="btn btn-primary">

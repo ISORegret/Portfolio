@@ -1,21 +1,21 @@
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Outfit } from 'next/font/google'
+import { Playfair_Display, Archivo } from 'next/font/google'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
 import { SITE_URL, siteConfig, seoKeywords } from './data/site'
 
-const display = Cormorant_Garamond({
+const display = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['600', '700', '800'],
   style: ['normal', 'italic'],
   display: 'swap',
   variable: '--font-display',
 })
 
-const sans = Outfit({
+const sans = Archivo({
   subsets: ['latin'],
-  weight: ['300', '400', '500'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-sans',
 })
@@ -73,7 +73,7 @@ const jsonLd = {
   },
   areaServed: ['Jacksonville', 'Northeast Florida'],
   sameAs: ['https://www.instagram.com/iso.regret/'],
-  priceRange: 'Roughly $150–$2,500+',
+  priceRange: '$150–$2,500',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

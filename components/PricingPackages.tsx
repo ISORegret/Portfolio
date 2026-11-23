@@ -2,20 +2,28 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 import { siteConfig } from '../app/data/site'
-import SectionHeading from './SectionHeading'
 
+/**
+ * Published rates, exactly as in the design mock:
+ * Essential $150 from / Signature $650 from (featured, gold border) /
+ * Cinematic $2,500 from. Three across.
+ */
 export default function PricingPackages() {
   const reduce = useReducedMotion()
   const { packages } = siteConfig
 
   return (
-    <section id="rates" className="band band-warm scroll-mt-24" aria-labelledby="rates-heading">
+    <section id="rates" className="band band-ink scroll-mt-24" aria-labelledby="rates-heading">
       <div className="shell">
-        <SectionHeading index="03" eyebrow="Published pricing" title="Rates" id="rates-heading" />
-        <p className="-mt-6 mb-10 max-w-2xl text-[rgb(var(--text-muted))] md:-mt-8">
-          Every project is scoped to your deliverables — these tiers are a starting point. Final quote after a quick call or form.
-        </p>
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="m-sec-head">
+          <div>
+            <span className="caps">Published pricing</span>
+            <h2 id="rates-heading" className="display display-md mt-3">
+              Rates
+            </h2>
+          </div>
+        </div>
+        <div className="grid gap-5 md:grid-cols-3">
           {packages.map((pkg, index) => (
             <motion.article
               key={pkg.name}
@@ -28,23 +36,21 @@ export default function PricingPackages() {
               }`}
             >
               <p className="eyebrow">{pkg.name}</p>
-              <p className="rate-price mt-4">{pkg.price}</p>
-              <p className="mt-4 text-sm leading-relaxed text-[rgb(var(--text-muted))]">{pkg.description}</p>
+              <p className="rate-price mt-4">
+                {pkg.price}
+                <small>&nbsp;{pkg.priceNote}</small>
+              </p>
               <ul className="rate-list mt-6 flex-1 text-sm text-[rgb(var(--text-muted))]">
                 {pkg.bullets.map((bullet) => (
                   <li key={bullet}>{bullet}</li>
                 ))}
               </ul>
-              <a href={pkg.href} className={`btn mt-6 ${pkg.featured ? 'btn-primary' : 'btn-line'}`}>
+              <a href={pkg.href} className={`btn mt-6 ${pkg.featured ? 'btn-gold' : 'btn-line'}`}>
                 {pkg.cta}
               </a>
             </motion.article>
           ))}
         </div>
-        <p className="mt-8 max-w-2xl text-sm leading-relaxed text-[rgb(var(--text-subtle))]">
-          Deliverables: web-optimized previews on this site; full high-res and guest access via Pixieset when applicable.
-          Turnaround typically 48–72 hours unless otherwise agreed.
-        </p>
       </div>
     </section>
   )

@@ -1,12 +1,12 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { siteConfig } from '../app/data/site'
 
 /**
- * Full-screen still hero matching the approved design mock:
- * one photo (S650 Mustang roller), serif "ISO Regret Media" wordmark
- * with the Regret in italic gold, and the market line underneath.
- * No headline, no video — the mock hero is a still with the wordmark.
+ * Full-screen still hero matching the design mock exactly:
+ * S650 Mustang roller (NOT the C8 — the roller stays), vertical side
+ * labels on desktop, giant "ISO Regret Media" with the Regret in
+ * italic gold, and the market line with gold dots underneath.
+ * The nav/wordmark live in the sticky SiteHeader above this section.
  */
 export default function HomeHero() {
   const { hero, brandName } = siteConfig
@@ -23,17 +23,31 @@ export default function HomeHero() {
           className="object-cover"
         />
         <div className="hero-shade absolute inset-0" aria-hidden />
+        <span className="hero-side-label left">Photo + Video</span>
+        <span className="hero-side-label right">Jacksonville, Florida</span>
         <div className="shell relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
           <div className="hero-copy">
-            <p className="hero-kicker">Stills + Motion</p>
             <h1 className="hero-wordmark hero-wordmark--mock" aria-label={brandName}>
-              ISO <em>Regret</em> Media
+              ISO <em>Regret</em>
+              <br />
+              Media
             </h1>
-            <p className="hero-market">Automotive&nbsp;&nbsp;·&nbsp;&nbsp;Real Estate&nbsp;&nbsp;·&nbsp;&nbsp;Events&nbsp;&nbsp;·&nbsp;&nbsp;Jacksonville, FL</p>
+            <p className="hero-market">
+              <span>Automotive</span>
+              <span className="dot" aria-hidden>
+                ·
+              </span>
+              <span>Real Estate</span>
+              <span className="dot" aria-hidden>
+                ·
+              </span>
+              <span>Events</span>
+              <span className="dot" aria-hidden>
+                ·
+              </span>
+              <span>Jacksonville, FL</span>
+            </p>
           </div>
-          <Link href="/#shoots" className="hero-scroll">
-            Scroll — Shoots
-          </Link>
         </div>
       </div>
     </section>

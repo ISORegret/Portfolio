@@ -10,9 +10,9 @@ export const shootTypes = [
 ] as const
 
 export const hourOptions = [
-  { id: '1-2', label: '1–2 hours', packageName: 'Short session (1–2 hrs)' },
-  { id: '3-4', label: '3–4 hours', packageName: 'Half-day (3–4 hrs)' },
-  { id: 'full', label: 'Full day', packageName: 'Full-day event / show' },
+  { id: '1-2', label: '1–2 hours', packageName: 'Essential' },
+  { id: '3-4', label: '3–4 hours', packageName: 'Signature' },
+  { id: 'full', label: 'Full day', packageName: 'Cinematic' },
 ] as const
 
 /** Phrases taken from the existing package list. They do not have their own prices. */
