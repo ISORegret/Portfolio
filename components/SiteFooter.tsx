@@ -5,7 +5,6 @@ import { bookShootHref, navLinks } from '../lib/nav'
 
 const footerLinks = [
   ...navLinks,
-  { href: '/#rates', label: 'Rates' },
   { href: '/blog', label: 'Journal' },
   { href: bookShootHref, label: 'Book a shoot' },
 ]
@@ -29,13 +28,17 @@ export default function SiteFooter() {
               Instagram
             </a>
           </nav>
-          <p className="mt-8 text-sm text-[rgb(var(--text-muted))]">
+          <p className="footer-line mt-10">© {new Date().getFullYear()} ISO.Regret Media — Jacksonville, FL</p>
+          <p className="footer-line mt-3">
+            Instagram —{' '}
+            <a href="https://www.instagram.com/iso.regret/" target="_blank" rel="noreferrer" className="hover:text-[rgb(var(--text))]">
+              @iso.regret
+            </a>
+          </p>
+          <p className="footer-line mt-3">
             <a href="mailto:Brickel.Ryan@icloud.com" className="hover:text-[rgb(var(--text))]">
               Brickel.Ryan@icloud.com
             </a>
-          </p>
-          <p className="mt-6 text-[0.68rem] uppercase tracking-[0.18em] text-[rgb(var(--text-subtle))]">
-            © {new Date().getFullYear()} ISO.Regret
           </p>
         </div>
       </footer>

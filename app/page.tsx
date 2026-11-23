@@ -1,33 +1,69 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import AlbumCard from '../components/AlbumCard'
 import FilmGallery from '../components/FilmGallery'
 import HomeHero from '../components/HomeHero'
 import PricingPackages from '../components/PricingPackages'
 import Reveal from '../components/Reveal'
+import ShootFilter, { type ShootTile } from '../components/ShootFilter'
+import FaqAccordion from '../components/FaqAccordion'
 import SpecBuilder from '../components/SpecBuilder'
 import Testimonials from '../components/Testimonials'
 import { siteConfig } from './data/site'
 import { albumHrefWithFrom } from '../lib/albumBackNavigation'
 import { buildArchive, photoFilesNewestFirst } from '../lib/files'
 
+/** Show / meet albums among the newest shoots (by title — these are the events). */
+const eventSlugs = new Set([
+  'waterfront-auto-show-2026',
+  'endless-summer-showcase-2026-09-26',
+  'caffeine-octane-jacksonville-2026-09-12',
+  'caffeine-octane-jacksonville',
+])
+
 const faqs = [
   {
-    q: 'How fast will I get my photos?',
+    q: 'How fast is turnaround?',
     a: 'Galleries are typically ready 48–72 hours after the shoot, and I reply to enquiries within 24 hours.',
   },
   {
-    q: 'What happens after I enquire?',
-    a: 'Tell me what you’re shooting, when, and where — I’ll come back with a quote scoped to your deliverables, then we lock in a date.',
+    // PLACEHOLDER — no rain policy is published on the site yet. Ryan to fill in.
+    q: 'What if it rains on event day?',
+    a: 'Rain policy to be confirmed — email Ryan and he’ll confirm the plan for your date.',
   },
   {
-    q: 'Where do I see my photos?',
-    a: 'Web-optimised previews live on this site, and full high-res delivery with guest access runs through Pixieset where applicable.',
+    // Derived from site copy: "Jacksonville. Wherever the story goes." + "across the First Coast".
+    q: 'Do you travel outside Jacksonville?',
+    a: 'Based in Jacksonville, shooting across the First Coast — and wherever the story goes.',
+  },
+  {
+    // PLACEHOLDER — no raw-file policy is published on the site yet. Ryan to fill in.
+    q: 'Can I get the raw files?',
+    a: 'To be confirmed — ask Ryan when you enquire.',
   },
 ] as const
 
 export default function Page() {
-  const photos = photoFilesNewestFirst().slice(0, 6)
+  const photos: ShootTile[] = photoFilesNewestFirst()
+    .slice(0, 7)
+    .map((file) => ({
+      href: albumHrefWithFrom(file.slug, '/'),
+      title: file.title,
+      category: file.category,
+      cover: file.cover,
+      location: file.location,
+      event: eventSlugs.has(file.slug),
+      kind: 'photo' as const,
+    }))
   const films = buildArchive().filter((file) => file.kind === 'film' && file.src && file.poster)
+  const filmTiles: ShootTile[] = films.map((film) => ({
+    href: `/films#${film.slug}`,
+    title: film.title,
+    category: 'Film',
+    cover: film.poster ?? film.cover,
+    event: false,
+    kind: 'film' as const,
+  }))
+  const showreel = films[0]
 
   return (
     <main>
@@ -57,21 +93,9 @@ export default function Page() {
               </Link>
             </div>
           </Reveal>
-        </div>
-        <div className="album-grid mt-10 md:mt-14">
-          {photos.map((file, index) => (
-            <AlbumCard
-              key={file.slug}
-              href={albumHrefWithFrom(file.slug, '/')}
-              title={file.title}
-              category={file.category}
-              cover={file.cover}
-              date={file.date}
-              location={file.location}
-              index={index + 1}
-              priority={index < 3}
-            />
-          ))}
+          <div className="mt-8 md:mt-10">
+            <ShootFilter photos={photos} films={filmTiles} />
+          </div>
         </div>
       </section>
 
@@ -79,32 +103,56 @@ export default function Page() {
         <div className="shell">
           <Reveal>
             <p className="eyebrow">Motion</p>
-            <div className="section-head">
-              <h2 id="films-heading" className="display display-xl">
-                Films
-              </h2>
-              <Link href="/films" className="text-link">
-                All films
-              </Link>
-            </div>
+            <h2 id="films-heading" className="display display-xl mt-3">
+              Films
+            </h2>
           </Reveal>
-          <p className="mt-5 max-w-2xl text-[rgb(var(--text-muted))]">
-            Rollers, reveals and recap films. More on Instagram —{' '}
+          {showreel ? (
+            <figure className="film-band mt-10 md:mt-14">
+              <Image
+                src={showreel.poster ?? showreel.cover}
+                alt={showreel.title}
+                width={1600}
+                height={900}
+                sizes="100vw"
+                className="film-band-media"
+              />
+              <figcaption className="film-band-caption">
+                <p className="eyebrow">Showreel</p>
+                <p className="film-band-title">Rollers, reveals &amp; recap films</p>
+                <a
+                  href="https://www.instagram.com/iso.regret/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-line film-band-cta"
+                >
+                  <span aria-hidden>▶</span> Watch on Instagram
+                </a>
+              </figcaption>
+            </figure>
+          ) : null}
+          <p className="mt-8 max-w-2xl text-[rgb(var(--text-muted))]">
+            More on Instagram —{' '}
             <a href="https://www.instagram.com/iso.regret/" className="text-link">
               @iso.regret
             </a>
           </p>
           <div className="mt-10 md:mt-14">
-          <FilmGallery
-            films={films.map((film) => ({
-              slug: film.slug,
-              title: film.title,
-              src: film.src ?? '',
-              poster: film.poster ?? film.cover,
-              fileNumber: film.fileNumber,
-            }))}
-          />
-        </div>
+            <FilmGallery
+              films={films.map((film) => ({
+                slug: film.slug,
+                title: film.title,
+                src: film.src ?? '',
+                poster: film.poster ?? film.cover,
+                fileNumber: film.fileNumber,
+              }))}
+            />
+          </div>
+          <p className="mt-8">
+            <Link href="/films" className="text-link">
+              All films
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -159,14 +207,11 @@ export default function Page() {
         <span id="spec" />
         <div className="shell grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div>
-            <p className="eyebrow">Make something worth keeping</p>
-            <h2 className="display display-xl mt-3">Contact</h2>
+            <p className="eyebrow">Booking</p>
+            <h2 className="display display-xl mt-3">Start a shoot</h2>
             <p className="measure mt-5 text-[rgb(var(--text-muted))]">
-              A car you’re proud of. An event you’re planning. An idea you want to try. Let’s talk about it.
-            </p>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-[rgb(var(--text-muted))]">
-              <span className="text-[rgb(var(--text))]">What happens next. </span>
-              I’ll reply within 24 hours. Galleries are typically ready 48–72 hours after the shoot.
+              Tell me what you’re shooting and when. The form asks for the details that decide a quote — shoot type, date,
+              location and budget — so the first reply can be a real answer, not a back-and-forth.
             </p>
             <p className="mt-6 text-sm leading-relaxed text-[rgb(var(--text-muted))]">
               Rather just email?{' '}
@@ -174,19 +219,17 @@ export default function Page() {
                 Brickel.Ryan@icloud.com
               </a>
             </p>
+            <p className="mt-4 text-sm leading-relaxed text-[rgb(var(--text-muted))]">
+              Based in Jacksonville, FL — shooting across the First Coast.
+            </p>
           </div>
           <SpecBuilder />
         </div>
         <div className="shell mt-16">
           <p className="eyebrow">Before you ask</p>
           <h3 className="display mt-3 text-[clamp(1.9rem,4vw,2.75rem)]">Questions, answered</h3>
-          <div className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-3">
-            {faqs.map((faq) => (
-              <div key={faq.q}>
-                <h4 className="font-display text-xl font-medium leading-snug">{faq.q}</h4>
-                <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">{faq.a}</p>
-              </div>
-            ))}
+          <div className="mt-8 max-w-3xl">
+            <FaqAccordion items={[...faqs]} />
           </div>
         </div>
       </section>

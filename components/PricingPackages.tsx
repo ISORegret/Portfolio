@@ -21,22 +21,18 @@ export default function PricingPackages() {
               key={pkg.name}
               initial={reduce ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '120px 0px -40px 0px' }}
               transition={{ duration: 0.45, delay: index * 0.05 }}
-              className={`flex h-full flex-col border bg-bg-card p-5 ${
+              className={`rate-card flex h-full flex-col border bg-bg-card p-5 md:p-7 ${
                 pkg.featured ? 'border-[rgb(var(--accent))]' : 'border-[rgb(var(--border-muted))]'
               }`}
             >
-              <p className="eyebrow">Starting at</p>
-              <p className="mt-3 text-sm text-[rgb(var(--accent-muted))]">{pkg.price}</p>
-              <h3 className="mt-3 font-display text-[1.7rem] leading-none">{pkg.name}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-[rgb(var(--text-muted))]">{pkg.description}</p>
-              <ul className="mt-5 flex-1 space-y-2.5 text-sm text-[rgb(var(--text-muted))]">
+              <p className="eyebrow">{pkg.name}</p>
+              <p className="rate-price mt-4">{pkg.price}</p>
+              <p className="mt-4 text-sm leading-relaxed text-[rgb(var(--text-muted))]">{pkg.description}</p>
+              <ul className="rate-list mt-6 flex-1 text-sm text-[rgb(var(--text-muted))]">
                 {pkg.bullets.map((bullet) => (
-                  <li key={bullet} className="flex gap-2">
-                    <span className="mt-2 h-px w-3 shrink-0 bg-[rgb(var(--accent))]" aria-hidden />
-                    <span>{bullet}</span>
-                  </li>
+                  <li key={bullet}>{bullet}</li>
                 ))}
               </ul>
               <a href={pkg.href} className={`btn mt-6 ${pkg.featured ? 'btn-primary' : 'btn-line'}`}>

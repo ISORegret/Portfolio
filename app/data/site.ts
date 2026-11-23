@@ -33,13 +33,14 @@ export const siteConfig = {
     'True-to-life color for listings, punch and atmosphere for cars and events, and mood when the story calls for it—graded for wherever your images live.',
   hero: {
     /** Poster still. Shown on its own when video is off or motion is reduced. */
-    imageSrc: '/hero-poster.jpg',
-    imageAlt: 'Orange sports car filmed from behind at a meet — ISO.Regret',
+    imageSrc: '/gallery/blue-mustang/blue-mustang-roller.jpg',
+    imageAlt: 'S650 Mustang GT Premium roller — ISO.Regret',
     /**
      * Muted full-bleed loop. H.264, 1080p, faststart, no audio.
-     * Set to '' to use the poster only.
+     * Set to '' to use the poster only. Homepage hero is a still roller
+     * (design mock), so this stays empty.
      */
-    videoSrc: '/hero-reel.mp4',
+    videoSrc: '',
     headline: 'Look again.',
     subline: 'Photography with a little attitude.\nJacksonville. Wherever the story goes.',
   },

@@ -194,14 +194,14 @@ export default function SpecBuilder() {
         </p>
       ) : null}
 
-      <button type="submit" className="btn btn-line" disabled={locked}>
+      <button type="submit" className="btn btn-gold" disabled={locked}>
         {locked ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
             Sending…
           </>
         ) : (
-          'Send spec'
+          'Send enquiry by email'
         )}
       </button>
     </form>
