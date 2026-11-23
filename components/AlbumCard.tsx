@@ -13,9 +13,11 @@ type Props = {
   sizes?: string
   /** When set, the caption kicker shows the shoot location instead of the category. */
   location?: string
+  /** 1-based position in the Shoots wall, shown as a Ligthelm-style index number. */
+  index?: number
 }
 
-export default function AlbumCard({ href, title, category, cover, date, priority, sizes, location }: Props) {
+export default function AlbumCard({ href, title, category, cover, date, priority, sizes, location, index }: Props) {
   const dateLabel = formatLongDate(date)
 
   return (
@@ -31,7 +33,10 @@ export default function AlbumCard({ href, title, category, cover, date, priority
         />
       </span>
       <span className="album-caption">
-        <span className="album-kicker">{location ?? category}</span>
+        <span className="album-kicker">
+          {index !== undefined ? <span className="album-index">{String(index).padStart(2, '0')}</span> : null}
+          {location ?? category}
+        </span>
         <span className="album-title">{title}</span>
         {dateLabel ? <span className="album-date">{dateLabel}</span> : null}
       </span>
