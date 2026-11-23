@@ -993,9 +993,13 @@ button.album-tile {
   color: rgb(var(--accent));
 }
 
-/* Films showreel band (mock: full-width still, SHOWREEL + title + Instagram button). */
+/* Films showreel band (mock: full-width still, SHOWREEL + title + Instagram button).
+   The showreel poster is a tall vertical photo, so the band is capped in height
+   and the image is cropped to fit — it must not span screens of scrolling. */
 .film-band {
   position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: min(60vh, 520px);
   overflow: hidden;
   background: #000;
 }
@@ -1003,7 +1007,13 @@ button.album-tile {
 .film-band-media {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Film gallery tiles: compact 16/9 tiles, not tall portrait cards. */
+.film-tile-media {
+  aspect-ratio: 16 / 9;
 }
 
 .film-band-caption {

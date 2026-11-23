@@ -41,7 +41,7 @@ function FilmCard({ film, onOpen }: { film: FilmFile; onOpen: (film: FilmFile) =
         className="album-tile"
         aria-label={`Play ${film.title}`}
       >
-        <span className="album-media is-portrait">
+        <span className="album-media film-tile-media">
           <video
             ref={videoRef}
             className="album-photo absolute inset-0 h-full w-full object-cover"
@@ -88,7 +88,7 @@ export default function FilmGallery({ films }: { films: FilmFile[] }) {
 
   return (
     <>
-      <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-6">
+      <div className="mx-auto grid max-w-2xl grid-cols-2 gap-4 sm:gap-5">
         {films.map((film) => (
           <FilmCard key={film.slug} film={film} onOpen={setActive} />
         ))}
