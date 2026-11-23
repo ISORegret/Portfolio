@@ -9,13 +9,13 @@ export default function PricingPackages() {
   const { packages } = siteConfig
 
   return (
-    <section id="packages" className="section scroll-mt-24" aria-labelledby="packages-heading">
+    <section id="rates" className="band band-warm scroll-mt-24" aria-labelledby="rates-heading">
       <div className="shell">
-        <SectionHeading index="04" eyebrow="Starting at" title="Packages" id="packages-heading" />
+        <SectionHeading index="03" eyebrow="Published pricing" title="Rates" id="rates-heading" />
         <p className="-mt-6 mb-10 max-w-2xl text-[rgb(var(--text-muted))] md:-mt-8">
           Every project is scoped to your deliverables — these tiers are a starting point. Final quote after a quick call or form.
         </p>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-5 md:grid-cols-2">
           {packages.map((pkg, index) => (
             <motion.article
               key={pkg.name}

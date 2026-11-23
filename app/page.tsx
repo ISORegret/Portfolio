@@ -2,12 +2,28 @@ import Link from 'next/link'
 import AlbumCard from '../components/AlbumCard'
 import FilmGallery from '../components/FilmGallery'
 import HomeHero from '../components/HomeHero'
+import PricingPackages from '../components/PricingPackages'
 import Reveal from '../components/Reveal'
 import SpecBuilder from '../components/SpecBuilder'
 import Testimonials from '../components/Testimonials'
 import { siteConfig } from './data/site'
 import { albumHrefWithFrom } from '../lib/albumBackNavigation'
 import { buildArchive, photoFilesNewestFirst } from '../lib/files'
+
+const faqs = [
+  {
+    q: 'How fast will I get my photos?',
+    a: 'Galleries are typically ready 48–72 hours after the shoot, and I reply to enquiries within 24 hours.',
+  },
+  {
+    q: 'What happens after I enquire?',
+    a: 'Tell me what you’re shooting, when, and where — I’ll come back with a quote scoped to your deliverables, then we lock in a date.',
+  },
+  {
+    q: 'Where do I see my photos?',
+    a: 'Web-optimised previews live on this site, and full high-res delivery with guest access runs through Pixieset where applicable.',
+  },
+] as const
 
 export default function Page() {
   const photos = photoFilesNewestFirst().slice(0, 6)
@@ -16,6 +32,17 @@ export default function Page() {
   return (
     <main>
       <HomeHero />
+
+      <section className="band band-ink statement-band" aria-label="Introduction">
+        <div className="shell">
+          <Reveal>
+            <p className="statement">Built to be seen.</p>
+            <p className="measure mt-5 text-[rgb(var(--text-muted))]">
+              Cars, listings and nights worth remembering — shot in Jacksonville and across the First Coast.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       <section id="shoots" className="band band-charcoal" aria-labelledby="shoots-heading">
         <div className="shell">
@@ -41,6 +68,7 @@ export default function Page() {
               cover={file.cover}
               date={file.date}
               location={file.location}
+              index={index + 1}
               priority={index < 3}
             />
           ))}
@@ -60,6 +88,12 @@ export default function Page() {
               </Link>
             </div>
           </Reveal>
+          <p className="mt-5 max-w-2xl text-[rgb(var(--text-muted))]">
+            Rollers, reveals and recap films. More on Instagram —{' '}
+            <a href="https://www.instagram.com/iso.regret/" className="text-link">
+              @iso.regret
+            </a>
+          </p>
           <div className="mt-10 md:mt-14">
           <FilmGallery
             films={films.map((film) => ({
@@ -74,37 +108,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="rates" className="band band-warm" aria-labelledby="rates-heading">
-        <div className="shell">
-        <Reveal>
-          <p className="eyebrow">Starting points</p>
-          <h2 id="rates-heading" className="display display-xl mt-3">
-            Rates
-          </h2>
-        </Reveal>
-        <p className="measure mt-5 text-[rgb(var(--text-muted))]">
-          Every project is scoped to your deliverables — these tiers are a starting point. Final quote after a quick call or form.
-        </p>
-        <ul className="mt-8">
-          {siteConfig.packages.map((pkg) => (
-            <li key={pkg.name} className="rate-row">
-              <div>
-                <h3 className="font-display text-3xl font-medium leading-tight">{pkg.name}</h3>
-                <p className="mt-3 text-[0.95rem] text-[rgb(var(--accent))]">{pkg.price}</p>
-              </div>
-              <div className="text-sm leading-relaxed text-[rgb(var(--text-muted))]">
-                <p>{pkg.description}</p>
-                <ul className="mt-3 space-y-1">
-                  {pkg.bullets.map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          ))}
-        </ul>
-        </div>
-      </section>
+      <PricingPackages />
 
       <section id="about" className="band band-ink">
         <div className="shell">
@@ -117,15 +121,26 @@ export default function Page() {
           <p>Automotive is a big part of the work. There’s plenty more worth photographing.</p>
           <p>{siteConfig.colorStory}</p>
         </div>
-        <div className="mt-6 flex flex-wrap gap-x-6">
-          <Link href="/collections/automotive" className="text-link">
-            Automotive
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <Link href="/collections/automotive" className="about-card">
+            <p className="eyebrow">01</p>
+            <h3 className="mt-3 font-display text-2xl font-medium">Automotive</h3>
+            <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">Cars, meets and shows — rollers, details and the nights around them.</p>
           </Link>
+          <Link href="/collections/real-estate" className="about-card">
+            <p className="eyebrow">02</p>
+            <h3 className="mt-3 font-display text-2xl font-medium">Real estate</h3>
+            <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">MLS-ready stills — interiors, exteriors and the details that sell a listing.</p>
+          </Link>
+          <Link href="/files" className="about-card">
+            <p className="eyebrow">03</p>
+            <h3 className="mt-3 font-display text-2xl font-medium">Events</h3>
+            <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">Shows, meets and gatherings — the full story from open to close.</p>
+          </Link>
+        </div>
+        <div className="mt-10 flex flex-wrap gap-x-6">
           <Link href="/collections/street" className="text-link">
             People &amp; places
-          </Link>
-          <Link href="/collections/real-estate" className="text-link">
-            Real estate
           </Link>
           <Link href="/#rates" className="text-link">
             Rates
@@ -153,8 +168,26 @@ export default function Page() {
               <span className="text-[rgb(var(--text))]">What happens next. </span>
               I’ll reply within 24 hours. Galleries are typically ready 48–72 hours after the shoot.
             </p>
+            <p className="mt-6 text-sm leading-relaxed text-[rgb(var(--text-muted))]">
+              Rather just email?{' '}
+              <a href="mailto:Brickel.Ryan@icloud.com" className="text-link">
+                Brickel.Ryan@icloud.com
+              </a>
+            </p>
           </div>
           <SpecBuilder />
+        </div>
+        <div className="shell mt-16">
+          <p className="eyebrow">Before you ask</p>
+          <h3 className="display mt-3 text-[clamp(1.9rem,4vw,2.75rem)]">Questions, answered</h3>
+          <div className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-3">
+            {faqs.map((faq) => (
+              <div key={faq.q}>
+                <h4 className="font-display text-xl font-medium leading-snug">{faq.q}</h4>
+                <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">{faq.a}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
