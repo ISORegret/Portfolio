@@ -33,11 +33,14 @@ export default function FilesPage() {
 
   return (
     <main className="pb-16 md:pb-24">
-      <div className="shell pb-8 pt-14 md:pt-20">
-        <h1 className="display text-[clamp(2.8rem,6vw,4.75rem)]">Photos</h1>
+      <div className="band band-charcoal">
+        <div className="shell">
+        <p className="eyebrow">Galleries</p>
+        <h1 className="display display-xl mt-3">Photos</h1>
         <p className="mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--text-muted))]">
           Every photo gallery. Filter by category or year, then open one.
         </p>
+        </div>
       </div>
       <FileBrowser files={files} />
     </main>
