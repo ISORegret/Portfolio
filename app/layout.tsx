@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Archivo } from 'next/font/google'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
+import SiteLoader from '../components/SiteLoader'
 import { SITE_URL, siteConfig, seoKeywords } from './data/site'
 
 const display = Playfair_Display({
@@ -87,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <SiteLoader />
         <SiteHeader />
         {children}
         <SiteFooter />

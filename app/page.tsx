@@ -98,7 +98,9 @@ export default function Page() {
 
       <section id="shoots" className="band band-charcoal" aria-labelledby="shoots-heading">
         <div className="shell">
-          <ShootFilter tiles={realTiles} films={filmTiles} />
+          <Reveal>
+            <ShootFilter tiles={realTiles} films={filmTiles} />
+          </Reveal>
         </div>
       </section>
 
@@ -110,7 +112,8 @@ export default function Page() {
               Films
             </h2>
           </Reveal>
-          <figure className="film-band mt-10 md:mt-14">
+          <Reveal delay={0.1}>
+            <figure className="film-band mt-10 md:mt-14">
             <Image
               src="/mock/coastal-911.webp"
               alt="Porsche 911 Turbo on a coastal road at dusk, film still"
@@ -132,6 +135,7 @@ export default function Page() {
               </a>
             </figcaption>
           </figure>
+          </Reveal>
           <div className="mt-10 md:mt-14">
             <FilmGallery
               films={films.map((film) => ({
@@ -162,7 +166,8 @@ export default function Page() {
               <h2 className="display display-md mt-3">Start a shoot</h2>
             </div>
           </div>
-          <div className="book-grid">
+          <Reveal>
+            <div className="book-grid">
             <div className="book-info">
               <p>
                 Tell me what you’re shooting and when. The form asks for the details that decide a quote — shoot type, date,
@@ -176,8 +181,11 @@ export default function Page() {
             </div>
             <SpecBuilder />
           </div>
+          </Reveal>
           <div className="mt-9 max-w-3xl">
-            <FaqAccordion items={[...faqs]} />
+            <Reveal delay={0.08}>
+              <FaqAccordion items={[...faqs]} />
+            </Reveal>
           </div>
         </div>
       </section>

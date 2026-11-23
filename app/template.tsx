@@ -21,14 +21,17 @@ export default function Template({ children }: { children: React.ReactNode }) {
     )
   }
 
+  // Page transition (internal nav only — the first load is covered by the
+  // full-screen SiteLoader instead): a soft fade + a whisper of scale,
+  // so album/gallery pages crossfade instead of hard-jumping.
   return (
     <motion.div
       id="content"
       tabIndex={-1}
       className="outline-none"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 8, scale: 0.998 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>

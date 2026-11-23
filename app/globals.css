@@ -30,6 +30,114 @@ html {
   overflow-x: hidden;
 }
 
+/* Sections always paint on the site background, so a fast mobile scroll
+   never flashes a blank gap between bands. */
+main {
+  background: #0a0a0b;
+}
+
+/* ---------- Loading + transition animations (Nov 23) ---------- */
+
+/* Bottega53-style loader: giant wordmark + 0–100% counter, curtain lift.
+   Timer-driven in SiteLoader.tsx (~1.6s total, once per session). */
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: #0a0a0b;
+  color: rgb(var(--text));
+  cursor: pointer;
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-loader--leaving {
+  transform: translateY(-100%);
+}
+
+.site-loader-inner {
+  text-align: center;
+  transition: opacity 300ms ease;
+}
+
+.site-loader--leaving .site-loader-inner,
+.site-loader--leaving .site-loader-count,
+.site-loader--leaving .site-loader-skip {
+  opacity: 0;
+}
+
+.site-loader-kicker {
+  color: rgb(var(--accent));
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+.site-loader-wordmark {
+  margin-top: 0.5rem;
+  font-size: clamp(2.8rem, 10vw, 6.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.site-loader-sub {
+  margin-top: 0.6rem;
+  color: rgb(var(--text-muted));
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.site-loader-count {
+  position: absolute;
+  right: clamp(1rem, 5vw, 3rem);
+  bottom: clamp(1rem, 4vw, 2.5rem);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.4rem, 7vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  color: #f7f1e6;
+  transition: opacity 300ms ease;
+}
+
+.site-loader-count span {
+  color: rgb(var(--accent));
+  font-size: 0.45em;
+}
+
+.site-loader-skip {
+  position: absolute;
+  left: clamp(1rem, 5vw, 3rem);
+  bottom: clamp(1rem, 4vw, 2.5rem);
+  border: 0;
+  background: transparent;
+  color: rgb(var(--text-muted));
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.site-loader-skip:hover {
+  color: rgb(var(--text));
+}
+
+.site-loader-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgb(var(--accent));
+}
+
 #films,
 #rates,
 #shoots,
@@ -546,7 +654,7 @@ button.album-tile {
 }
 
 .album-photo {
-  transition: transform 800ms ease;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .album-caption {
@@ -883,7 +991,7 @@ button.album-tile {
   .album-tile:focus-visible .album-photo,
   .hero-main:hover img,
   .hero-main:hover video {
-    transform: scale(1.06);
+    transform: scale(1.04);
   }
 }
 
@@ -1337,7 +1445,7 @@ button.album-tile {
   height: 100%;
   object-fit: cover;
   aspect-ratio: 4 / 3;
-  transition: transform 0.6s ease;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .tile:hover img {
@@ -1387,6 +1495,13 @@ button.album-tile {
   background: linear-gradient(to top, rgba(5, 5, 6, 0.82), rgba(5, 5, 6, 0));
   font-size: 0.82rem;
   line-height: 1.4;
+  transform: translateY(4px);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tile:hover figcaption,
+.tile:focus-within figcaption {
+  transform: translateY(0);
 }
 
 .tile figcaption .t {
