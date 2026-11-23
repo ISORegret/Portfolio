@@ -91,7 +91,7 @@ const mockTiles: MockTile[] = [
 const faqs = [
   {
     q: 'How fast is turnaround?',
-    a: 'Edited galleries are delivered within a week, and films within two.',
+    a: 'Edited galleries are typically delivered within 5 days, and films within 10 days.',
   },
   {
     q: 'What if it rains on event day?',

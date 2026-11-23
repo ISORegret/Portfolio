@@ -98,7 +98,6 @@ export const siteConfig = {
         'Full-day coverage',
         'Complete edited gallery',
         'Feature film + social cuts',
-        'Raw footage included',
       ],
       cta: 'Book Cinematic',
       href: '/#contact',
