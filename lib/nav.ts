@@ -1,37 +1,22 @@
 /**
- * Navigation split by buyer, not by medium — as in the design mock:
- * Automotive (24), Real Estate (18), Events (31), Films, Rates,
- * with Contact as the gold-outline CTA (not a plain link).
- * There is no dedicated events collection, so Events points at the
- * full archive (/files) — event shoots (car shows, meets) live there
- * under Automotive.
+ * Easton Chang minimal nav: one row of small-caps links, top-right —
+ * Portfolio (the Stills wall) / Motion (films) / Rates / Contact.
+ * The buyer-split collections (Automotive / Real Estate / Events) are
+ * still reachable from the Shoots filters and the archive; the header
+ * stays out of the way and lets the work lead.
  */
 export const navLinks = [
-  { href: '/collections/automotive', label: 'Automotive (24)' },
-  { href: '/collections/real-estate', label: 'Real Estate (18)' },
-  { href: '/files', label: 'Events (31)' },
-  { href: '/films', label: 'Films' },
+  { href: '/#shoots', label: 'Portfolio' },
+  { href: '/films', label: 'Motion' },
   { href: '/#rates', label: 'Rates' },
+  { href: '/#contact', label: 'Contact' },
 ] as const
 
 export const bookShootHref = '/#contact'
 
 export function isNavActive(href: string, pathname: string, hash: string): boolean {
-  if (href === '/collections/automotive') {
-    return pathname === '/collections/automotive'
-  }
-  if (href === '/collections/real-estate') {
-    return pathname === '/collections/real-estate'
-  }
-  if (href === '/files') {
-    return (
-      pathname === '/files' ||
-      pathname.startsWith('/gallery') ||
-      (pathname.startsWith('/collections') &&
-        pathname !== '/collections/automotive' &&
-        pathname !== '/collections/real-estate') ||
-      pathname === '/work'
-    )
+  if (href === '/#shoots') {
+    return pathname === '/' && hash === '#shoots'
   }
   if (href === '/films') return pathname === '/films' || pathname.startsWith('/films/')
   if (href === '/#rates') return pathname === '/' && hash === '#rates'

@@ -44,7 +44,7 @@ export default function ShootFilter({ tiles, films = [] }: { tiles: MockTile[]; 
     <div>
       <div className="m-sec-head">
         <div>
-          <span className="caps">Selected work</span>
+          <span className="caps">Stills — Selected work</span>
           <h2 id="shoots-heading" className="display display-md mt-3">
             Shoots
           </h2>

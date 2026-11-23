@@ -2,11 +2,13 @@ import Image from 'next/image'
 import { siteConfig } from '../app/data/site'
 
 /**
- * Full-screen still hero matching the design mock exactly:
- * S650 Mustang roller (NOT the C8 — the roller stays), vertical side
- * labels on desktop, giant "ISO Regret Media" with the Regret in
- * italic gold, and the market line with gold dots underneath.
- * The nav/wordmark live in the sticky SiteHeader above this section.
+ * Easton Chang first viewport: one full-screen S650 Mustang roller,
+ * no text clutter beyond the header wordmark — the image is the page.
+ * The brand h1 is visually hidden (SEO / accessibility); the header
+ * wordmark ("ISO REGRET / STILLS + MOTION") carries the brand, and
+ * the only other chrome on the image is a quiet "Scroll" cue.
+ * Everything below (Stills wall, Motion, Rates, FAQ) stays, reached
+ * by scrolling.
  */
 export default function HomeHero() {
   const { hero, brandName } = siteConfig
@@ -23,32 +25,12 @@ export default function HomeHero() {
           className="object-cover"
         />
         <div className="hero-shade absolute inset-0" aria-hidden />
-        <span className="hero-side-label left">Photo + Video</span>
-        <span className="hero-side-label right">Jacksonville, Florida</span>
-        <div className="shell relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
-          <div className="hero-copy">
-            <h1 className="hero-wordmark hero-wordmark--mock" aria-label={brandName}>
-              ISO <em>Regret</em>
-              <br />
-              Media
-            </h1>
-            <p className="hero-market">
-              <span>Automotive</span>
-              <span className="dot" aria-hidden>
-                ·
-              </span>
-              <span>Real Estate</span>
-              <span className="dot" aria-hidden>
-                ·
-              </span>
-              <span>Events</span>
-              <span className="dot" aria-hidden>
-                ·
-              </span>
-              <span>Jacksonville, FL</span>
-            </p>
-          </div>
-        </div>
+        <h1 className="sr-only">
+          {brandName} — Jacksonville photographer · automotive, real estate &amp; events
+        </h1>
+        <a href="#shoots" className="hero-scroll-cue" aria-label="Scroll to selected work">
+          <span>Scroll</span>
+        </a>
       </div>
     </section>
   )
