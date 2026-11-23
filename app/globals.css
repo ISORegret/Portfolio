@@ -40,10 +40,22 @@ main {
 
 /* Bottega53-style loader: S650 full-screen + giant wordmark + slow
    0–100% counter, then the photo morphs into the hero frame.
-   Timer-driven in SiteLoader.tsx: ~2.1s count, then a two-stage
-   morph — shrink to a framed inset (~0.7s), land on the hero frame
-   (~0.6s), ~3.4s total. Plays on EVERY full page load (the old
-   once-per-session gate hid it from Ryan on a revisit). */
+   Timer-driven in SiteLoader.tsx: ~2.1s count, a ~0.4s settle (the
+   wordmark + its legibility scrim fade out while the photo is still
+   full-screen), then a two-stage morph — shrink to a framed inset
+   (~0.7s), land on the hero frame (~0.6s), ~3.8s total. Plays on
+   EVERY full page load (the old once-per-session gate hid it from
+   Ryan on a revisit).
+
+   COLOUR — Ryan, Nov 23: "only dislike in the transition from the
+   loading screen to the front hero is the color change of the
+   picture." The loader used a much darker shade than the hero, and
+   it faded to nothing mid-morph, so the picture visibly brightened
+   as it landed. Fixed: the loader shade is now the EXACT hero shade
+   (same gradients, never faded during the morph), and the extra
+   darkening the wordmark needs lives in a separate scrim that fades
+   out during the settle — before the morph starts. The photo itself
+   is colour-identical from the first frame to the landing. */
 .site-loader {
   position: fixed;
   inset: 0;
@@ -98,15 +110,34 @@ main {
   object-fit: cover;
 }
 
-/* Darkens the photo so the wordmark stays legible; fades away as
-   the photo shrinks into the hero, so the landing is the clean hero. */
+/* The shade over the loader photo — IDENTICAL to the hero shade
+   (.hero-shade, Easton Chang whisper gradients), and it is NEVER
+   faded during the morph: at the landing the hero's own shade takes
+   over pixel-for-pixel, so the picture cannot change colour. */
 .site-loader-shade {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(90% 80% at 50% 40%, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.55) 100%),
-    linear-gradient(to top, rgba(12, 9, 6, 0.6) 0%, rgba(12, 9, 6, 0.15) 50%, rgba(12, 9, 6, 0.35) 100%);
-  transition: opacity 350ms ease;
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.12) 18%, transparent 34%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.38) 0%, transparent 22%);
+}
+
+/* Extra darkening the big wordmark needs to read over the photo.
+   Lives apart from the shade so it can fade out during the settle —
+   BEFORE the morph starts — while the photo is still full-screen
+   and static. By the time the photo shrinks, it is already at hero
+   colour and stays that way through the landing. */
+.site-loader-scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(58% 44% at 50% 46%, rgba(0, 0, 0, 0.52) 0%, rgba(0, 0, 0, 0.2) 55%, transparent 78%);
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
+
+.site-loader--settling .site-loader-scrim,
+.site-loader--morphing .site-loader-scrim {
+  opacity: 0;
 }
 
 .site-loader--morphing {
@@ -114,10 +145,6 @@ main {
   /* Dark surround while the photo shrinks — the shrink only reads
      if the space around the inset isn't the same photo underneath. */
   background: #0a0a0b;
-}
-
-.site-loader--morphing .site-loader-shade {
-  opacity: 0;
 }
 
 .site-loader--leaving {
@@ -134,6 +161,10 @@ main {
 .site-loader--leaving .site-loader-inner,
 .site-loader--leaving .site-loader-count,
 .site-loader--leaving .site-loader-skip,
+.site-loader--settling .site-loader-inner,
+.site-loader--settling .site-loader-count,
+.site-loader--settling .site-loader-skip,
+.site-loader--settling .site-loader-bar,
 .site-loader--morphing .site-loader-inner,
 .site-loader--morphing .site-loader-count,
 .site-loader--morphing .site-loader-skip,

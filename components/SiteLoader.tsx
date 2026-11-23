@@ -25,20 +25,35 @@ import { siteConfig } from '../app/data/site'
  *
  * Behaviour now:
  * 1. S650 FULL-SCREEN behind a giant wordmark + slow 0–100% counter (~2.1s).
- * 2. At 100%: shrink to a framed inset (~0.7s), then land on the
- *    hero frame (~0.6s). Same photo in the same frame underneath,
- *    so the landing has no flash or jump. ~3.4s total.
+ * 2. At 100%: SETTLE (~0.4s) — the wordmark, counter and the
+ *    legibility scrim fade out while the photo is still full-screen
+ *    and static. Then shrink to a framed inset (~0.7s), then land
+ *    on the hero frame (~0.6s). Same photo in the same frame
+ *    underneath, so the landing has no flash or jump. ~3.8s total.
  * 3. No hero on this page: falls back to the curtain lift.
- * Tap anywhere to skip the count (the shrink still plays); tap again
- * during the morph to land instantly. Timer-driven, hard cap.
+ * Tap anywhere to skip the count (the settle + shrink still play);
+ * tap again during the morph to land instantly. Timer-driven, hard cap.
  * Reduced motion: no loader at all, hero appears instantly.
+ *
+ * COLOUR — Ryan, Nov 23: "only dislike in the transition from the
+ * loading screen to the front hero is the color change of the
+ * picture." The loader shade used to be much darker than the hero
+ * shade and faded to nothing mid-morph, so the picture brightened
+ * as it landed. Fixed two ways: (a) the loader shade is now the
+ * EXACT hero shade (same Easton gradients) and never fades during
+ * the morph, so at the landing the hero's own shade takes over
+ * pixel-for-pixel; (b) the extra darkening the wordmark needs lives
+ * in a separate scrim that fades out during the settle, BEFORE the
+ * morph starts. The photo is colour-identical from the first frame
+ * through the landing — the morph itself is colour-stable.
  */
 const COUNT_MS = 2100
+const SETTLE_MS = 400
 const SHRINK_MS = 700
 const LAND_MS = 600
 
 type Rect = { left: number; top: number; width: number; height: number }
-type Phase = 'loading' | 'shrink' | 'land' | 'done'
+type Phase = 'loading' | 'settle' | 'shrink' | 'land' | 'done'
 
 function loaderParam(): 'force' | 'skip' | null {
   try {
@@ -66,6 +81,8 @@ export default function SiteLoader() {
   const [target, setTarget] = useState<Rect | null>(null)
   const finishedRef = useRef(false)
   const announcedRef = useRef(false)
+  const shrinkStartedRef = useRef(false)
+  const heroRectRef = useRef<Rect | null>(null)
   const timersRef = useRef<number[]>([])
 
   const later = useCallback((fn: () => void, ms: number) => {
@@ -94,24 +111,58 @@ export default function SiteLoader() {
   }, [phase, announceDone])
 
   // Two-stage finish, shared by the counter, the safety cap and
-  // tap-to-skip: shrink into a framed inset, then land on the hero.
+  // tap-to-skip: first SETTLE — the wordmark, counter and scrim fade
+  // out while the photo is still full-screen and static, so the
+  // photo reaches hero colour BEFORE anything moves — then shrink
+  // into a framed inset, then land on the hero.
+  const startShrink = useCallback(
+    (heroRect: Rect | null) => {
+      // Guard: the settle timer and a tap during the settle can both
+      // ask for the shrink — only the first one runs.
+      if (shrinkStartedRef.current) return
+      shrinkStartedRef.current = true
+      if (!heroRect) {
+        // No hero to land on: curtain-lift the whole loader instead.
+        setTarget(null)
+        setPhase('land')
+        later(() => {
+          announceDone()
+          setPhase('done')
+        }, LAND_MS)
+        return
+      }
+      const vw = window.innerWidth
+      const vh = window.innerHeight
+      // Stage 1 target: a clearly smaller framed inset — this is the
+      // shrink Ryan asked for. Deliberately much smaller than the hero
+      // frame (which is ~full viewport), so it reads unmistakably.
+      const inset: Rect = {
+        left: Math.round(vw * 0.05),
+        top: Math.round(vh * 0.14),
+        width: Math.round(vw * 0.9),
+        height: Math.round(vh * 0.68),
+      }
+      setTarget(inset)
+      setPhase('shrink')
+      later(() => {
+        setTarget(heroRect)
+        setPhase('land')
+      }, SHRINK_MS)
+      later(() => {
+        announceDone()
+        setPhase('done')
+      }, SHRINK_MS + LAND_MS)
+    },
+    [announceDone, later],
+  )
+
   const finish = useCallback(() => {
     if (finishedRef.current) return
     finishedRef.current = true
     setCount(100)
-    const vw = window.innerWidth
-    const vh = window.innerHeight
-    // Stage 1 target: a clearly smaller framed inset — this is the
-    // shrink Ryan asked for. Deliberately much smaller than the hero
-    // frame (which is ~full viewport), so it reads unmistakably.
-    const inset: Rect = {
-      left: Math.round(vw * 0.05),
-      top: Math.round(vh * 0.14),
-      width: Math.round(vw * 0.9),
-      height: Math.round(vh * 0.68),
-    }
     // Stage 2 target: the hero's real frame, measured at runtime —
     // header height, svh, min-height and viewport all included.
+    // Measured NOW, before the settle, so the target can't drift.
     let heroRect: Rect | null = null
     const hero = document.querySelector('.hero-main')
     if (hero) {
@@ -120,27 +171,13 @@ export default function SiteLoader() {
         heroRect = { left: r.left, top: r.top, width: r.width, height: r.height }
       }
     }
-    if (!heroRect) {
-      // No hero to land on: curtain-lift the whole loader instead.
-      setTarget(null)
-      setPhase('land')
-      later(() => {
-        announceDone()
-        setPhase('done')
-      }, LAND_MS)
-      return
-    }
-    setTarget(inset)
-    setPhase('shrink')
-    later(() => {
-      setTarget(heroRect)
-      setPhase('land')
-    }, SHRINK_MS)
-    later(() => {
-      announceDone()
-      setPhase('done')
-    }, SHRINK_MS + LAND_MS)
-  }, [announceDone, later])
+    // Settle first: text + scrim fade while the photo is static.
+    // The morph itself is then colour-stable — the photo is already
+    // at hero colour before it starts shrinking.
+    heroRectRef.current = heroRect
+    setPhase('settle')
+    later(() => startShrink(heroRect), SETTLE_MS)
+  }, [later, startShrink])
 
   // Tap during the morph: land instantly instead of waiting it out.
   const landNow = useCallback(() => {
@@ -173,7 +210,7 @@ export default function SiteLoader() {
     }
     raf = requestAnimationFrame(tick)
     // Hard cap: the loader can never block the site, even if rAF stalls.
-    const safety = window.setTimeout(finish, COUNT_MS + SHRINK_MS + LAND_MS + 900)
+    const safety = window.setTimeout(finish, COUNT_MS + SETTLE_MS + SHRINK_MS + LAND_MS + 900)
     return () => {
       cancelAnimationFrame(raf)
       window.clearTimeout(safety)
@@ -188,13 +225,15 @@ export default function SiteLoader() {
 
   return (
     <div
-      className={`site-loader${morphing ? ' site-loader--morphing' : ''}${curtain ? ' site-loader--leaving' : ''}`}
+      className={`site-loader${phase === 'settle' ? ' site-loader--settling' : ''}${morphing ? ' site-loader--morphing' : ''}${curtain ? ' site-loader--leaving' : ''}`}
       role="status"
       aria-label="Loading ISO Regret Media"
       onClick={() => {
-        // Tap once to skip the count (the shrink still plays, so the
-        // landing feels intentional); tap again mid-morph to land now.
+        // Tap once to skip the count (the settle + shrink still play,
+        // so the landing feels intentional); tap during the settle to
+        // jump straight to the shrink; tap again mid-morph to land now.
         if (phase === 'loading') finish()
+        else if (phase === 'settle') startShrink(heroRectRef.current)
         else if (morphing) landNow()
       }}
     >
@@ -214,6 +253,10 @@ export default function SiteLoader() {
         <img src={siteConfig.hero.imageSrc} alt="" className="site-loader-img" />
       </div>
       <div className="site-loader-shade" aria-hidden />
+      {/* Legibility scrim for the wordmark only — fades out during the
+          settle, before the morph, so the photo's colour never moves
+          while it shrinks. See the COLOUR note at the top of this file. */}
+      <div className="site-loader-scrim" aria-hidden />
       <div className="site-loader-inner">
         <p className="site-loader-kicker">Stills + Motion</p>
         <p className="site-loader-wordmark display" aria-hidden>
