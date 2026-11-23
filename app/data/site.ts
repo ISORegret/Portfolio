@@ -27,21 +27,20 @@ export const siteConfig = {
    * Location + services + outcome + trust signal.
    */
   defaultDescription:
-    'Jacksonville, FL photographer for automotive events, MLS-ready real estate, and street work. Cinematic photos & video—online galleries, high-res delivery, typically 48–72 hr turnaround.',
+    'Jacksonville, FL photographer for automotive events, MLS-ready real estate, and street work. Cinematic photos & video — online galleries, high-res delivery.',
   /** Short line under the hero headline (your “look”) */
   colorStory:
     'True-to-life color for listings, punch and atmosphere for cars and events, and mood when the story calls for it—graded for wherever your images live.',
   hero: {
     /** Poster still. Shown on its own when video is off or motion is reduced. */
-    imageSrc: '/hero-poster.jpg',
-    imageAlt: 'Orange sports car filmed from behind at a meet — ISO.Regret',
+    imageSrc: '/gallery/blue-mustang/blue-mustang-roller.jpg',
+    imageAlt: 'S650 Mustang GT Premium roller — ISO.Regret',
     /**
      * Muted full-bleed loop. H.264, 1080p, faststart, no audio.
-     * Set to '' to use the poster only.
+     * Set to '' to use the poster only. Homepage hero is a still roller
+     * (design mock), so this stays empty.
      */
-    videoSrc: '/hero-reel.mp4',
-    headline: 'Look again.',
-    subline: 'Photography with a little attitude.\nJacksonville. Wherever the story goes.',
+    videoSrc: '',
   },
   /** Slugs of projects to show in the horizontal “selected work” strip (order preserved) */
   featuredStripSlugs: [
@@ -58,60 +57,49 @@ export const siteConfig = {
   ] as const,
   /** Optional “as seen in” — name + link; leave empty to hide */
   press: [] as { name: string; href: string }[],
+  /**
+   * Published rates, exactly as in the approved design mock
+   * (Nov 23, 2026 — these three tiers replace the old four packages).
+   */
   packages: [
     {
-      name: 'Short session (1–2 hrs)',
-      price: 'Roughly $150–$500+',
-      description: 'Personal work, portfolio, or a single vehicle—price depends on deliverables and editing.',
+      name: 'Essential',
+      price: '$150',
+      priceNote: 'from',
       bullets: [
-        'Great for one car, small meet, or tight creative set',
-        'Web / social files + gallery options',
-        'Add high-res or extended time as needed',
-        'Quote after scope',
+        'Short session, up to 1 hour',
+        '15 edited photos',
+        'Online gallery delivery',
+        'Suits listings, meets & single-car shoots',
       ],
-      cta: 'Request a quote',
+      cta: 'Book Essential',
       href: '/#contact',
       featured: false,
     },
     {
-      name: 'Half-day (3–4 hrs)',
-      price: 'Roughly $400–$1,000+',
-      description: 'Small events, multi-car setups, or a longer real-estate run in one window.',
+      name: 'Signature',
+      price: '$650',
+      priceNote: 'from',
       bullets: [
-        'Enough time for variety and key moments',
-        'Consistent look across the set',
-        'Optional short video add-ons',
-        'Final quote based on location & deliverables',
+        'Half day, up to 4 hours',
+        '40 edited photos',
+        '60-second highlight film',
+        'Suits full listings & event coverage',
       ],
-      cta: 'Request a quote',
+      cta: 'Book Signature',
       href: '/#contact',
       featured: true,
     },
     {
-      name: 'Full-day event / show',
-      price: 'Roughly $800–$2,500+',
-      description: 'Car shows, long events, or coverage that needs breadth from open to close (big spread by scale).',
+      name: 'Cinematic',
+      price: '$2,500',
+      priceNote: 'from',
       bullets: [
-        'Full event narrative and hero moments',
-        'High volume, organized delivery',
-        'Reels / vertical clips available',
-        'Scoped to venue, hours, and usage',
+        'Full-day coverage',
+        'Complete edited gallery',
+        'Feature film + social cuts',
       ],
-      cta: 'Book event coverage',
-      href: '/#contact',
-      featured: false,
-    },
-    {
-      name: 'Real estate — single listing (stills)',
-      price: 'Roughly $150–$500+ per listing',
-      description: 'MLS-ready stills; luxury or larger homes / more rooms usually land higher in the range.',
-      bullets: [
-        'Interiors, exteriors, and key details',
-        'Sized for MLS and marketing',
-        'Blue-hour or twilight add-ons optional',
-        'Turnaround aligned with your closing needs',
-      ],
-      cta: 'Request a quote',
+      cta: 'Book Cinematic',
       href: '/#contact',
       featured: false,
     },

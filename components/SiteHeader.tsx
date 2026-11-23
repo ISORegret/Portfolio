@@ -67,8 +67,8 @@ export default function SiteHeader() {
             )
           })}
         </nav>
-        <Link href={bookShootHref} className="book-link site-book" onClick={() => onNavigate(bookShootHref)}>
-          Book a shoot
+        <Link href={bookShootHref} className="nav-cta site-book" onClick={() => onNavigate(bookShootHref)}>
+          Contact
         </Link>
         <button
           type="button"
@@ -105,8 +105,8 @@ export default function SiteHeader() {
                     </Link>
                   )
                 })}
-                <Link href={bookShootHref} className="book-link mt-8" onClick={() => onNavigate(bookShootHref)}>
-                  Book a shoot
+                <Link href={bookShootHref} className="nav-cta mt-8 self-start" onClick={() => onNavigate(bookShootHref)}>
+                  Contact
                 </Link>
               </nav>
             </div>,

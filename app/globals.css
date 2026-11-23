@@ -4,19 +4,19 @@
 
 :root {
   color-scheme: dark;
-  --bg: 11 10 9;
-  --bg-elevated: 26 23 20;
-  --bg-card: 34 29 24;
-  --border: 214 186 140;
+  --bg: 10 10 11;
+  --bg-elevated: 18 18 20;
+  --bg-card: 18 18 20;
+  --border: 201 162 75;
   --border-muted: 92 74 54;
-  --text: 245 239 228;
-  --text-muted: 196 184 166;
-  --text-subtle: 154 140 120;
-  --accent: 214 176 112;
+  --text: 237 234 222;
+  --text-muted: 168 162 148;
+  --text-subtle: 140 134 122;
+  --accent: 201 162 75;
   --accent-muted: 168 132 78;
-  --ink: 11 10 9;
-  --line: rgba(214, 176, 112, 0.22);
-  --line-strong: rgba(214, 176, 112, 0.42);
+  --ink: 10 10 11;
+  --line: rgba(237, 234, 222, 0.16);
+  --line-strong: rgba(201, 162, 75, 0.42);
   --header-h: 4.5rem;
   --radius: 0;
   --radius-lg: 0;
@@ -41,11 +41,11 @@ html {
 
 body {
   background:
-    radial-gradient(1100px 520px at 8% -8%, rgba(214, 176, 112, 0.14), transparent 58%),
+    radial-gradient(1100px 520px at 8% -8%, rgba(201, 162, 75, 0.14), transparent 58%),
     radial-gradient(800px 480px at 100% 0%, rgba(88, 62, 36, 0.28), transparent 52%),
-    #0b0a09;
+    #0a0a0b;
   color: rgb(var(--text));
-  font-family: var(--font-sans), 'Outfit', system-ui, sans-serif;
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
   font-weight: 300;
   font-feature-settings: 'rlig' 1, 'calt' 1;
   overflow-x: hidden;
@@ -96,7 +96,7 @@ select:-webkit-autofill {
 
 .display {
   font-family: var(--font-display), Georgia, 'Times New Roman', serif;
-  font-weight: 500;
+  font-weight: 700;
   font-stretch: normal;
   letter-spacing: -0.03em;
   line-height: 0.9;
@@ -107,28 +107,48 @@ select:-webkit-autofill {
   font-size: clamp(3.5rem, 7.4vw, 6.4rem);
 }
 
+/* Mock section headings: Playfair 700, clamp(1.5rem, 3.4vw, 2.2rem). */
+.display-md {
+  font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
 .measure {
   max-width: 38rem;
   font-size: 1.05rem;
   line-height: 1.7;
 }
 
+/* Mock wordmark: "ISO REGRET" in Playfair 700 with a gold "STILLS + MOTION" sub-line. */
 .wordmark {
+  display: block;
   font-family: var(--font-display), Georgia, serif;
-  font-weight: 500;
-  font-size: clamp(1.35rem, 2vw, 1.6rem);
-  letter-spacing: 0.01em;
-  line-height: 1;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
   text-transform: none;
   color: rgb(var(--text));
+  text-decoration: none;
 }
 
-.wordmark span {
+.wordmark .wm-name {
+  display: block;
+}
+
+.wordmark .wm-sub {
+  display: block;
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
   color: rgb(var(--accent));
 }
 
 .eyebrow {
-  font-family: var(--font-sans), 'Outfit', system-ui, sans-serif;
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.28em;
@@ -140,7 +160,7 @@ select:-webkit-autofill {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: #100e0c;
+  background: #0a0a0b;
   border-bottom: 1px solid var(--line);
 }
 
@@ -158,7 +178,7 @@ select:-webkit-autofill {
   border: 0;
   background: transparent;
   color: rgb(var(--text-muted));
-  font-family: var(--font-sans), 'Outfit', system-ui, sans-serif;
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
   font-size: 0.72rem;
   font-weight: 400;
   letter-spacing: 0.18em;
@@ -204,8 +224,33 @@ select:-webkit-autofill {
 }
 
 .menu-screen {
-  background: #090909;
+  background: #0a0a0b;
   animation: rise-in 460ms ease;
+}
+
+/* Gold-outline Contact CTA in the header, as in the mock nav. */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 9px 16px;
+  border: 1px solid rgb(var(--accent));
+  color: rgb(var(--accent));
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 240ms ease, color 240ms ease;
+}
+
+.nav-cta:hover {
+  background: rgb(var(--accent));
+  color: rgb(var(--ink));
 }
 
 .menu-toggle:focus-visible,
@@ -278,24 +323,24 @@ select:-webkit-autofill {
 .band {
   position: relative;
   padding: 4.25rem 0 4.75rem;
-  background: #0b0a09;
-  border-top: 1px solid rgba(214, 176, 112, 0.35);
+  background: #0a0a0b;
+  border-top: 1px solid rgba(237, 234, 222, 0.16);
 }
 
 .band-charcoal {
   background:
-    linear-gradient(180deg, rgba(214, 176, 112, 0.07), transparent 90px),
-    #1a1613;
+    linear-gradient(180deg, rgba(201, 162, 75, 0.07), transparent 90px),
+    #121214;
 }
 
 .band-warm {
   background:
-    radial-gradient(700px 280px at 80% 0%, rgba(214, 176, 112, 0.12), transparent 70%),
-    #241c16;
+    radial-gradient(700px 280px at 80% 0%, rgba(201, 162, 75, 0.12), transparent 70%),
+    #121214;
 }
 
 .band-ink {
-  background: #0c0b0a;
+  background: #0a0a0b;
 }
 
 @media (min-width: 768px) {
@@ -317,7 +362,7 @@ select:-webkit-autofill {
   border: 1px solid var(--line-strong);
   background: transparent;
   color: rgb(var(--text));
-  font-family: var(--font-sans), 'Outfit', system-ui, sans-serif;
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
   font-size: 0.72rem;
   font-weight: 400;
   font-stretch: normal;
@@ -361,7 +406,7 @@ select:-webkit-autofill {
 
 .home-hero {
   min-height: calc(100svh - var(--header-h));
-  background: #1a140f;
+  background: #000;
 }
 
 .hero-main {
@@ -587,7 +632,7 @@ button.album-tile {
   color: rgb(var(--text-muted));
   padding: 0.45rem 0.15rem;
   text-align: left;
-  font-family: var(--font-sans), 'Outfit', system-ui, sans-serif;
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.16em;
@@ -627,15 +672,20 @@ button.album-tile {
 
 .statement-band {
   padding: 3.5rem 0 4rem;
+  text-align: center;
 }
 
 .statement {
   font-family: var(--font-display), Georgia, serif;
-  font-weight: 500;
-  font-size: clamp(2.6rem, 7vw, 5rem);
-  letter-spacing: -0.02em;
-  line-height: 1;
-  color: #f7f1e6;
+  font-weight: 700;
+  font-size: clamp(2rem, 6vw, 4.2rem);
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  color: #edeade;
+}
+
+.statement-band .measure {
+  margin-inline: auto;
 }
 
 .about-card {
@@ -903,5 +953,606 @@ button.album-tile {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Design-mock match (Nov 23 rebuild) ---- */
+
+/* Hero: serif "ISO Regret Media" with the Regret in italic gold (mock).
+   Playfair 800, clamp(3rem, 10.5vw, 8.2rem), line-height 0.95. */
+.hero-wordmark--mock {
+  text-transform: none;
+  font-weight: 800;
+  font-size: clamp(3rem, 10.5vw, 8.2rem);
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+}
+
+.hero-wordmark--mock em {
+  font-style: italic;
+  font-weight: 600;
+  color: rgb(var(--accent));
+}
+
+.hero-market {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin-top: 16px;
+  color: rgba(237, 234, 222, 0.9);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  line-height: 1.8;
+  text-transform: uppercase;
+}
+
+.hero-market .dot {
+  color: rgb(var(--accent));
+}
+
+/* Vertical side labels on the hero (desktop only), as in the mock. */
+.hero-side-label {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  writing-mode: vertical-rl;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(237, 234, 222, 0.85);
+}
+
+.hero-side-label.left {
+  left: 18px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.hero-side-label.right {
+  right: 18px;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 760px) {
+  .hero-side-label {
+    display: none;
+  }
+}
+
+/* Shoots filter pills (mock: ALL / AUTOMOTIVE / REAL ESTATE / EVENTS / FILM). */
+.shoot-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.shoot-pill {
+  min-height: 44px;
+  padding: 0.55rem 1.15rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: rgb(var(--text-muted));
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 240ms ease, background 240ms ease, border-color 240ms ease;
+}
+
+.shoot-pill:hover {
+  color: rgb(var(--text));
+  border-color: rgb(var(--accent));
+}
+
+.shoot-pill.is-active {
+  background: #f7f1e6;
+  border-color: transparent;
+  color: rgb(var(--ink));
+}
+
+/* Kind badge on Shoots tiles (STILLS / FILM), dark pill so the text stays readable. */
+.album-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #f7f1e6;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.album-index {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+}
+
+.album-cat {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+/* Films showreel band (mock: full-width still, SHOWREEL + title + Instagram button).
+   Wide/short 21/9, full-bleed, capped in height — it must not span screens of scrolling. */
+.film-band {
+  position: relative;
+  aspect-ratio: 21 / 9;
+  max-height: min(52vh, 520px);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  background: #000;
+}
+
+.film-band-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Film gallery tiles: compact 16/9 tiles, not tall portrait cards. */
+.film-tile-media {
+  aspect-ratio: 16 / 9;
+}
+
+.film-band-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.25) 55%, transparent 80%);
+}
+
+.film-band-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 5vw, 3.4rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #f7f1e6;
+}
+
+.film-band-cta {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+/* Rates cards in the mock's style: gold tier name, big serif price, divided bullets. */
+.rate-price {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  font-size: 2.4rem;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #edeade;
+}
+
+.rate-price small {
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgb(var(--text-muted));
+}
+
+.rate-list li {
+  padding: 0.75rem 0;
+}
+
+.rate-list li + li {
+  border-top: 1px solid var(--line);
+}
+
+/* Gold button: dark ink text on gold so it stays readable (mock's SEND ENQUIRY button). */
+.btn-gold {
+  background: rgb(var(--accent));
+  border-color: transparent;
+  color: rgb(var(--ink));
+}
+
+.btn-gold:hover {
+  background: #e8c88f;
+  border-color: transparent;
+  color: rgb(var(--ink));
+}
+
+/* FAQ accordion (mock: question rows with a + marker). */
+.faq-list {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-item {
+  border-top: 1px solid var(--line);
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-marker {
+  flex-shrink: 0;
+  color: rgb(var(--accent));
+  font-family: var(--font-sans), 'Archivo', system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+  transition: transform 240ms ease;
+}
+
+.faq-item[open] .faq-marker {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-width: 38rem;
+  padding-bottom: 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgb(var(--text-muted));
+}
+
+/* Footer lines in the mock's uppercase letterspaced style. */
+.footer-line {
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  line-height: 1.8;
+  text-transform: uppercase;
+  color: rgb(var(--text-muted));
+}
+
+/* Mock footer: three lines, spread across the width. */
+.m-foot {
+  border-top: 1px solid var(--line);
+  padding: 22px clamp(16px, 4vw, 44px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgb(var(--text-muted));
+}
+
+.m-foot a {
+  color: rgb(var(--text-muted));
+  text-decoration: none;
+}
+
+.m-foot a:hover {
+  color: rgb(var(--accent));
+}
+
+/* ---------- Design mock: Shoots wall ---------- */
+
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.m-sec-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.m-sec-head .caps {
+  color: rgb(var(--accent));
+  display: block;
+  margin-bottom: 6px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filters button {
+  background: none;
+  border: 1px solid var(--line);
+  color: rgb(var(--text-muted));
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.filters button:hover {
+  color: rgb(var(--text));
+  border-color: rgb(var(--text-muted));
+}
+
+.filters button[aria-pressed='true'] {
+  background: #edeade;
+  color: #141310;
+  border-color: #edeade;
+}
+
+.wall {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  background: var(--m-panel, #121214);
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+  transition: transform 0.6s ease;
+}
+
+.tile:hover img {
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile img {
+    transition: none;
+  }
+
+  .tile:hover img {
+    transform: none;
+  }
+}
+
+.tile.wide {
+  grid-column: span 7;
+}
+
+.tile.wide img {
+  aspect-ratio: 16 / 10;
+}
+
+.tile.narrow {
+  grid-column: span 5;
+}
+
+.tile.narrow img {
+  aspect-ratio: 4 / 3.42;
+}
+
+.tile.third {
+  grid-column: span 4;
+}
+
+.tile.third img {
+  aspect-ratio: 4 / 3;
+}
+
+.tile figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 26px 14px 12px;
+  background: linear-gradient(to top, rgba(5, 5, 6, 0.82), rgba(5, 5, 6, 0));
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.tile figcaption .t {
+  display: block;
+  font-weight: 600;
+  color: #edeade;
+}
+
+.tile figcaption .c {
+  color: rgb(var(--accent));
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.tile .num {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  z-index: 2;
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: rgba(237, 234, 222, 0.9);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+.tile .tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: rgba(5, 5, 6, 0.66);
+  color: #edeade;
+  padding: 5px 9px;
+  border-radius: 999px;
+}
+
+.tile .tag.film {
+  color: rgb(var(--accent));
+}
+
+.standin {
+  color: rgb(var(--text-muted));
+  font-size: 0.8rem;
+  margin: 14px 0 0;
+}
+
+@media (max-width: 900px) {
+  .tile.wide,
+  .tile.narrow,
+  .tile.third {
+    grid-column: span 12;
+  }
+
+  .tile img,
+  .tile.wide img,
+  .tile.narrow img {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* ---------- Design mock: booking form ---------- */
+
+.book-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(20px, 4vw, 48px);
+}
+
+.book-info p {
+  color: rgb(var(--text-muted));
+  margin: 0 0 14px;
+}
+
+.book-info .mail {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  color: rgb(var(--text));
+  text-decoration: none;
+  border-bottom: 1px solid rgb(var(--accent));
+  padding-bottom: 2px;
+}
+
+.book-info .mail:hover {
+  color: rgb(var(--accent));
+}
+
+form.book {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+form.book label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--text-muted));
+  display: block;
+}
+
+form.book input,
+form.book select,
+form.book textarea {
+  width: 100%;
+  margin-top: 6px;
+  background: #121214;
+  border: 1px solid var(--line);
+  color: rgb(var(--text));
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 10px 12px;
+  border-radius: 6px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+form.book select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, rgb(var(--text-muted)) 50%), linear-gradient(135deg, rgb(var(--text-muted)) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 32px;
+}
+
+form.book textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+form.book .full {
+  grid-column: 1 / -1;
+}
+
+form.book button {
+  grid-column: 1 / -1;
+  background: rgb(var(--accent));
+  color: rgb(var(--ink));
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 14px;
+  min-height: 48px;
+  border-radius: 6px;
+}
+
+form.book button:hover {
+  filter: brightness(1.08);
+}
+
+form.book button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (max-width: 900px) {
+  .book-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  form.book {
+    grid-template-columns: 1fr;
   }
 }

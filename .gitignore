@@ -12,3 +12,9 @@ out
 
 # Build-time image variants; originals remain in public/gallery.
 public/prepared/
+
+# Decoded mock stand-in images (binary). The committed .b64 sources in
+# public/mock/ are decoded by scripts/decode-mock-images.mjs at build time.
+public/mock/*.jpg
+public/mock/*.jpeg
+public/mock/*.webp

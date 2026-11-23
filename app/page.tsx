@@ -1,33 +1,82 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import AlbumCard from '../components/AlbumCard'
 import FilmGallery from '../components/FilmGallery'
 import HomeHero from '../components/HomeHero'
 import PricingPackages from '../components/PricingPackages'
 import Reveal from '../components/Reveal'
+import ShootFilter, { type MockTile } from '../components/ShootFilter'
+import FaqAccordion from '../components/FaqAccordion'
 import SpecBuilder from '../components/SpecBuilder'
-import Testimonials from '../components/Testimonials'
-import { siteConfig } from './data/site'
-import { albumHrefWithFrom } from '../lib/albumBackNavigation'
-import { buildArchive, photoFilesNewestFirst } from '../lib/files'
+import { buildArchive } from '../lib/files'
+
+import { projects } from '../app/data/projects'
+
+/**
+ * The design mock's exact Shoots wall — 7 numbered tiles, 12-col grid
+ * (wide 7, narrow 5, third 4), STILLS/FILM tag pills, caption + gold
+ * category line, working All / Automotive / Real Estate / Events / Film
+ * filters — but the tiles are Ryan's REAL albums, not the mock's stand-ins.
+ * Covers/titles come from app/data/projects.ts so they stay in sync.
+ * Order: newest first. No real-estate albums exist in the repo, so the
+ * Real Estate filter shows the empty state (see ShootFilter).
+ */
+const wallSpec = [
+  { slug: 'cruise-2026', caption: 'MSC Grandiosa · Nov 2026', cats: ['events'], span: 'wide' },
+  { slug: 'endless-summer-showcase-2026-09-26', caption: 'Downtown Jacksonville', cats: ['automotive'], span: 'narrow' },
+  { slug: 'blue-mustang', caption: 'Jacksonville', cats: ['automotive'], span: 'third' },
+  { slug: 'green-macan', caption: 'Jacksonville', cats: ['automotive'], span: 'third' },
+  { slug: 'caffeine-octane-jacksonville-2026-09-12', caption: 'Jacksonville · Sep 2026', cats: ['automotive', 'events'], span: 'third' },
+  { slug: 'waterfront-auto-show-2026', caption: 'St. Marys, GA', cats: ['automotive', 'events'], span: 'narrow' },
+  { slug: 'caffeine-octane-jacksonville', caption: 'Jacksonville', cats: ['automotive', 'events'], span: 'wide' },
+] as const
+
+const realTiles: MockTile[] = wallSpec.map((spec, index) => {
+  const project = projects.find((p) => p.slug === spec.slug)
+  if (!project) throw new Error(`Wall album missing from projects.ts: ${spec.slug}`)
+  return {
+    n: String(index + 1).padStart(2, '0'),
+    title: project.title,
+    caption: spec.caption,
+    cats: [...spec.cats],
+    span: spec.span,
+    img: project.cover,
+    alt: `${project.title} — photographed by ISO.Regret`,
+    tag: 'Stills',
+  }
+})
 
 const faqs = [
   {
-    q: 'How fast will I get my photos?',
-    a: 'Galleries are typically ready 48–72 hours after the shoot, and I reply to enquiries within 24 hours.',
+    q: 'How fast is turnaround?',
+    a: 'Edited galleries are typically delivered within 5 days, and films within 10 days.',
   },
   {
-    q: 'What happens after I enquire?',
-    a: 'Tell me what you’re shooting, when, and where — I’ll come back with a quote scoped to your deliverables, then we lock in a date.',
+    q: 'What if it rains on event day?',
+    a: 'Shoots go ahead rain or shine where it’s safe to do so — I work around the weather and chase the light. If severe weather makes the shoot impossible, we reschedule your date free of charge.',
   },
   {
-    q: 'Where do I see my photos?',
-    a: 'Web-optimised previews live on this site, and full high-res delivery with guest access runs through Pixieset where applicable.',
+    q: 'Do you travel outside Jacksonville?',
+    a: 'Regularly across the First Coast — St. Augustine, Amelia Island, Daytona — with travel quoted up front.',
+  },
+  {
+    q: 'Can I get the raw files?',
+    a: 'No — delivery is the edited gallery only (Pixieset, high resolution). Raw files are not included.',
   },
 ] as const
 
 export default function Page() {
-  const photos = photoFilesNewestFirst().slice(0, 6)
   const films = buildArchive().filter((file) => file.kind === 'film' && file.src && file.poster)
+  const filmTiles: MockTile[] = films.map((film) => ({
+    n: '',
+    title: film.title,
+    caption: 'Film',
+    cats: ['film'],
+    span: 'third',
+    img: film.poster ?? film.cover,
+    alt: `${film.title} — film by ISO.Regret`,
+    tag: 'Film',
+    film: true,
+  }))
 
   return (
     <main>
@@ -46,32 +95,7 @@ export default function Page() {
 
       <section id="shoots" className="band band-charcoal" aria-labelledby="shoots-heading">
         <div className="shell">
-          <Reveal>
-            <p className="eyebrow">Selected work</p>
-            <div className="section-head">
-              <h2 id="shoots-heading" className="display display-xl">
-                Shoots
-              </h2>
-              <Link href="/files" className="text-link">
-                All photos
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-        <div className="album-grid mt-10 md:mt-14">
-          {photos.map((file, index) => (
-            <AlbumCard
-              key={file.slug}
-              href={albumHrefWithFrom(file.slug, '/')}
-              title={file.title}
-              category={file.category}
-              cover={file.cover}
-              date={file.date}
-              location={file.location}
-              index={index + 1}
-              priority={index < 3}
-            />
-          ))}
+          <ShootFilter tiles={realTiles} films={filmTiles} />
         </div>
       </section>
 
@@ -79,119 +103,81 @@ export default function Page() {
         <div className="shell">
           <Reveal>
             <p className="eyebrow">Motion</p>
-            <div className="section-head">
-              <h2 id="films-heading" className="display display-xl">
-                Films
-              </h2>
-              <Link href="/films" className="text-link">
-                All films
-              </Link>
-            </div>
+            <h2 id="films-heading" className="display display-md mt-3">
+              Films
+            </h2>
           </Reveal>
-          <p className="mt-5 max-w-2xl text-[rgb(var(--text-muted))]">
-            Rollers, reveals and recap films. More on Instagram —{' '}
-            <a href="https://www.instagram.com/iso.regret/" className="text-link">
-              @iso.regret
-            </a>
-          </p>
+          <figure className="film-band mt-10 md:mt-14">
+            <Image
+              src="/mock/coastal-911.webp"
+              alt="Porsche 911 Turbo on a coastal road at dusk, film still"
+              width={1600}
+              height={686}
+              sizes="100vw"
+              className="film-band-media"
+            />
+            <figcaption className="film-band-caption">
+              <p className="eyebrow">Showreel</p>
+              <p className="film-band-title">Rollers, reveals &amp; recap films</p>
+              <a
+                href="https://www.instagram.com/iso.regret/"
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-line film-band-cta"
+              >
+                <span aria-hidden>▶</span> Watch on Instagram
+              </a>
+            </figcaption>
+          </figure>
           <div className="mt-10 md:mt-14">
-          <FilmGallery
-            films={films.map((film) => ({
-              slug: film.slug,
-              title: film.title,
-              src: film.src ?? '',
-              poster: film.poster ?? film.cover,
-              fileNumber: film.fileNumber,
-            }))}
-          />
-        </div>
+            <FilmGallery
+              films={films.map((film) => ({
+                slug: film.slug,
+                title: film.title,
+                src: film.src ?? '',
+                poster: film.poster ?? film.cover,
+                fileNumber: film.fileNumber,
+              }))}
+            />
+          </div>
+          <p className="mt-8">
+            <Link href="/films" className="text-link">
+              All films
+            </Link>
+          </p>
         </div>
       </section>
 
       <PricingPackages />
 
-      <section id="about" className="band band-ink">
-        <div className="shell">
-        <Reveal>
-          <p className="eyebrow">Jacksonville</p>
-          <h2 className="display display-xl mt-3">About</h2>
-        </Reveal>
-        <div className="measure mt-6 space-y-4 text-[rgb(var(--text-muted))]">
-          <p>ISO.Regret is my view of the world. I’m Ryan, based in Jacksonville, drawn to good light, interesting details, and the stories happening right in front of us.</p>
-          <p>Automotive is a big part of the work. There’s plenty more worth photographing.</p>
-          <p>{siteConfig.colorStory}</p>
-        </div>
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          <Link href="/collections/automotive" className="about-card">
-            <p className="eyebrow">01</p>
-            <h3 className="mt-3 font-display text-2xl font-medium">Automotive</h3>
-            <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">Cars, meets and shows — rollers, details and the nights around them.</p>
-          </Link>
-          <Link href="/collections/real-estate" className="about-card">
-            <p className="eyebrow">02</p>
-            <h3 className="mt-3 font-display text-2xl font-medium">Real estate</h3>
-            <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">MLS-ready stills — interiors, exteriors and the details that sell a listing.</p>
-          </Link>
-          <Link href="/files" className="about-card">
-            <p className="eyebrow">03</p>
-            <h3 className="mt-3 font-display text-2xl font-medium">Events</h3>
-            <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">Shows, meets and gatherings — the full story from open to close.</p>
-          </Link>
-        </div>
-        <div className="mt-10 flex flex-wrap gap-x-6">
-          <Link href="/collections/street" className="text-link">
-            People &amp; places
-          </Link>
-          <Link href="/#rates" className="text-link">
-            Rates
-          </Link>
-          <Link href="/blog" className="text-link">
-            Journal
-          </Link>
-        </div>
-        <a href="mailto:Brickel.Ryan@icloud.com" className="text-link">
-          Brickel.Ryan@icloud.com
-        </a>
-        </div>
-      </section>
-
       <section id="contact" className="band band-charcoal">
         <span id="spec" />
-        <div className="shell grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-          <div>
-            <p className="eyebrow">Make something worth keeping</p>
-            <h2 className="display display-xl mt-3">Contact</h2>
-            <p className="measure mt-5 text-[rgb(var(--text-muted))]">
-              A car you’re proud of. An event you’re planning. An idea you want to try. Let’s talk about it.
-            </p>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-[rgb(var(--text-muted))]">
-              <span className="text-[rgb(var(--text))]">What happens next. </span>
-              I’ll reply within 24 hours. Galleries are typically ready 48–72 hours after the shoot.
-            </p>
-            <p className="mt-6 text-sm leading-relaxed text-[rgb(var(--text-muted))]">
-              Rather just email?{' '}
-              <a href="mailto:Brickel.Ryan@icloud.com" className="text-link">
+        <div className="shell">
+          <div className="m-sec-head">
+            <div>
+              <span className="caps">Booking</span>
+              <h2 className="display display-md mt-3">Start a shoot</h2>
+            </div>
+          </div>
+          <div className="book-grid">
+            <div className="book-info">
+              <p>
+                Tell me what you’re shooting and when. The form asks for the details that decide a quote — shoot type, date,
+                location and budget — so the first reply can be a real answer, not a back-and-forth.
+              </p>
+              <p>Rather just email?</p>
+              <a className="mail" href="mailto:Brickel.Ryan@icloud.com">
                 Brickel.Ryan@icloud.com
               </a>
-            </p>
+              <p style={{ marginTop: 16 }}>Based in Jacksonville, FL — shooting across the First Coast.</p>
+            </div>
+            <SpecBuilder />
           </div>
-          <SpecBuilder />
-        </div>
-        <div className="shell mt-16">
-          <p className="eyebrow">Before you ask</p>
-          <h3 className="display mt-3 text-[clamp(1.9rem,4vw,2.75rem)]">Questions, answered</h3>
-          <div className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-3">
-            {faqs.map((faq) => (
-              <div key={faq.q}>
-                <h4 className="font-display text-xl font-medium leading-snug">{faq.q}</h4>
-                <p className="mt-2 text-sm leading-relaxed text-[rgb(var(--text-muted))]">{faq.a}</p>
-              </div>
-            ))}
+          <div className="mt-9 max-w-3xl">
+            <FaqAccordion items={[...faqs]} />
           </div>
         </div>
       </section>
-
-      <Testimonials />
     </main>
   )
 }
