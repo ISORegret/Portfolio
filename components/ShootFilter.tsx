@@ -21,6 +21,8 @@ export type MockTile = {
   alt: string
   tag: string
   film?: boolean
+  /** Where a tap/click goes: album tiles → /gallery/<slug>, film tiles → /films#<slug>. */
+  href: string
 }
 
 const filters = [
@@ -80,6 +82,9 @@ export default function ShootFilter({ tiles, films = [] }: { tiles: MockTile[]; 
                 <span className="t">{tile.title}</span>
                 <span className="c">{tile.caption}</span>
               </figcaption>
+              <Link href={tile.href} className="tile-link" aria-label={tile.title}>
+                <span className="sr-only">{tile.title}</span>
+              </Link>
             </figure>
           ))}
         </div>
